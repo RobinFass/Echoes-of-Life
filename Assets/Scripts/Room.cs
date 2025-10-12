@@ -9,22 +9,17 @@ public class Room : MonoBehaviour
     [SerializeField] private Door leftDoor;
     [SerializeField] private CameraBounds cameraBounds;
 
-    private void Awake()
+    private void Start()
     {
-        topDoor.GetComponent<SpriteRenderer>().enabled = topDoor != null;
-        topDoor.GetComponent<SpriteRenderer>().enabled = rightDoor != null;
-        topDoor.GetComponent<SpriteRenderer>().enabled = bottomDoor != null;
-        topDoor.GetComponent<SpriteRenderer>().enabled = leftDoor != null;
+        topDoor.gameObject.SetActive(topDoor.DestinationDoor != null);
+        rightDoor.gameObject.SetActive(rightDoor.DestinationDoor != null);
+        bottomDoor.gameObject.SetActive(bottomDoor.DestinationDoor != null);
+        leftDoor.gameObject.SetActive(leftDoor.DestinationDoor != null);
     }
     
     public List<Door> GetDoors()
     {
-        var doorsList = new List<Door>();
-        if (topDoor != null) doorsList.Add(topDoor);
-        if (rightDoor != null) doorsList.Add(rightDoor);
-        if (bottomDoor != null) doorsList.Add(bottomDoor);
-        if (leftDoor != null) doorsList.Add(leftDoor);
-        return doorsList;
+        return new List<Door>{topDoor, rightDoor, bottomDoor, leftDoor};
     }
 
     public CameraBounds GetCameraBounds()

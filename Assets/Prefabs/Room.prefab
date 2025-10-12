@@ -574,10 +574,10 @@ PolygonCollider2D:
   m_Points:
     m_Paths:
     - - {x: 0.087319374, y: 15.582364}
-      - {x: -25.487844, y: 15.677256}
-      - {x: -25.561172, y: -15.566019}
-      - {x: 25.648493, y: -15.566017}
-      - {x: 25.487846, y: 15.415297}
+      - {x: -25.487844, y: 15.483285}
+      - {x: -25.492567, y: -15.488837}
+      - {x: 25.477365, y: -15.495553}
+      - {x: 25.487846, y: 15.500094}
   m_UseDelaunayMesh: 0
 --- !u!114 &4759802418546217583
 MonoBehaviour:
@@ -1380,7 +1380,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3452900125007483873}
   - component: {fileID: 2482353071521893905}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BackGround
   m_TagString: Untagged
   m_Icon: {fileID: 0}

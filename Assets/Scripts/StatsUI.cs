@@ -7,6 +7,8 @@ public class StatsUI : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private Image healthBar;
+    [SerializeField] private Image staminaBar;
+
     private GameManager _gameManager;
 
     private void Start()
@@ -23,5 +25,7 @@ public class StatsUI : MonoBehaviour
     {
         scoreText.text = "Score: " + _gameManager.GetScore();
         healthBar.fillAmount = _gameManager.GetHealthNormalized();
+        staminaBar.fillAmount = Player.Instance.GetStaminaNormalized();
+
     }
 }

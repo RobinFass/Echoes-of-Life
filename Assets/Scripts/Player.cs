@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -7,39 +8,124 @@ public class Player : MonoBehaviour
 {
     public static Player Instance { get; private set; }
     
+    [SerializeField] private float moveSpeed = 5000f;
+    
+    [SerializeField] private float sprintMultiplier = 1.5f;
+    
+    [SerializeField] private float dashDistance = 5f;
+    [SerializeField] private float dashDuration = 0.1f;
+    [SerializeField] private float dashCooldown = 3f;
+    
+    [SerializeField] private float maxStamina = 10f;
+    [SerializeField] private float staminaRegenRate = 1f;
+    [SerializeField] private float staminaRegenCooldown = 2f;
+    [SerializeField] private float sprintStaminaCost = 2f;
+    [SerializeField] private float dashStaminaCost = 4f;
+    
     private Rigidbody2D _rigidbody;
+    private bool isSprinting = false;
+    private float dashCooldownTimer = 0f;
+    private float staminaRegenCooldownTimer = 0f;
+    private Vector2 dashDirection;
+    private Vector2 moveInput;
+    private Vector2 lastMoveInput = new Vector2(1f, 0f);
+    private float stamina;
+
     public event EventHandler OnPickUpCoin;
     public event EventHandler OnEnemyHit;
     public event EventHandler<Room> OnChangingRoom;
+    
+    public float GetStaminaNormalized()
+    {
+        return stamina / maxStamina;
+    }
     private void Awake()
     {
         Instance = this;
+        stamina = maxStamina;
         _rigidbody = GetComponent<Rigidbody2D>();
+    }
+
+    private void Start()
+    {
+        GameManager.Instance.OnPlayerDeath += GameManager_OnPlayerDeath;
+    }
+
+    private void GameManager_OnPlayerDeath(object sender, EventArgs e)
+    {
+        gameObject.SetActive(false);
+        moveSpeed = 0;
     }
 
     private void FixedUpdate()
     {
-        const float kidMoveSpeed = 7500f;
-        // const float adultMoveSpeed = 5000f;
-        // const float OldMoveSpeed = 2500f;
-        if (Keyboard.current.upArrowKey.isPressed)
-        {
-            _rigidbody.AddForce(Time.deltaTime * kidMoveSpeed *  transform.up );
+        var speed = moveSpeed;
+
+        if (isSprinting && stamina <= 0)
+        {            
+            isSprinting = false;
+            staminaRegenCooldownTimer = staminaRegenCooldown;
         }
-        if (Keyboard.current.downArrowKey.isPressed)
+        if (isSprinting && stamina > 0)
         {
-            _rigidbody.AddForce(Time.deltaTime * -kidMoveSpeed *  transform.up );
+            stamina -= sprintStaminaCost * Time.fixedDeltaTime;
+            staminaRegenCooldownTimer = staminaRegenCooldown;
+            speed = moveSpeed * sprintMultiplier;
         }
-        if (Keyboard.current.leftArrowKey.isPressed)
+        else if (staminaRegenCooldownTimer <= 0f)
         {
-            _rigidbody.AddForce(Time.deltaTime * -kidMoveSpeed *  transform.right );
-        }
-        if (Keyboard.current.rightArrowKey.isPressed)
-        {
-            _rigidbody.AddForce(Time.deltaTime * kidMoveSpeed *  transform.right );
+            stamina = Mathf.Min(maxStamina, stamina + staminaRegenRate * Time.fixedDeltaTime);
         }
         
+        _rigidbody.AddForce(Time.fixedDeltaTime * speed * moveInput);
+
+        if (dashCooldownTimer > 0f)
+            dashCooldownTimer -= Time.fixedDeltaTime;
+        
+        if (staminaRegenCooldownTimer > 0f)
+            staminaRegenCooldownTimer -= Time.fixedDeltaTime;
+
+        stamina = Mathf.Clamp(stamina, 0, maxStamina);
     }
+
+    public void OnMove(InputValue value)
+    {
+        if (value.Get<Vector2>() == Vector2.zero)
+        {
+            lastMoveInput = moveInput;
+        }
+        moveInput = value.Get<Vector2>();
+    }
+    
+    public void OnSprint(InputValue value)
+    {
+        isSprinting = value.isPressed;
+    }
+
+    public void OnDash()
+    {
+        if (stamina >= dashStaminaCost)
+        {
+            stamina -= dashStaminaCost;
+            staminaRegenCooldownTimer = staminaRegenCooldown;
+            StartCoroutine(DashCoroutine(lastMoveInput.normalized, dashDistance));
+        }
+    }
+
+    private IEnumerator DashCoroutine(Vector2 direction, float distance)
+    {
+        float elapsed = 0f;
+        float dashSpeed = distance / dashDuration;
+        while (elapsed < dashDuration)
+        {
+            _rigidbody.linearVelocity = direction * dashSpeed;
+            elapsed += Time.fixedDeltaTime;
+            yield return new WaitForFixedUpdate();
+        }
+        _rigidbody.linearVelocity = Vector2.zero;
+        dashCooldownTimer = dashCooldown;
+    }
+
     
     
     private void OnTriggerEnter2D(Collider2D other)
