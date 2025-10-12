@@ -1484,6 +1484,10 @@ PrefabInstance:
       propertyPath: prefab
       value: 
       objectReference: {fileID: 7754320905872796290, guid: 59a2c81ef08a02a4e889a7a47182049a, type: 3}
+    - target: {fileID: 3415177618431943296, guid: 088f4ba668dae0f41b81c428b01fb6c0, type: 3}
+      propertyPath: spawnMask.m_Bits
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4114103510819037122, guid: 088f4ba668dae0f41b81c428b01fb6c0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1562,6 +1566,10 @@ PrefabInstance:
       propertyPath: coinPrefab
       value: 
       objectReference: {fileID: 6856343653045903136, guid: 151e3557033d8414285a78926b2474dc, type: 3}
+    - target: {fileID: 3415177618431943296, guid: 088f4ba668dae0f41b81c428b01fb6c0, type: 3}
+      propertyPath: spawnMask.m_Bits
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4114103510819037122, guid: 088f4ba668dae0f41b81c428b01fb6c0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
