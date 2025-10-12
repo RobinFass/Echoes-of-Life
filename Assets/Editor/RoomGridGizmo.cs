@@ -8,14 +8,15 @@ namespace Editor
     {
         static RoomGridGizmo()
         {
-            SceneView.duringSceneGui += OnSceneGUI;
+            // Uncomment the line below to enable the grid gizmo in the Scene view
+            // SceneView.duringSceneGui += OnSceneGUI;
         }
 
         private static void OnSceneGUI(SceneView sceneView)
         {
             var roomWidth = RoomDimensions.Width;
             var roomHeight = RoomDimensions.Height;
-
+            
             var gridCount = 10;
             Handles.color = Color.green;
             for (var x = -gridCount; x <= gridCount; x++)

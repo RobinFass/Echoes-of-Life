@@ -5,7 +5,7 @@ using UnityEngine;
 public class RoomsManager : MonoBehaviour
 {
     private List<Room> rooms;
-    [SerializeField] private float proximityThreshold = 0.5f;
+    [SerializeField] private float maxLinkingDistance = 5f;
 
     private void Awake()
     {
@@ -19,7 +19,7 @@ public class RoomsManager : MonoBehaviour
             foreach (var d2 in allDoors)
             {
                 if (d1 == d2) continue;
-                if (Vector2.Distance(d1.transform.position, d2.transform.position) < proximityThreshold)
+                if (Vector2.Distance(d1.transform.position, d2.transform.position) < maxLinkingDistance)
                 {
                     d1.DestinationDoor = d2;
                     d2.DestinationDoor = d1;

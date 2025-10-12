@@ -3,6 +3,7 @@ using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Object = System.Object;
 
 public class Player : MonoBehaviour
 {
@@ -30,10 +31,12 @@ public class Player : MonoBehaviour
     private Vector2 moveInput;
     private Vector2 lastMoveInput = new Vector2(1f, 0f);
     private float stamina;
-
+    private GameManager gameManager => GameManager.Instance;
     public event EventHandler OnPickUpCoin;
     public event EventHandler OnEnemyHit;
     public event EventHandler<Room> OnChangingRoom;
+    public event EventHandler OnPlayerWin;
+    
     
     public float GetStaminaNormalized()
     {
@@ -48,17 +51,24 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        GameManager.Instance.OnPlayerDeath += GameManager_OnPlayerDeath;
+        gameManager.OnPlayerDeath += GameManager_OnGameOver;
     }
 
-    private void GameManager_OnPlayerDeath(object sender, EventArgs e)
+    private void GameManager_OnGameOver(object sender, EventArgs e)
     {
         gameObject.SetActive(false);
-        moveSpeed = 0;
     }
 
     private void FixedUpdate()
     {
+        switch (gameManager.State)
+        {
+            case GameState.Playing:
+                break;
+            default:
+                return;
+        }
+        
         var speed = moveSpeed;
 
         if (isSprinting && stamina <= 0)
@@ -108,14 +118,15 @@ public class Player : MonoBehaviour
         {
             stamina -= dashStaminaCost;
             staminaRegenCooldownTimer = staminaRegenCooldown;
-            StartCoroutine(DashCoroutine(lastMoveInput.normalized, dashDistance));
+            var direction = moveInput.normalized == Vector2.zero ? lastMoveInput.normalized : moveInput.normalized;
+            StartCoroutine(DashCoroutine(direction));
         }
     }
 
-    private IEnumerator DashCoroutine(Vector2 direction, float distance)
+    private IEnumerator DashCoroutine(Vector2 direction)
     {
         float elapsed = 0f;
-        float dashSpeed = distance / dashDuration;
+        float dashSpeed = dashDistance / dashDuration;
         while (elapsed < dashDuration)
         {
             _rigidbody.linearVelocity = direction * dashSpeed;
@@ -130,30 +141,66 @@ public class Player : MonoBehaviour
     
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.TryGetComponent(out Coin coin))
-        {        
-            OnPickUpCoin?.Invoke(this, EventArgs.Empty);
-            coin.SelfDestruct();
-        }
-        if (other.gameObject.TryGetComponent(out Door door))
+        other.gameObject.TryGetComponent(out MonoBehaviour obj);
+        switch (obj)
         {
-            var destinationDoor = door.DestinationDoor;
-            var room = destinationDoor.GetComponentInParent<Room>();
+            case Coin coin:
+            {
+                OnPickUpCoin?.Invoke(this, EventArgs.Empty);
+                coin.SelfDestruct();
+                break;
+            }
+            case Door door:
+            {
+                var destinationDoor = door.DestinationDoor;
+                var room = destinationDoor.GetComponentInParent<Room>();
 
-            var roomCenter = room.transform.position;
-            var doorPos = destinationDoor.transform.position;
-            var direction = (roomCenter - doorPos).normalized;
+                var roomCenter = room.transform.position;
+                var doorPos = destinationDoor.transform.position;
+                var direction = (roomCenter - doorPos).normalized;
 
-            var offset = direction * 2f;
-            transform.position = destinationDoor.transform.position + offset;
+                var offset = direction * 2f;
+                transform.position = destinationDoor.transform.position + offset;
 
-            OnChangingRoom?.Invoke(this, room);
+                OnChangingRoom?.Invoke(this, room);
+                break;
+            }
+            case Enemy enemy:
+            {
+                enemy.Health--;
+                OnEnemyHit?.Invoke(this, EventArgs.Empty);
+                break;
+            }
+            case End _:
+            {
+                OnPlayerWin?.Invoke(this, EventArgs.Empty);
+                gameManager.State = GameState.Won;
+                break;
+            }
         }
-
-        if (other.gameObject.TryGetComponent(out Enemy enemy))
-        {
-            enemy.Health--;
-            OnEnemyHit?.Invoke(this, EventArgs.Empty);
-        }
+        // if (other.gameObject.TryGetComponent(out Coin coin))
+        // {        
+        //     OnPickUpCoin?.Invoke(this, EventArgs.Empty);
+        //     coin.SelfDestruct();
+        // }
+        // if (other.gameObject.TryGetComponent(out Door door))
+        // {
+        //     var destinationDoor = door.DestinationDoor;
+        //     var room = destinationDoor.GetComponentInParent<Room>();
+        //
+        //     var roomCenter = room.transform.position;
+        //     var doorPos = destinationDoor.transform.position;
+        //     var direction = (roomCenter - doorPos).normalized;
+        //
+        //     var offset = direction * 2f;
+        //     transform.position = destinationDoor.transform.position + offset;
+        //
+        //     OnChangingRoom?.Invoke(this, room);
+        // }
+        // if (other.gameObject.TryGetComponent(out Enemy enemy))
+        // {
+        //     enemy.Health--;
+        //     OnEnemyHit?.Invoke(this, EventArgs.Empty);
+        // }
     }
 }
