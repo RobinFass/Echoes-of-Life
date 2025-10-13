@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,6 +11,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private List<GameLevel> levelList;
 
     public event EventHandler OnPlayerDeath;
+    public event EventHandler OnGamePaused;
+    public event EventHandler OnGameUnpaused;
     
     private int _score;
     public int Score => _score;
@@ -23,22 +24,26 @@ public class GameManager : MonoBehaviour
         get => state;
         set => state = value;
     }
+    private GameInput _gameInput => GameInput.Instance;
+    private Player _player => Player.Instance;
+    
     public float NormalizedHealth => health/maxHealth;
     
     private void Awake()
     {
         Instance = this;
         health = maxHealth;
-        state = GameState.Playing;
     }
     
     private void Start()
     {
-        Player.Instance.OnPickUpCoin += Player_OnPickUpCoin;
-        Player.Instance.OnChangingRoom += Player_OnChangingRoomSetCameraBounds;
-        Player.Instance.OnEnemyHit += Player_OnEnemyHit;
+        _player.OnPickUpCoin += Player_OnPickUpCoin;
+        _player.OnChangingRoom += Player_OnChangingRoomSetCameraBounds;
+        _player.OnEnemyHit += Player_OnEnemyHit;
+        _gameInput.OnMEnuEvent += GameInput_OnGamePause;
         
         LoadCurrentLevel();
+        state = GameState.Playing;
     }
 
     private void LoadCurrentLevel()
@@ -53,6 +58,7 @@ public class GameManager : MonoBehaviour
                 return;
             }
         }
+        SceneLoader.LoadScene(Scenes.HomeScene);
         Debug.LogError("No level found for level number " + levelNumber);
     }
 
@@ -78,14 +84,32 @@ public class GameManager : MonoBehaviour
         CineCamera.Instance.transform.position = Player.Instance.transform.position;
     }
     
+    private void GameInput_OnGamePause(object sender, EventArgs e)
+    {
+        if (Time.timeScale.Equals(1))
+        {
+            OnGamePaused?.Invoke(this, EventArgs.Empty);
+        }
+        else
+        {
+            OnGameUnpaused?.Invoke(this, EventArgs.Empty);
+        }
+        PauseUnpause();
+    }
+    
     public void NextLevel()
     {
         levelNumber++;
-        SceneManager.LoadScene(0);
+        SceneLoader.LoadScene(Scenes.GameScene);
     }
     
     public void RestartLevel()
     {
-        SceneManager.LoadScene(0);
+        SceneLoader.LoadScene(Scenes.GameScene);
+    }
+
+    public void PauseUnpause()
+    {
+        Time.timeScale = Time.timeScale.Equals(1) ? Time.timeScale = 0 : Time.timeScale = 1;
     }
 }

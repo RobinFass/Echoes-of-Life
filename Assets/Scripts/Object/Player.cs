@@ -1,15 +1,13 @@
 using System;
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Object = System.Object;
 
 public class Player : MonoBehaviour
 {
     public static Player Instance { get; private set; }
     
-    [SerializeField] private float moveSpeed = 5000f;
+    [SerializeField] private float moveSpeed = 4000f;
     
     [SerializeField] private float sprintMultiplier = 1.5f;
     
@@ -17,21 +15,22 @@ public class Player : MonoBehaviour
     [SerializeField] private float dashDuration = 0.1f;
     [SerializeField] private float dashCooldown = 3f;
     
-    [SerializeField] private float maxStamina = 10f;
-    [SerializeField] private float staminaRegenRate = 1f;
+    [SerializeField] private float maxStamina = 20f;
+    [SerializeField] private float staminaRegenRate = 2f;
     [SerializeField] private float staminaRegenCooldown = 2f;
     [SerializeField] private float sprintStaminaCost = 2f;
-    [SerializeField] private float dashStaminaCost = 4f;
+    [SerializeField] private float dashStaminaCost = 2f;
     
     private Rigidbody2D _rigidbody;
-    private bool isSprinting = false;
+    private bool isSprinting => gameInput.OnSprint();
     private float dashCooldownTimer = 0f;
     private float staminaRegenCooldownTimer = 0f;
     private Vector2 dashDirection;
-    private Vector2 moveInput;
+    private Vector2 moveInput => gameInput.OnMove();
     private Vector2 lastMoveInput = new Vector2(1f, 0f);
     private float stamina;
     private GameManager gameManager => GameManager.Instance;
+    private GameInput gameInput => GameInput.Instance;
     public event EventHandler OnPickUpCoin;
     public event EventHandler OnEnemyHit;
     public event EventHandler<Room> OnChangingRoom;
@@ -52,13 +51,9 @@ public class Player : MonoBehaviour
     private void Start()
     {
         gameManager.OnPlayerDeath += GameManager_OnGameOver;
+        gameInput.OnDashEvent += GameInput_OnOnDashEvent;
     }
-
-    private void GameManager_OnGameOver(object sender, EventArgs e)
-    {
-        gameObject.SetActive(false);
-    }
-
+    
     private void FixedUpdate()
     {
         switch (gameManager.State)
@@ -68,12 +63,11 @@ public class Player : MonoBehaviour
             default:
                 return;
         }
-        
+
         var speed = moveSpeed;
 
         if (isSprinting && stamina <= 0)
         {            
-            isSprinting = false;
             staminaRegenCooldownTimer = staminaRegenCooldown;
         }
         if (isSprinting && stamina > 0)
@@ -97,47 +91,6 @@ public class Player : MonoBehaviour
 
         stamina = Mathf.Clamp(stamina, 0, maxStamina);
     }
-
-    public void OnMove(InputValue value)
-    {
-        if (value.Get<Vector2>() == Vector2.zero)
-        {
-            lastMoveInput = moveInput;
-        }
-        moveInput = value.Get<Vector2>();
-    }
-    
-    public void OnSprint(InputValue value)
-    {
-        isSprinting = value.isPressed;
-    }
-
-    public void OnDash()
-    {
-        if (stamina >= dashStaminaCost)
-        {
-            stamina -= dashStaminaCost;
-            staminaRegenCooldownTimer = staminaRegenCooldown;
-            var direction = moveInput.normalized == Vector2.zero ? lastMoveInput.normalized : moveInput.normalized;
-            StartCoroutine(DashCoroutine(direction));
-        }
-    }
-
-    private IEnumerator DashCoroutine(Vector2 direction)
-    {
-        float elapsed = 0f;
-        float dashSpeed = dashDistance / dashDuration;
-        while (elapsed < dashDuration)
-        {
-            _rigidbody.linearVelocity = direction * dashSpeed;
-            elapsed += Time.fixedDeltaTime;
-            yield return new WaitForFixedUpdate();
-        }
-        _rigidbody.linearVelocity = Vector2.zero;
-        dashCooldownTimer = dashCooldown;
-    }
-
-    
     
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -178,29 +131,35 @@ public class Player : MonoBehaviour
                 break;
             }
         }
-        // if (other.gameObject.TryGetComponent(out Coin coin))
-        // {        
-        //     OnPickUpCoin?.Invoke(this, EventArgs.Empty);
-        //     coin.SelfDestruct();
-        // }
-        // if (other.gameObject.TryGetComponent(out Door door))
-        // {
-        //     var destinationDoor = door.DestinationDoor;
-        //     var room = destinationDoor.GetComponentInParent<Room>();
-        //
-        //     var roomCenter = room.transform.position;
-        //     var doorPos = destinationDoor.transform.position;
-        //     var direction = (roomCenter - doorPos).normalized;
-        //
-        //     var offset = direction * 2f;
-        //     transform.position = destinationDoor.transform.position + offset;
-        //
-        //     OnChangingRoom?.Invoke(this, room);
-        // }
-        // if (other.gameObject.TryGetComponent(out Enemy enemy))
-        // {
-        //     enemy.Health--;
-        //     OnEnemyHit?.Invoke(this, EventArgs.Empty);
-        // }
+    }
+    
+    private void GameManager_OnGameOver(object sender, EventArgs e)
+    {
+        gameObject.SetActive(false);
+    }
+    
+    private void GameInput_OnOnDashEvent(object sender, EventArgs e)
+    {
+        if (stamina >= dashStaminaCost)
+        {
+            stamina -= dashStaminaCost;
+            staminaRegenCooldownTimer = staminaRegenCooldown;
+            var direction = moveInput.normalized == Vector2.zero ? lastMoveInput.normalized : moveInput.normalized;
+            StartCoroutine(DashCoroutine(direction));
+        }
+    }
+    
+    private IEnumerator DashCoroutine(Vector2 direction)
+    {
+        var elapsed = 0f;
+        var dashSpeed = dashDistance / dashDuration;
+        while (elapsed < dashDuration)
+        {
+            _rigidbody.linearVelocity = direction * dashSpeed;
+            elapsed += Time.fixedDeltaTime;
+            yield return new WaitForFixedUpdate();
+        }
+        _rigidbody.linearVelocity = Vector2.zero;
+        dashCooldownTimer = dashCooldown;
     }
 }

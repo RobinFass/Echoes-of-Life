@@ -8,10 +8,9 @@ public class GameOverUI : MonoBehaviour
 {
     [SerializeField] private Button nextButton;
     [SerializeField] private Button homeButton;
-    [SerializeField] private TextMeshProUGUI titletext;
-    [SerializeField] private TextMeshProUGUI buttonText;
-
-    private int currentButton = 0; // 0 = nextButton, 1 = homeButton
+    [SerializeField] private TextMeshProUGUI titleText;
+    [SerializeField] private TextMeshProUGUI nextButtonText;
+    
     private Action nextButtonClickAction;
     private void Awake()
     {
@@ -22,6 +21,7 @@ public class GameOverUI : MonoBehaviour
         });
         homeButton.onClick.AddListener(() =>
         {
+            SceneLoader.LoadScene(Scenes.HomeScene);
             Hide();
         });
     }
@@ -32,32 +32,11 @@ public class GameOverUI : MonoBehaviour
         Player.Instance.OnPlayerWin += Player_OnPlayerWin;
         Hide();
     }
-
-    private void OnMove(InputValue value)
-    {
-        if (value.Get<Vector2>() == Vector2.left || value.Get<Vector2>() == Vector2.right)
-        {
-            currentButton = (currentButton + 1) % 2; // Toggle between 0 and 1;
-            if (currentButton == 0)
-            {
-                nextButton.Select();
-            }
-            else
-            {
-                homeButton.Select();
-            }
-        }
-    }
     
-    private void OnSelect()
-    {
-        nextButton.onClick.Invoke();
-    }
-
     private void Player_OnPlayerWin(object sender, EventArgs e)
     {
-        titletext.text = "<color=#00ff00>You Win!</color>";
-        buttonText.text = "Continue";
+        titleText.text = "<color=#00ff00>You Win!</color>";
+        nextButtonText.text = "Continue";
         nextButtonClickAction = () =>
         {
             GameManager.Instance.NextLevel();
@@ -68,8 +47,8 @@ public class GameOverUI : MonoBehaviour
 
     private void GameManager_OnPlayerDeath(object sender, EventArgs e)
     {
-        titletext.text = "<color=#ff0000>You Died!</color>";
-        buttonText.text = "Retry";
+        titleText.text = "<color=#ff0000>You Died!</color>";
+        nextButtonText.text = "Retry";
         nextButtonClickAction = () =>
         {
             GameManager.Instance.RestartLevel();
@@ -80,11 +59,11 @@ public class GameOverUI : MonoBehaviour
     private void Show()
     {
         nextButton.Select();
-        currentButton = 0;
         gameObject.SetActive(true);
     }
     private void Hide()
     {
         gameObject.SetActive(false);
     }
+    
 }
