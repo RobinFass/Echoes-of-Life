@@ -469,7 +469,7 @@ MonoBehaviour:
   moveSpeed: 4000
   sprintMultiplier: 1.5
   dashDistance: 5
-  dashDuration: 0.1
+  dashDuration: 0.15
   dashCooldown: 2
   maxStamina: 20
   staminaRegenRate: 2
@@ -977,7 +977,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 487501462}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2797,6 +2797,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   levelList:
+  - {fileID: 1180297549984511305, guid: 4d80993fc3267cc48a65c4691193b1a6, type: 3}
   - {fileID: 1180297549984511305, guid: 496639c104e075642b337f4b09ef5d1e, type: 3}
   - {fileID: 1180297549984511305, guid: 105d32358bf97d94d8b38887a702e66e, type: 3}
 --- !u!4 &1973957333
