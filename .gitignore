@@ -1,0 +1,23 @@
+# IDE
+.idea/
+.vscode/
+Assets/.idea/
+*.csproj
+*.sln
+
+# Unity auto-generated
+Library/
+Temp/
+Obj/
+Logs/
+UserSettings/
+MemoryCaptures/
+
+# Build
+Build/
+Builds/
+
+# Other
+*.user
+*.pidb
+*.suo
