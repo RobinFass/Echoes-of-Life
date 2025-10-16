@@ -59,7 +59,7 @@ public class GameManager : MonoBehaviour
             }
         }
         SceneLoader.LoadScene(Scenes.HomeScene);
-        Debug.LogError("No level found for level number " + levelNumber);
+        Debug.Log("No more levels to load, returning to home scene");
     }
 
     private void Player_OnEnemyHit(object sender, EventArgs e)
