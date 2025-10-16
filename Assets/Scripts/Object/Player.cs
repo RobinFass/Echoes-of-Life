@@ -21,6 +21,9 @@ public class Player : MonoBehaviour
     [SerializeField] private float sprintStaminaCost = 2f;
     [SerializeField] private float dashStaminaCost = 2f;
     
+    [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private Animator animator;
+    
     private Rigidbody2D _rigidbody;
     private bool isSprinting => gameInput.OnSprint();
     private float dashCooldownTimer = 0f;
@@ -81,6 +84,13 @@ public class Player : MonoBehaviour
             stamina = Mathf.Min(maxStamina, stamina + staminaRegenRate * Time.fixedDeltaTime);
         }
         
+        animator.SetBool("isMoving", moveInput != Vector2.zero);
+        
+        if(moveInput.x > 0)
+            spriteRenderer.flipX = false;
+        else if(moveInput.x < 0)
+            spriteRenderer.flipX = true;
+        
         _rigidbody.AddForce(Time.fixedDeltaTime * speed * moveInput);
 
         if (dashCooldownTimer > 0f)
@@ -88,7 +98,6 @@ public class Player : MonoBehaviour
         
         if (staminaRegenCooldownTimer > 0f)
             staminaRegenCooldownTimer -= Time.fixedDeltaTime;
-
         stamina = Mathf.Clamp(stamina, 0, maxStamina);
     }
     

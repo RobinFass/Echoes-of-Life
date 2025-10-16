@@ -38,11 +38,11 @@ TagManager:
   - 
   - 
   m_SortingLayers:
-  - name: Void
-    uniqueID: 1675241469
-    locked: 0
   - name: Room
     uniqueID: 1316822683
+    locked: 0
+  - name: UI
+    uniqueID: 1675241469
     locked: 0
   - name: Default
     uniqueID: 0
