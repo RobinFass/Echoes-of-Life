@@ -668,8 +668,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21d0f660f1c56e446bcbac0560b78674, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
-  moveSpeed: 4000
-  sprintMultiplier: 1.5
+  moveSpeed: 2000
+  sprintMultiplier: 2
   dashDistance: 5
   dashDuration: 0.15
   dashCooldown: 2
