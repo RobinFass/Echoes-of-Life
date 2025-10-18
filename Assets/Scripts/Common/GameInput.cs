@@ -36,6 +36,11 @@ public class GameInput : MonoBehaviour
     {
         return inputActions.Player.Sprint.IsPressed();
     }
+    
+    public Vector2 OnLook()
+    {
+        return inputActions.Player.Look.ReadValue<Vector2>();
+    }
 
     public void OnDash(InputAction.CallbackContext callbackContext)
     {

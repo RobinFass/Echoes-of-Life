@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using Random = System.Random;
 
 public class Enemy : MonoBehaviour
 {
@@ -6,7 +8,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float damage = 1;
     [SerializeField] private Canvas canva;
     
-    private float health = 4;
+    private float health;
     
     public float NormalizedHealth =>  health / maxHealth;
     public float Health
@@ -27,7 +29,13 @@ public class Enemy : MonoBehaviour
         get => damage;
         set => damage = value;
     }
-    
+
+    private void Start()
+    {
+        maxHealth = UnityEngine.Random.Range(maxHealth/2, maxHealth*2+1);
+        health = maxHealth;
+    }
+
     public void SelfDestruct()
     {
         Destroy(gameObject);
