@@ -2,8 +2,14 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    private int health = 1;
-    public int Health
+    [SerializeField] private float maxHealth = 4;
+    [SerializeField] private float damage = 1;
+    [SerializeField] private Canvas canva;
+    
+    private float health = 4;
+    
+    public float NormalizedHealth =>  health / maxHealth;
+    public float Health
     {
         get => health;
         set
@@ -15,8 +21,26 @@ public class Enemy : MonoBehaviour
             }
         }
     }
+    
+    public float Damage
+    {
+        get => damage;
+        set => damage = value;
+    }
+    
     public void SelfDestruct()
     {
         Destroy(gameObject);
     }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        canva.gameObject.SetActive(true);
+    }
+    
+    public void ShowHealthBar()
+    {
+        canva.gameObject.SetActive(true);
+    }
+
 }

@@ -10,7 +10,7 @@ public class StatsUI : MonoBehaviour
     [SerializeField] private Image staminaBar;
 
     private GameManager gameManager => GameManager.Instance;
-    private Player player => Player.Instance;
+    private PlayerStats stats => Player.Instance.Stats;
 
 
     private void FixedUpdate()
@@ -21,8 +21,8 @@ public class StatsUI : MonoBehaviour
     private void UpdateUI()
     {
         scoreText.text = "Score: " + gameManager.Score;
-        healthBar.fillAmount = gameManager.NormalizedHealth;
-        staminaBar.fillAmount = player.GetStaminaNormalized();
+        healthBar.fillAmount = stats.NormalizedHealth;
+        staminaBar.fillAmount = stats.NormalizedStamina;
 
     }
 }

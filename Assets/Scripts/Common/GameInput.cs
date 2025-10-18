@@ -9,6 +9,7 @@ public class GameInput : MonoBehaviour
     private InputActions inputActions;
     public event EventHandler OnDashEvent; 
     public event EventHandler OnMEnuEvent; 
+    public event EventHandler OnAttackEvent; 
         
     private void Awake()
     {
@@ -18,6 +19,7 @@ public class GameInput : MonoBehaviour
         
         inputActions.Player.Dash.performed += OnDash;
         inputActions.Player.Menu.performed += OnMenu;
+        inputActions.Player.Attack.performed += OnAttack;
     }
 
     private void OnDestroy()
@@ -40,10 +42,13 @@ public class GameInput : MonoBehaviour
         OnDashEvent?.Invoke(this, EventArgs.Empty);
     }
     
+    public void OnAttack(InputAction.CallbackContext callbackContext)
+    {
+        OnAttackEvent?.Invoke(this, EventArgs.Empty);
+    }
+    
     public void OnMenu(InputAction.CallbackContext callbackContext)
     {
         OnMEnuEvent?.Invoke(this, EventArgs.Empty);
     }
-    
-    
 }

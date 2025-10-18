@@ -12,6 +12,8 @@ public class GameOverUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI nextButtonText;
     
     private Action nextButtonClickAction;
+    
+    private Player player => Player.Instance;
     private void Awake()
     {
         nextButton.onClick.AddListener(() =>
@@ -28,8 +30,8 @@ public class GameOverUI : MonoBehaviour
 
     private void Start()
     {
-        GameManager.Instance.OnPlayerDeath += GameManager_OnPlayerDeath;
-        Player.Instance.OnPlayerWin += Player_OnPlayerWin;
+        player.Stats.OnDeath += GameManager_OnDeath;
+        player.OnPlayerWin += Player_OnPlayerWin;
         Hide();
     }
     
@@ -45,7 +47,7 @@ public class GameOverUI : MonoBehaviour
         Show();
     }
 
-    private void GameManager_OnPlayerDeath(object sender, EventArgs e)
+    private void GameManager_OnDeath(object sender, EventArgs e)
     {
         titleText.text = "<color=#ff0000>You Died!</color>";
         nextButtonText.text = "Retry";
