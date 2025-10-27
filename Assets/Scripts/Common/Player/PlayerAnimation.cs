@@ -12,15 +12,18 @@ public class PlayerAnimation : MonoBehaviour
 
     private GameInput input => GameInput.Instance;
     private Vector3 initialAttackLocalPos;
+    private CapsuleCollider2D capsule;
 
     private void Awake()
     {
         Instance = this;
         if (attackPosition != null)
             initialAttackLocalPos = attackPosition.localPosition;
+        capsule = Player.Instance.GetComponent<CapsuleCollider2D>();
+        
     }
 
-    public bool FacingRight => spriteRenderer != null ? !spriteRenderer.flipX : true;
+    public bool FacingRight => !spriteRenderer || !spriteRenderer.flipX;
 
     private void FixedUpdate()
     {
@@ -28,13 +31,13 @@ public class PlayerAnimation : MonoBehaviour
         animator.SetBool("isMoving", move != Vector2.zero);
 
         if (!attackPosition) return;
-
         if (move.x > 0)
         {
             spriteRenderer.flipX = false;
             var pos = initialAttackLocalPos;
             pos.x = Mathf.Abs(initialAttackLocalPos.x);
             attackPosition.localPosition = pos;
+            capsule.offset = new Vector2(1,-1);
         }
         else if (move.x < 0)
         {
@@ -42,6 +45,8 @@ public class PlayerAnimation : MonoBehaviour
             var pos = initialAttackLocalPos;
             pos.x = -Mathf.Abs(initialAttackLocalPos.x);
             attackPosition.localPosition = pos;
+            capsule.offset = new Vector2(-1,-1);
+            
         }
     }
 

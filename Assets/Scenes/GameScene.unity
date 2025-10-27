@@ -2021,7 +2021,7 @@ MonoBehaviour:
   attackDamage: 2
   bodyDamage: 1
   attackRange: 1.5
-  coneAngle: 180
+  coneAngle: 250
   knockbackDistance: 2
   knockbackDuration: 0.15
 --- !u!114 &876904194
