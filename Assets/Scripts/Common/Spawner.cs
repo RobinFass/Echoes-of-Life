@@ -19,8 +19,8 @@ public class Spawner : MonoBehaviour
         }
         spawnedParent = folder.transform;
         
-        var xSize = prefab.GetComponent<SpriteRenderer>().bounds.size.x;
-        var ySize = prefab.GetComponent<SpriteRenderer>().bounds.size.y;
+        var xSize = prefab.GetComponent<SpriteRenderer>().bounds.size.x*2;
+        var ySize = prefab.GetComponent<SpriteRenderer>().bounds.size.y*2;
         var prefabRadius = Mathf.Max(xSize, ySize);
         
         for (var i = 0; i < amount; i++)
