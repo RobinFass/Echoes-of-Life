@@ -1309,8 +1309,8 @@ SpriteShapeRenderer:
   - {fileID: 21300000, guid: 608e61deb05c54660bebf5a4dd2ee02d, type: 3}
   - {fileID: 21300000, guid: 608e61deb05c54660bebf5a4dd2ee02d, type: 3}
   m_LocalAABB:
-    m_Center: {x: -0.015000343, y: 0, z: 0}
-    m_Extent: {x: 15.625, y: 0.305, z: 0}
+    m_Center: {x: -0.015000343, y: 0.000000834465, z: 0}
+    m_Extent: {x: 15.625, y: 0.30500007, z: 0}
   m_SpriteSortPoint: 0
 --- !u!114 &7427558632159889521
 MonoBehaviour:
@@ -1327,7 +1327,7 @@ MonoBehaviour:
   m_Spline:
     m_IsOpenEnded: 1
     m_ControlPoints:
-    - position: {x: -15.6, y: 0, z: 0}
+    - position: {x: -15.6, y: 0.0000008821487, z: 0}
       leftTangent: {x: 0, y: 0, z: 0}
       rightTangent: {x: 0, y: 0, z: 0}
       mode: 0
@@ -1335,7 +1335,7 @@ MonoBehaviour:
       spriteIndex: 0
       corner: 1
       m_CornerMode: 1
-    - position: {x: 15.6, y: 0, z: 0}
+    - position: {x: 15.6, y: 0.00000078678136, z: 0}
       leftTangent: {x: 0, y: 0, z: 0}
       rightTangent: {x: 0, y: 0, z: 0}
       mode: 0
@@ -1365,8 +1365,8 @@ MonoBehaviour:
   m_Creator: {fileID: 0}
   m_Modifiers: []
   m_ColliderSegment:
-  - {x: -15.64, y: -0.00060999696}
-  - {x: 15.610001, y: -0.00060999696}
+  - {x: -15.64, y: -0.0006091029}
+  - {x: 15.610001, y: -0.0006092221}
   m_ShadowSegment: []
 --- !u!68 &8297250270068817466
 EdgeCollider2D:
@@ -1405,8 +1405,8 @@ EdgeCollider2D:
   m_Offset: {x: 0, y: -0.3}
   m_EdgeRadius: 0
   m_Points:
-  - {x: -15.64, y: -0.00060999696}
-  - {x: 15.610001, y: -0.00060999696}
+  - {x: -15.64, y: -0.0006091029}
+  - {x: 15.610001, y: -0.0006092221}
   m_AdjacentStartPoint: {x: 0, y: 0}
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0
@@ -1867,7 +1867,7 @@ SpriteShapeRenderer:
   - {fileID: 21300000, guid: 608e61deb05c54660bebf5a4dd2ee02d, type: 3}
   m_LocalAABB:
     m_Center: {x: 0, y: 0, z: 0}
-    m_Extent: {x: 50.01, y: 1.2149999, z: 0}
+    m_Extent: {x: 50.03, y: 1.2149999, z: 0}
   m_SpriteSortPoint: 0
 --- !u!114 &6530383150115938243
 MonoBehaviour:
@@ -1922,8 +1922,8 @@ MonoBehaviour:
   m_Creator: {fileID: 0}
   m_Modifiers: []
   m_ColliderSegment:
-  - {x: -50.01, y: -0.002429981}
-  - {x: 50.01, y: -0.002429981}
+  - {x: -50.03, y: -0.002429981}
+  - {x: 50.03, y: -0.002429981}
   m_ShadowSegment: []
 --- !u!68 &6967963771182512172
 EdgeCollider2D:
@@ -1962,8 +1962,8 @@ EdgeCollider2D:
   m_Offset: {x: 0, y: 0}
   m_EdgeRadius: 0
   m_Points:
-  - {x: -50.01, y: -0.002429981}
-  - {x: 50.01, y: -0.002429981}
+  - {x: -50.03, y: -0.002429981}
+  - {x: 50.03, y: -0.002429981}
   m_AdjacentStartPoint: {x: 0, y: 0}
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0
@@ -2065,7 +2065,7 @@ SpriteShapeRenderer:
   - {fileID: 21300000, guid: 608e61deb05c54660bebf5a4dd2ee02d, type: 3}
   m_LocalAABB:
     m_Center: {x: 0, y: 0, z: 0}
-    m_Extent: {x: 50.51, y: 1.2149999, z: 0}
+    m_Extent: {x: 50.53, y: 1.2149999, z: 0}
   m_SpriteSortPoint: 0
 --- !u!114 &963301525134007805
 MonoBehaviour:
@@ -2120,8 +2120,8 @@ MonoBehaviour:
   m_Creator: {fileID: 0}
   m_Modifiers: []
   m_ColliderSegment:
-  - {x: -50.51, y: -0.002429981}
-  - {x: 50.51, y: -0.002429981}
+  - {x: -50.53, y: -0.002429981}
+  - {x: 50.53, y: -0.002429981}
   m_ShadowSegment: []
 --- !u!68 &1120819469218137835
 EdgeCollider2D:
@@ -2160,8 +2160,8 @@ EdgeCollider2D:
   m_Offset: {x: 0, y: 0}
   m_EdgeRadius: 0
   m_Points:
-  - {x: -50.51, y: -0.002429981}
-  - {x: 50.51, y: -0.002429981}
+  - {x: -50.53, y: -0.002429981}
+  - {x: 50.53, y: -0.002429981}
   m_AdjacentStartPoint: {x: 0, y: 0}
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0
