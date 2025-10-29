@@ -1,15 +1,19 @@
 using System;
-using Unity.VisualScripting;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.U2D.Animation;
 
 public class Player : MonoBehaviour
 {
     public static Player Instance { get; private set; }
-
+    
+    [SerializeField] private SpriteLibrary spriteLibrary;
+    [SerializeField] private SpriteLibraryAsset[] spriteLibraryAsset;
+    
     public PlayerAttack Attack => PlayerAttack.Instance;
     public PlayerMovement Movement => PlayerMovement.Instance;
     public PlayerStats Stats => PlayerStats.Instance;
-    public PlayerAnimation PlayerAnimation => PlayerAnimation.Instance;
+    public PlayerAnimation Animation => PlayerAnimation.Instance;
     
     private GameManager gameManager => GameManager.Instance;
     
@@ -80,5 +84,10 @@ public class Player : MonoBehaviour
                 break;
             }
         }
+    }
+
+    public void ChangeSprite(int level)
+    {
+        spriteLibrary.spriteLibraryAsset = spriteLibraryAsset[level];
     }
 }

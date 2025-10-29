@@ -19,7 +19,19 @@ public class GameManager : MonoBehaviour
     public GameState State
     {
         get => state;
-        set => state = value;
+        set
+        {
+            state = value;
+            if(state == GameState.Playing)
+            {
+                Time.timeScale = 1;
+
+            }
+            else
+            {
+                Time.timeScale = 0;
+            }
+        }
     }
     private GameInput gameInput => GameInput.Instance;
     private Player player => Player.Instance;
@@ -37,7 +49,7 @@ public class GameManager : MonoBehaviour
         gameInput.OnMEnuEvent += GameInput_OnGamePause;
         
         LoadCurrentLevel();
-        state = GameState.Playing;
+        State = GameState.Playing;
     }
 
     private void LoadCurrentLevel()
@@ -48,12 +60,14 @@ public class GameManager : MonoBehaviour
             {
                 var spawnedLevel = Instantiate(level, Vector3.zero, Quaternion.identity);
                 Player.Instance.transform.position = spawnedLevel.StartPosition;
+                Player.Instance.ChangeSprite(levelNumber-1);
                 Player_OnChangingRoomSetCameraBounds(null, spawnedLevel.GetStartRoom());
                 return;
             }
         }
         SceneLoader.LoadScene(Scenes.HomeScene);
         Debug.Log("No more levels to load, returning to home scene");
+        levelNumber = 1;
     }
 
 
@@ -75,32 +89,30 @@ public class GameManager : MonoBehaviour
         if (Time.timeScale.Equals(1))
         {
             OnGamePaused?.Invoke(this, EventArgs.Empty);
+            State = GameState.Pause;
         }
         else
         {
             OnGameUnpaused?.Invoke(this, EventArgs.Empty);
+            State = GameState.Playing;
         }
-        PauseUnpause();
     }
     
     private void Player_OnDeath(object sender, EventArgs e)
     {
-        state = GameState.Dead;
+        State = GameState.Dead;
     }
     
     public void NextLevel()
     {
         levelNumber++;
         SceneLoader.LoadScene(Scenes.GameScene);
+        State = GameState.Playing;
     }
     
     public void RestartLevel()
     {
         SceneLoader.LoadScene(Scenes.GameScene);
-    }
-
-    public void PauseUnpause()
-    {
-        Time.timeScale = Time.timeScale.Equals(1) ? Time.timeScale = 0 : Time.timeScale = 1;
+        State = GameState.Playing;
     }
 }

@@ -29,7 +29,7 @@ public class PlayerAttack : MonoBehaviour
 
     private float attackCooldownTimer;
     private GameInput input => GameInput.Instance;
-    private PlayerAnimation playerAnimation => Player.Instance != null ? Player.Instance.PlayerAnimation : null;
+    private PlayerAnimation playerAnimation => Player.Instance != null ? Player.Instance.Animation : null;
 
     public float BodyDamage
     {
@@ -129,7 +129,7 @@ public class PlayerAttack : MonoBehaviour
         }
         else
         {
-            var facingRight = !Player.Instance || !Player.Instance.PlayerAnimation || Player.Instance.PlayerAnimation.FacingRight;
+            var facingRight = !Player.Instance || !Player.Instance.Animation || Player.Instance.Animation.FacingRight;
             centerDir = (facingRight ? attackPos.right : -attackPos.right).normalized;
         }
 

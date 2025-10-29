@@ -14,12 +14,11 @@ public class PauseUI : MonoBehaviour
     {
         continueButton.onClick.AddListener(() =>
         {
-            gameManager.PauseUnpause();
+            gameManager.State = GameState.Playing;
             Hide();
         });
         homeButton.onClick.AddListener(() =>
         {
-            gameManager.PauseUnpause();
             SceneLoader.LoadScene(Scenes.HomeScene);
             Hide();
         });
