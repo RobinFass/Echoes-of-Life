@@ -19,7 +19,8 @@ public class PlayerMovement : MonoBehaviour
 
     private Vector2 lastMoveInput = new Vector2(1f, 0f);
     private GameInput input => GameInput.Instance;
-    private PlayerStats stats => Player.Instance != null ? Player.Instance.Stats : null;
+    private PlayerStats stats => Player.Instance.Stats;
+    private PlayerAnimation anime => Player.Instance.Animation;
 
     private void Awake()
     {
@@ -35,32 +36,34 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         var moveInput = input ? input.OnMove() : Vector2.zero;
-        if (moveInput != Vector2.zero) lastMoveInput = moveInput;
+        if (moveInput == Vector2.zero) 
+        {
+            anime.PauseSprint();
+            return;
+        }
+        lastMoveInput = moveInput;
 
         var speed = moveForce;
-        if (input && input.OnSprint() && stats)
+        if (input.OnSprint())
         {
             var used = sprintStaminaCostPerSecond * Time.fixedDeltaTime;
             if (stats.UseStamina(used))
             {
+                anime.PlaySprint();
                 speed *= sprintMultiplier;
             }
         }
 
-        if (rigidBody)
-            rigidBody.AddForce(Time.fixedDeltaTime * speed * moveInput);
+        rigidBody.AddForce(Time.fixedDeltaTime * speed * moveInput);
     }
 
     private void OnDashEvent(object sender, System.EventArgs e)
     {
-        if (!stats || !input || !rigidBody) return;
-
-        if (stats.UseStamina(dashStaminaCost))
-        {
-            var dir = input.OnMove().normalized;
-            if (dir == Vector2.zero) dir = lastMoveInput.normalized;
-            StartCoroutine(DashCoroutine(dir));
-        }
+        if (!stats.UseStamina(dashStaminaCost)) return;
+        var dir = input.OnMove().normalized;
+        if (dir == Vector2.zero) dir = lastMoveInput.normalized;
+        StartCoroutine(DashCoroutine(dir));
+        anime.PlayDash();
     }
 
     private IEnumerator DashCoroutine(Vector2 direction)

@@ -5,9 +5,9 @@ public class PlayerStats : MonoBehaviour
 {
     public static PlayerStats Instance { get; private set; }
     
-    [SerializeField] private float maxHealth = 5f;
-    [SerializeField] private float maxStamina = 5f;
-    [SerializeField] private float staminaRegenRate = 1f; 
+    [SerializeField] private float maxHealth = 10f;
+    [SerializeField] private float maxStamina = 20f;
+    [SerializeField] private float staminaRegenRate = 2f; 
     [SerializeField] private float staminaRegenCooldown = 1f;
 
     private float health;
