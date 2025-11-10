@@ -13,6 +13,8 @@ public class PlayerAnimation : MonoBehaviour
     private GameInput input => GameInput.Instance;
     private Vector3 initialAttackLocalPos;
     private CapsuleCollider2D capsule;
+    
+    public bool FacingRight => !spriteRenderer || !spriteRenderer.flipX;
 
     private void Awake()
     {
@@ -22,9 +24,7 @@ public class PlayerAnimation : MonoBehaviour
         capsule = Player.Instance.GetComponent<CapsuleCollider2D>();
         
     }
-
-    public bool FacingRight => !spriteRenderer || !spriteRenderer.flipX;
-
+    
     private void FixedUpdate()
     {
         var move = input.OnMove();
@@ -37,7 +37,6 @@ public class PlayerAnimation : MonoBehaviour
             var pos = initialAttackLocalPos;
             pos.x = Mathf.Abs(initialAttackLocalPos.x);
             attackPosition.localPosition = pos;
-            capsule.offset = new Vector2(1,-1);
         }
         else if (move.x < 0)
         {
@@ -45,14 +44,25 @@ public class PlayerAnimation : MonoBehaviour
             var pos = initialAttackLocalPos;
             pos.x = -Mathf.Abs(initialAttackLocalPos.x);
             attackPosition.localPosition = pos;
-            capsule.offset = new Vector2(-1,-1);
-            
         }
     }
 
+    public void PlaySprint()
+    {
+        animator.SetBool("isSprinting", true);
+    }
+    public void PauseSprint()
+    {
+        animator.SetBool("isSprinting", false);
+    }
+    
     public void PlayAttack()
     {
-        Debug.Log("Oni Giri !");
-        // animator.SetTrigger("Attack");
+        animator.SetTrigger("Attack");
+    }
+    
+    public void PlayDash()
+    {
+        animator.SetTrigger("Dash");
     }
 }

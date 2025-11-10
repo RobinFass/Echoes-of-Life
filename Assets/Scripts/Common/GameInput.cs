@@ -37,17 +37,17 @@ public class GameInput : MonoBehaviour
         return inputActions.Player.Sprint.IsPressed();
     }
 
-    public void OnDash(InputAction.CallbackContext callbackContext)
+    private void OnDash(InputAction.CallbackContext callbackContext)
     {
         OnDashEvent?.Invoke(this, EventArgs.Empty);
     }
     
-    public void OnAttack(InputAction.CallbackContext callbackContext)
+    private void OnAttack(InputAction.CallbackContext callbackContext)
     {
         OnAttackEvent?.Invoke(this, EventArgs.Empty);
     }
     
-    public void OnMenu(InputAction.CallbackContext callbackContext)
+    private void OnMenu(InputAction.CallbackContext callbackContext)
     {
         OnMEnuEvent?.Invoke(this, EventArgs.Empty);
     }

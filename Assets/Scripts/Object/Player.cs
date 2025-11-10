@@ -36,7 +36,6 @@ public class Player : MonoBehaviour
     {
         gameObject.SetActive(false);
     }
-
     
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -58,7 +57,7 @@ public class Player : MonoBehaviour
                 var doorPos = destinationDoor.transform.position;
                 var direction = (roomCenter - doorPos).normalized;
 
-                var offset = direction * 2f;
+                var offset = direction * 3f;
                 transform.position = destinationDoor.transform.position + offset;
 
                 OnChangingRoom?.Invoke(this, room);
@@ -68,6 +67,12 @@ public class Player : MonoBehaviour
             {
                 OnPlayerWin?.Invoke(this, EventArgs.Empty);
                 gameManager.State = GameState.Won;
+                break;
+            }
+            case Heal heal:
+            {
+                Stats.Heal(7);
+                heal.SelfDestruct();
                 break;
             }
         }

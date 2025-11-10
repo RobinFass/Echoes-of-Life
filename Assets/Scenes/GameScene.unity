@@ -559,7 +559,7 @@ Transform:
   m_GameObject: {fileID: 237797776}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1, y: -1, z: 0}
+  m_LocalPosition: {x: 0.1, y: 0.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -636,12 +636,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 43030445065924934, guid: a8ad648b65687124199b9fac3f291530, type: 3}
+  m_Sprite: {fileID: -6326092278341079468, guid: c4ff661a0d8afa343b556f8835a1734a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 6.62, y: 9.88}
+  m_Size: {x: 10.00244, y: 10}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -657,7 +657,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 110760587}
@@ -691,7 +691,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &291914581
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -725,7 +725,7 @@ Animator:
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
+  m_AnimatePhysics: 1
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
@@ -765,8 +765,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 1.0663314, y: -0.95205843}
-  m_Size: {x: 4.4873533, y: 7.9759083}
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 2.2160416, y: 3.6635985}
   m_Direction: 0
 --- !u!114 &291914585
 MonoBehaviour:
@@ -794,9 +794,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Unity.2D.Animation.Runtime::UnityEngine.U2D.Animation.SpriteResolver
   m_CategoryHash: 1.8625731e-11
-  m_labelHash: 6.7256295e-38
+  m_labelHash: 1.6793976e-13
   m_SpriteKey: 0
-  m_SpriteHash: 620037965
+  m_SpriteHash: 259982550
 --- !u!114 &291914587
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -810,7 +810,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Unity.2D.Animation.Runtime::UnityEngine.U2D.Animation.SpriteLibrary
   m_Library: []
-  m_SpriteLibraryAsset: {fileID: 7108339969198208228, guid: b97611a8fa86b09448edc0cbb972f686, type: 3}
+  m_SpriteLibraryAsset: {fileID: 7108339969198208228, guid: 165882e97a2c9624a99c7832699fef4f, type: 3}
 --- !u!1 &339965311
 GameObject:
   m_ObjectHideFlags: 0
@@ -1165,6 +1165,37 @@ MonoBehaviour:
   scoreText: {fileID: 555169717}
   healthBar: {fileID: 2129921586}
   staminaBar: {fileID: 1488564730}
+--- !u!1 &474740956
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 474740957}
+  m_Layer: 0
+  m_Name: PlayerRelatedObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &474740957
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 474740956}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.60336, y: 0.14557, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &487501462
 GameObject:
   m_ObjectHideFlags: 0
@@ -2133,8 +2164,9 @@ MonoBehaviour:
   attackCooldown: 0.2
   attackDamage: 2
   bodyDamage: 1
-  attackRange: 1.5
-  coneAngle: 250
+  attackRange: 2
+  coneAngle: 140
+  orientationAngle: 0
   knockbackDistance: 2
   knockbackDuration: 0.15
 --- !u!114 &876904194
@@ -4069,3 +4101,4 @@ SceneRoots:
   - {fileID: 235663235}
   - {fileID: 354267501}
   - {fileID: 2047336089}
+  - {fileID: 474740957}

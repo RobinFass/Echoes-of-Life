@@ -1,3 +1,4 @@
+
 using System;
 using System.Collections;
 using UnityEngine;
@@ -11,17 +12,20 @@ public class PlayerAttack : MonoBehaviour
     public static PlayerAttack Instance { get; private set; }
 
     [SerializeField] private Transform attackPos;
-    
+
     [Header("Layers")]
     [SerializeField] private LayerMask enemyLayer;
     [SerializeField] private LayerMask obstacleLayer;
-    
+
     [Header("Attack Settings")]
     [SerializeField] private float attackCooldown = 0.3f;
     [SerializeField] private float attackDamage = 2f;
     [SerializeField] private float bodyDamage = 1f;
     [SerializeField] private float attackRange = 1f;
     [SerializeField] private float coneAngle = 140f;
+
+    [Header("Orientation")]
+    [SerializeField] private float orientationAngle = 0f;
 
     [Header("Knockback (knockBack)")]
     [SerializeField] private float knockbackDistance = 2f;
@@ -58,16 +62,32 @@ public class PlayerAttack : MonoBehaviour
 
     private Vector2 GetConeCenterDirection()
     {
-        var dir = playerAnimation.FacingRight ? attackPos.right : -attackPos.right;
-        return dir.normalized;
+        if (!attackPos) return Vector2.right;
+
+        var baseDir = attackPos.right;
+        
+        var rotated = Quaternion.Euler(0f, 0f, orientationAngle) * baseDir;
+        var dir2 = new Vector2(rotated.x, rotated.y).normalized;
+
+        bool facingRight = true;
+        if (playerAnimation != null)
+            facingRight = playerAnimation.FacingRight;
+        else if (Player.Instance != null && Player.Instance.Animation != null)
+            facingRight = Player.Instance.Animation.FacingRight;
+
+        if (!facingRight)
+            dir2 = new Vector2(-dir2.x, dir2.y);
+
+        return dir2;
     }
 
     private void OnAttackEvent(object sender, EventArgs e)
     {
         if (attackCooldownTimer > 0f) return;
         if(!attackPos) return;
-        
+
         playerAnimation.PlayAttack();
+        attackCooldownTimer = attackCooldown;
 
         var hitEnemiesCollider = Physics2D.OverlapCircleAll(
             attackPos.position, attackRange, enemyLayer);
@@ -91,12 +111,10 @@ public class PlayerAttack : MonoBehaviour
             var rawDir = enemy.transform.position - attackPos.position;
             if (rawDir == Vector3.zero) continue;
             var dir = new Vector2(rawDir.normalized.x, rawDir.normalized.y);
-            
+
             var rb = enemy.GetComponent<Rigidbody2D>();
             StartCoroutine(KnockbackRigidbodyCoroutine(rb, dir));
         }
-
-        attackCooldownTimer = attackCooldown;
     }
 
     private IEnumerator KnockbackRigidbodyCoroutine(Rigidbody2D rb, Vector2 direction)
@@ -113,25 +131,15 @@ public class PlayerAttack : MonoBehaviour
         if (rb)
             rb.linearVelocity = Vector2.zero;
     }
-    
+
     private void OnDrawGizmosSelected()
     {
         if (!attackPos) return;
-        
+
         var centerPos = attackPos.position;
-        Vector3 centerDir;
-        if (Application.isPlaying)
-        {
-            if (playerAnimation)
-                centerDir = playerAnimation.FacingRight ? attackPos.right.normalized : (-attackPos.right).normalized;
-            else
-                centerDir = (attackPos.position - transform.position).normalized;
-        }
-        else
-        {
-            var facingRight = !Player.Instance || !Player.Instance.Animation || Player.Instance.Animation.FacingRight;
-            centerDir = (facingRight ? attackPos.right : -attackPos.right).normalized;
-        }
+        // use the same calculation as runtime to keep gizmo consistent
+        var centerDir2 = GetConeCenterDirection();
+        var centerDir = new Vector3(centerDir2.x, centerDir2.y, 0f).normalized;
 
         var half = coneAngle * 0.5f;
         var leftDir = Quaternion.Euler(0, 0, half) * centerDir;
