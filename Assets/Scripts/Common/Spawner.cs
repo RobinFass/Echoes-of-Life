@@ -21,7 +21,7 @@ public class Spawner : MonoBehaviour
         
         var xSize = prefab.GetComponent<SpriteRenderer>().bounds.size.x*2;
         var ySize = prefab.GetComponent<SpriteRenderer>().bounds.size.y*2;
-        var prefabRadius = Mathf.Max(xSize, ySize);
+        var prefabRadius = Mathf.Max(xSize*2, ySize*2);
         
         for (var i = 0; i < amount; i++)
         {
@@ -32,7 +32,7 @@ public class Spawner : MonoBehaviour
                 startPos = GetRandomPosition(ground.bounds);
                 tries++;
             }
-            while (Physics2D.OverlapCircle(startPos, prefabRadius, spawnMask) != null && tries < 50);
+            while (Physics2D.OverlapCircle(startPos, prefabRadius, spawnMask) && tries < 50);
 
             Instantiate(prefab, startPos, Quaternion.identity, spawnedParent);
         }
@@ -40,7 +40,7 @@ public class Spawner : MonoBehaviour
 
     private Vector2 GetRandomPosition(Bounds bounds)
     {
-        var wallThicknes = 1;
+        var wallThicknes = 2;
         return new Vector2(
             Random.Range(bounds.min.x + wallThicknes, bounds.max.x - wallThicknes),
             Random.Range(bounds.min.y + wallThicknes, bounds.max.y - wallThicknes)

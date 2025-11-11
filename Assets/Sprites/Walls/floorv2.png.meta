@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: bf45a6b07f7a0864caf09f065605600f
+guid: 8f16f50881a95b74d860e688d3540a01
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1390032665171367959
-    second: 885_0
+      213: -4860833613907151798
+    second: floorv2_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 0
@@ -46,9 +46,9 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 3
+  spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: 885_0
+      name: floorv2_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 4722
-        height: 4722
+        width: 239
+        height: 241
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 7189ab128536a4310800000000000000
-      internalID: 1390032665171367959
+      spriteID: a4439caf499da8cb0800000000000000
+      internalID: -4860833613907151798
       vertices: []
       indices: 
       edges: []
@@ -138,7 +138,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      885_0: 1390032665171367959
+      floorv2_0: -4860833613907151798
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
