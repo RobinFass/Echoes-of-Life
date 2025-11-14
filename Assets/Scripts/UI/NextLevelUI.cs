@@ -3,18 +3,18 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GameOverUI : MonoBehaviour
+public class NextLevelUI : MonoBehaviour
 {
+    [SerializeField] private Button nextButton;
     [SerializeField] private Button homeButton;
-    [SerializeField] private Button retryButton;
     
     private Player player => Player.Instance;
 
     private void Awake()
     {
-        retryButton.onClick.AddListener(() =>
+        nextButton.onClick.AddListener(() =>
         {
-            GameManager.Instance.RestartLevel();
+            GameManager.Instance.NextLevel();
             Hide();
         });
         homeButton.onClick.AddListener(() =>
@@ -26,14 +26,13 @@ public class GameOverUI : MonoBehaviour
 
     private void Start()
     {
-        player.Stats.OnDeath += GameManager_OnDeath;
+        player.OnPlayerWin += Player_OnPlayerWin;
         Hide();
     }
-    
 
-    private void GameManager_OnDeath(object sender, EventArgs e)
+    private void Player_OnPlayerWin(object sender, EventArgs e)
     {
-        retryButton.Select();
+        nextButton.Select();
         gameObject.SetActive(true);
     }
 

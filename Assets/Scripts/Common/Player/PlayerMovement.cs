@@ -56,6 +56,10 @@ public class PlayerMovement : MonoBehaviour
                 speed *= sprintMultiplier;
             }
         }
+        else
+        {
+            anime.PauseSprint();
+        }
 
         rigidBody.AddForce(Time.fixedDeltaTime * speed * moveInput);
     }
