@@ -188,6 +188,103 @@ MonoBehaviour:
       m_SpriteOverride: {fileID: -1400551103, guid: e6a8f9a70b4fe16498145a75259b8d08, type: 3}
     m_FromMain: 0
     m_EntryOverrideCount: 7
+  - m_Name: Hurt
+    m_Hash: 666872612
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: hurt young_0
+      m_Hash: 8449128
+      m_Sprite: {fileID: 4068390446012952083, guid: 023f8979437a54943801641a035e7d66, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 4068390446012952083, guid: 023f8979437a54943801641a035e7d66, type: 3}
+    - m_Name: hurt young_1
+      m_Hash: 931650814
+      m_Sprite: {fileID: 1122326309619677231, guid: 023f8979437a54943801641a035e7d66, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 1122326309619677231, guid: 023f8979437a54943801641a035e7d66, type: 3}
+    - m_Name: hurt young_2
+      m_Hash: 781094212
+      m_Sprite: {fileID: 3354880225483055881, guid: 023f8979437a54943801641a035e7d66, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 3354880225483055881, guid: 023f8979437a54943801641a035e7d66, type: 3}
+    - m_Name: hurt young_3
+      m_Hash: 428457426
+      m_Sprite: {fileID: -8456311478337283252, guid: 023f8979437a54943801641a035e7d66, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -8456311478337283252, guid: 023f8979437a54943801641a035e7d66, type: 3}
+    - m_Name: hurt young_4
+      m_Hash: 132982897
+      m_Sprite: {fileID: -5200520447877787716, guid: 023f8979437a54943801641a035e7d66, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -5200520447877787716, guid: 023f8979437a54943801641a035e7d66, type: 3}
+    - m_Name: hurt young_5
+      m_Hash: 820648167
+      m_Sprite: {fileID: -1138276791336694602, guid: 023f8979437a54943801641a035e7d66, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1138276791336694602, guid: 023f8979437a54943801641a035e7d66, type: 3}
+    - m_Name: hurt young_6
+      m_Hash: 702761309
+      m_Sprite: {fileID: 2618568679690023736, guid: 023f8979437a54943801641a035e7d66, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 2618568679690023736, guid: 023f8979437a54943801641a035e7d66, type: 3}
+    m_FromMain: 0
+    m_EntryOverrideCount: 7
+  - m_Name: Dead
+    m_Hash: 219670042
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: dead young_0
+      m_Hash: 186981816
+      m_Sprite: {fileID: -1069579767, guid: b751991ef3764e248a9fbcce8fb4214b, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1069579767, guid: b751991ef3764e248a9fbcce8fb4214b, type: 3}
+    - m_Name: dead young_1
+      m_Hash: 1008872750
+      m_Sprite: {fileID: -358906306, guid: b751991ef3764e248a9fbcce8fb4214b, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -358906306, guid: b751991ef3764e248a9fbcce8fb4214b, type: 3}
+    - m_Name: dead young_2
+      m_Hash: 623606932
+      m_Sprite: {fileID: -285695887, guid: b751991ef3764e248a9fbcce8fb4214b, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -285695887, guid: b751991ef3764e248a9fbcce8fb4214b, type: 3}
+    - m_Name: dead young_3
+      m_Hash: 304892930
+      m_Sprite: {fileID: -1007332154, guid: b751991ef3764e248a9fbcce8fb4214b, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1007332154, guid: b751991ef3764e248a9fbcce8fb4214b, type: 3}
+    - m_Name: dead young_4
+      m_Hash: 206100897
+      m_Sprite: {fileID: 346610776, guid: b751991ef3764e248a9fbcce8fb4214b, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 346610776, guid: b751991ef3764e248a9fbcce8fb4214b, type: 3}
+    - m_Name: dead young_5
+      m_Hash: 995092791
+      m_Sprite: {fileID: 621168374, guid: b751991ef3764e248a9fbcce8fb4214b, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 621168374, guid: b751991ef3764e248a9fbcce8fb4214b, type: 3}
+    - m_Name: dead young_6
+      m_Hash: 575060109
+      m_Sprite: {fileID: -1200677787, guid: b751991ef3764e248a9fbcce8fb4214b, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1200677787, guid: b751991ef3764e248a9fbcce8fb4214b, type: 3}
+    - m_Name: dead young_7
+      m_Hash: 356616219
+      m_Sprite: {fileID: 1900277670, guid: b751991ef3764e248a9fbcce8fb4214b, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 1900277670, guid: b751991ef3764e248a9fbcce8fb4214b, type: 3}
+    - m_Name: dead young_8
+      m_Hash: 100570506
+      m_Sprite: {fileID: -1328461433, guid: b751991ef3764e248a9fbcce8fb4214b, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1328461433, guid: b751991ef3764e248a9fbcce8fb4214b, type: 3}
+    - m_Name: dead young_9
+      m_Hash: 855221532
+      m_Sprite: {fileID: 314887365, guid: b751991ef3764e248a9fbcce8fb4214b, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 314887365, guid: b751991ef3764e248a9fbcce8fb4214b, type: 3}
+    m_FromMain: 0
+    m_EntryOverrideCount: 10
   m_PrimaryLibraryGUID: 
-  m_ModificationHash: 638983885147310520
+  m_ModificationHash: 638986652286911062
   m_Version: 1

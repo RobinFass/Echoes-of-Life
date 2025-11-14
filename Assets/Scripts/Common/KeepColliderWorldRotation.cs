@@ -4,15 +4,15 @@
 public class KeepColliderWorldRotation : MonoBehaviour
 {
     [SerializeField] private Transform target;
-    private Vector3 worldOffset = Vector3.zero;
+    private readonly Vector3 worldOffset = Vector3.zero;
 
-    void Reset()
+    private void Reset()
     {
         if (transform.parent)
             target = transform.parent;
     }
 
-    void LateUpdate()
+    private void LateUpdate()
     {
         if (!target) return;
         transform.position = target.position + worldOffset;

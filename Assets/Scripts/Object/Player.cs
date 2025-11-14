@@ -1,53 +1,48 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.U2D.Animation;
 
 public class Player : MonoBehaviour
 {
-    public static Player Instance { get; private set; }
-    
     [SerializeField] private SpriteLibrary spriteLibrary;
     [SerializeField] private SpriteLibraryAsset[] spriteLibraryAsset;
-    
+    public static Player Instance { get; private set; }
+
     public PlayerAttack Attack => PlayerAttack.Instance;
     public PlayerMovement Movement => PlayerMovement.Instance;
     public PlayerStats Stats => PlayerStats.Instance;
     public PlayerAnimation Animation => PlayerAnimation.Instance;
-    
+
     private GameManager gameManager => GameManager.Instance;
-    
-    public event EventHandler OnPickUpCoin;
-    public event EventHandler<Enemy> OnEnemyHit;
-    public event EventHandler<Room> OnChangingRoom;
-    public event EventHandler OnPlayerWin;
-    
+
     private void Awake()
     {
         Instance = this;
     }
-    
+
     private void Start()
     {
         Stats.OnDeath += Stats_OnDeath;
     }
 
-    private void Stats_OnDeath(object sender, EventArgs eventArgs)
+    private void OnCollisionEnter2D(Collision2D other)
     {
-        gameObject.SetActive(false);
+        other.gameObject.TryGetComponent(out MonoBehaviour obj);
+        switch (obj)
+        {
+            case Enemy enemy:
+            {
+                OnEnemyHit?.Invoke(this, enemy);
+                break;
+            }
+        }
     }
-    
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         other.gameObject.TryGetComponent(out MonoBehaviour obj);
         switch (obj)
         {
-            case Coin coin:
-            {
-                OnPickUpCoin?.Invoke(this, EventArgs.Empty);
-                coin.SelfDestruct();
-                break;
-            }
             case Door door:
             {
                 var destinationDoor = door.DestinationDoor;
@@ -77,18 +72,15 @@ public class Player : MonoBehaviour
             }
         }
     }
-    
-    private void OnCollisionEnter2D(Collision2D other)
+
+    public event EventHandler<Enemy> OnEnemyHit;
+    public event EventHandler<Room> OnChangingRoom;
+    public event EventHandler OnPlayerWin;
+
+    private void Stats_OnDeath(object sender, EventArgs eventArgs)
     {
-        other.gameObject.TryGetComponent(out MonoBehaviour obj);
-        switch (obj)
-        {
-            case Enemy enemy:
-            {
-                OnEnemyHit?.Invoke(this, enemy);
-                break;
-            }
-        }
+        gameManager.State = GameState.Dead;
+
     }
 
     public void ChangeSprite(int level)

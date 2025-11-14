@@ -1,11 +1,8 @@
-using System;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class StatsUI : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private Image healthBar;
     [SerializeField] private Image staminaBar;
 
@@ -20,9 +17,7 @@ public class StatsUI : MonoBehaviour
 
     private void UpdateUI()
     {
-        scoreText.text = "Score: " + gameManager.Score;
         healthBar.fillAmount = stats.NormalizedHealth;
         staminaBar.fillAmount = stats.NormalizedStamina;
-
     }
 }

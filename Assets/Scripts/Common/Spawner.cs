@@ -13,16 +13,13 @@ public class Spawner : MonoBehaviour
     private void Start()
     {
         var folder = GameObject.Find("SpawnedObject");
-        if (folder == null)
-        {
-            folder = new GameObject("SpawnedObject");
-        }
+        if (folder == null) folder = new GameObject("SpawnedObject");
         spawnedParent = folder.transform;
-        
-        var xSize = prefab.GetComponent<SpriteRenderer>().bounds.size.x*2;
-        var ySize = prefab.GetComponent<SpriteRenderer>().bounds.size.y*2;
-        var prefabRadius = Mathf.Max(xSize*2, ySize*2);
-        
+
+        var xSize = prefab.GetComponent<SpriteRenderer>().bounds.size.x * 2;
+        var ySize = prefab.GetComponent<SpriteRenderer>().bounds.size.y * 2;
+        var prefabRadius = Mathf.Max(xSize * 2, ySize * 2);
+
         for (var i = 0; i < amount; i++)
         {
             Vector2 startPos;
@@ -31,8 +28,7 @@ public class Spawner : MonoBehaviour
             {
                 startPos = GetRandomPosition(ground.bounds);
                 tries++;
-            }
-            while (Physics2D.OverlapCircle(startPos, prefabRadius, spawnMask) && tries < 50);
+            } while (Physics2D.OverlapCircle(startPos, prefabRadius, spawnMask) && tries < 50);
 
             Instantiate(prefab, startPos, Quaternion.identity, spawnedParent);
         }
