@@ -1,32 +1,33 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public static PlayerMovement Instance { get; private set; }
-    
-    [Header("Movement")]
-    [SerializeField] private float moveForce = 2000f;
+    [Header("Movement")] [SerializeField] private float moveForce = 2000f;
+
     [SerializeField] private float sprintMultiplier = 2f;
     [SerializeField] private float sprintStaminaCostPerSecond = 2f;
 
-    [Header("Dash")]
-    [SerializeField] private float dashDistance = 5f;
+    [Header("Dash")] [SerializeField] private float dashDistance = 5f;
+
     [SerializeField] private float dashDuration = 0.15f;
     [SerializeField] private float dashStaminaCost = 2f;
 
     [SerializeField] private Rigidbody2D rigidBody;
 
-    private Vector2 lastMoveInput = new Vector2(1f, 0f);
+    private Vector2 lastMoveInput = new(1f, 0f);
+    public static PlayerMovement Instance { get; private set; }
     private GameInput input => GameInput.Instance;
     private PlayerStats stats => Player.Instance.Stats;
     private PlayerAnimation anime => Player.Instance.Animation;
+    private GameManager GameManager => GameManager.Instance;
 
     private void Awake()
     {
         Instance = this;
     }
-    
+
     private void Start()
     {
         if (input)
@@ -35,12 +36,14 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if(GameManager.State != GameState.Playing) return;
         var moveInput = input ? input.OnMove() : Vector2.zero;
-        if (moveInput == Vector2.zero) 
+        if (moveInput == Vector2.zero)
         {
             anime.PauseSprint();
             return;
         }
+
         lastMoveInput = moveInput;
 
         var speed = moveForce;
@@ -57,7 +60,7 @@ public class PlayerMovement : MonoBehaviour
         rigidBody.AddForce(Time.fixedDeltaTime * speed * moveInput);
     }
 
-    private void OnDashEvent(object sender, System.EventArgs e)
+    private void OnDashEvent(object sender, EventArgs e)
     {
         if (!stats.UseStamina(dashStaminaCost)) return;
         var dir = input.OnMove().normalized;
@@ -77,6 +80,7 @@ public class PlayerMovement : MonoBehaviour
             elapsed += Time.fixedDeltaTime;
             yield return new WaitForFixedUpdate();
         }
+
         if (rigidBody)
             rigidBody.linearVelocity = Vector2.zero;
     }

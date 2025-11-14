@@ -4,19 +4,15 @@ using UnityEngine.InputSystem;
 
 public class GameInput : MonoBehaviour
 {
-    public static GameInput Instance {get; private set;}
-    
     private InputActions inputActions;
-    public event EventHandler OnDashEvent; 
-    public event EventHandler OnMEnuEvent; 
-    public event EventHandler OnAttackEvent; 
-        
+    public static GameInput Instance { get; private set; }
+
     private void Awake()
     {
         Instance = this;
         inputActions = new InputActions();
         inputActions.Enable();
-        
+
         inputActions.Player.Dash.performed += OnDash;
         inputActions.Player.Menu.performed += OnMenu;
         inputActions.Player.Attack.performed += OnAttack;
@@ -26,12 +22,16 @@ public class GameInput : MonoBehaviour
     {
         inputActions.Disable();
     }
-    
+
+    public event EventHandler OnDashEvent;
+    public event EventHandler OnMEnuEvent;
+    public event EventHandler OnAttackEvent;
+
     public Vector2 OnMove()
     {
         return inputActions.Player.Move.ReadValue<Vector2>();
     }
-    
+
     public bool OnSprint()
     {
         return inputActions.Player.Sprint.IsPressed();
@@ -41,12 +41,12 @@ public class GameInput : MonoBehaviour
     {
         OnDashEvent?.Invoke(this, EventArgs.Empty);
     }
-    
+
     private void OnAttack(InputAction.CallbackContext callbackContext)
     {
         OnAttackEvent?.Invoke(this, EventArgs.Empty);
     }
-    
+
     private void OnMenu(InputAction.CallbackContext callbackContext)
     {
         OnMEnuEvent?.Invoke(this, EventArgs.Empty);

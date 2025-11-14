@@ -6,7 +6,7 @@ public class GameLevel : MonoBehaviour
     [SerializeField] private Transform startPosition;
     public int LevelNumber => levelNumber;
     public Vector3 StartPosition => startPosition.position;
-    
+
     public Room GetStartRoom()
     {
         var rooms = GetComponentsInChildren<Room>();
@@ -22,10 +22,7 @@ public class GameLevel : MonoBehaviour
             }
         }
 
-        if (closestRoom == null)
-        {
-            Debug.LogError("No room found in the level");
-        }
+        if (closestRoom == null) Debug.LogError("No room found in the level");
         return closestRoom;
     }
 }

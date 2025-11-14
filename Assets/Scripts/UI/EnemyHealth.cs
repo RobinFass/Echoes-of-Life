@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,7 +18,7 @@ public class EnemyHealth : MonoBehaviour
 
     private void UpdateHealthBar()
     {
-        if(enemy.NormalizedHealth < 1f) 
+        if (enemy.NormalizedHealth < 1f)
             healthBar.fillAmount = enemy.NormalizedHealth;
     }
 }

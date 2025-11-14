@@ -7,17 +7,23 @@ public class GameOverUI : MonoBehaviour
 {
     [SerializeField] private Button nextButton;
     [SerializeField] private Button homeButton;
+    [SerializeField] private Button retryButton;
     [SerializeField] private TextMeshProUGUI titleText;
-    [SerializeField] private TextMeshProUGUI nextButtonText;
-    
+
     private Action nextButtonClickAction;
-    
+
     private Player player => Player.Instance;
+
     private void Awake()
     {
         nextButton.onClick.AddListener(() =>
         {
-            nextButtonClickAction();
+            GameManager.Instance.NextLevel();
+            Hide();
+        });
+        retryButton.onClick.AddListener(() =>
+        {
+            GameManager.Instance.RestartLevel();
             Hide();
         });
         homeButton.onClick.AddListener(() =>
@@ -33,35 +39,36 @@ public class GameOverUI : MonoBehaviour
         player.OnPlayerWin += Player_OnPlayerWin;
         Hide();
     }
-    
+
     private void Player_OnPlayerWin(object sender, EventArgs e)
     {
         titleText.text = "<color=#00ff00>You Win!</color>";
-        nextButtonText.text = "Continue";
-        nextButtonClickAction = () =>
-        {
-            GameManager.Instance.NextLevel();
-        };
-        
+
+        nextButton.gameObject.SetActive(true);
+        retryButton.gameObject.SetActive(false);
+
         Show();
     }
 
     private void GameManager_OnDeath(object sender, EventArgs e)
     {
         titleText.text = "<color=#ff0000>You Died!</color>";
-        nextButtonText.text = "Retry";
-        nextButtonClickAction = () =>
-        {
-            GameManager.Instance.RestartLevel();
-        };
+        
+        nextButton.gameObject.SetActive(false);
+        retryButton.gameObject.SetActive(true);
+        
         Show();
     }
 
     private void Show()
     {
-        nextButton.Select();
+        if (retryButton.gameObject.activeSelf)
+            retryButton.Select();
+        else
+            nextButton.Select();
         gameObject.SetActive(true);
     }
+
     private void Hide()
     {
         gameObject.SetActive(false);

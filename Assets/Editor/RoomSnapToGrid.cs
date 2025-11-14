@@ -1,8 +1,8 @@
-﻿namespace Editor
-{
-    using UnityEditor;
-    using UnityEngine;
+﻿using UnityEditor;
+using UnityEngine;
 
+namespace Editor
+{
     [InitializeOnLoad]
     public static class RoomSnapToGrid
     {

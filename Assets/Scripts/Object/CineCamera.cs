@@ -1,12 +1,11 @@
-using System;
 using Unity.Cinemachine;
 using UnityEngine;
 
 public class CineCamera : MonoBehaviour
 {
-    public static CineCamera Instance { get; private set; }
     private CinemachineConfiner2D _confiner;
-    
+    public static CineCamera Instance { get; private set; }
+
     private void Awake()
     {
         Instance = this;

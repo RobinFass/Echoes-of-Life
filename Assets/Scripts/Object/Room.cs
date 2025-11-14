@@ -16,10 +16,10 @@ public class Room : MonoBehaviour
         bottomDoor.gameObject.SetActive(bottomDoor.DestinationDoor != null);
         leftDoor.gameObject.SetActive(leftDoor.DestinationDoor != null);
     }
-    
+
     public List<Door> GetDoors()
     {
-        return new List<Door>{topDoor, rightDoor, bottomDoor, leftDoor};
+        return new List<Door> { topDoor, rightDoor, bottomDoor, leftDoor };
     }
 
     public CameraBounds GetCameraBounds()
