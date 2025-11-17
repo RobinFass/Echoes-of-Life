@@ -56,6 +56,12 @@ public class GameManager : MonoBehaviour
                 Player.Instance.transform.position = spawnedLevel.StartPosition;
                 Player.Instance.ChangeSprite(levelNumber - 1);
                 Player_OnChangingRoomSetCameraBounds(null, spawnedLevel.GetStartRoom());
+                
+                // New: trigger level music via AudioManager
+                if (AudioManager.Instance != null)
+                {
+                    AudioManager.Instance.PlayLevelMusic(levelNumber);
+                }
                 return;
             }
 
