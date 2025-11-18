@@ -55,6 +55,10 @@ public class PlayerMovement : MonoBehaviour
                 anime.PlaySprint();
                 speed *= sprintMultiplier;
             }
+            else
+            {
+                anime.PauseSprint();
+            }
         }
         else
         {

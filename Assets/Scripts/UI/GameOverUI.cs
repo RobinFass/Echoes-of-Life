@@ -1,5 +1,3 @@
-using System;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,6 +5,7 @@ public class GameOverUI : MonoBehaviour
 {
     [SerializeField] private Button homeButton;
     [SerializeField] private Button retryButton;
+    [SerializeField] private Button continueButton;
     
     private Player player => Player.Instance;
 
@@ -22,6 +21,14 @@ public class GameOverUI : MonoBehaviour
             SceneLoader.LoadScene(Scenes.HomeScene);
             Hide();
         });
+        continueButton.onClick.AddListener(() =>
+        {
+            SceneLoader.LoadScene(Scenes.EndScene);
+            Hide();
+        });
+        homeButton.gameObject.SetActive(false);
+        retryButton.gameObject.SetActive(false);
+        continueButton.gameObject.SetActive(false);
     }
 
     private void Start()
@@ -31,8 +38,19 @@ public class GameOverUI : MonoBehaviour
     }
     
 
-    private void GameManager_OnDeath(object sender, EventArgs e)
+    private void GameManager_OnDeath(object sender, Enemy e)
     {
+        if (e.IsFinalBoss)
+        {
+            continueButton.gameObject.SetActive(true);
+            continueButton.Select();
+            gameObject.SetActive(true);
+            return;
+        }
+        
+        retryButton.gameObject.SetActive(true);
+        homeButton.gameObject.SetActive(true);
+        
         retryButton.Select();
         gameObject.SetActive(true);
     }

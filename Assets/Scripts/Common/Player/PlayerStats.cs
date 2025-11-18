@@ -9,11 +9,13 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] private float maxStamina = 20f;
     [SerializeField] private float staminaRegenRate = 2f;
     [SerializeField] private float staminaRegenCooldown = 1f;
+    [SerializeField] private float hurtCooldown = 1f;
 
     private float health;
     private bool isDying;
     private float stamina;
     private float staminaCooldownTime;
+    private float hurtCooldownTime;
     public static PlayerStats Instance { get; private set; }
 
 
@@ -39,31 +41,36 @@ public class PlayerStats : MonoBehaviour
     private void FixedUpdate()
     {
         if(GameManager.State != GameState.Playing) return;
+        if (hurtCooldownTime >= 0)
+            hurtCooldownTime -= Time.deltaTime;
+
         if (staminaCooldownTime >= 0)
             staminaCooldownTime -= Time.deltaTime;
         else
             stamina = Mathf.Min(maxStamina, stamina + staminaRegenRate * Time.deltaTime);
     }
 
-    public event EventHandler OnDeath;
+    public event EventHandler<Enemy> OnDeath;
 
     private async void Player_OnEnemyHit(object sender, Enemy e)
     {
-        if (isDying) return;
+        if (isDying || hurtCooldownTime > 0) return;
 
         if (health - e.Damage <= 0f)
         {
             isDying = true;
             health = 0f;
+            GameManager.State = GameState.Dead;
             anime.PlayDead();
             await Task.Delay(1200); // wait for death animation
-            OnDeath?.Invoke(this, EventArgs.Empty);
+            OnDeath?.Invoke(this, e);
             return;
         }
 
-        anime.PlayHurt();
         health -= e.Damage;
         e.Health -= player.Attack.BodyDamage;
+        anime.PlayHurt();
+        hurtCooldownTime = hurtCooldown;
     }
     
 

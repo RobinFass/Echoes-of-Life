@@ -1,5 +1,3 @@
-using System;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,14 +5,13 @@ public class NextLevelUI : MonoBehaviour
 {
     [SerializeField] private Button nextButton;
     [SerializeField] private Button homeButton;
+    [SerializeField] private Button continueButton;
     
-    private Player player => Player.Instance;
-
     private void Awake()
     {
         nextButton.onClick.AddListener(() =>
         {
-            GameManager.Instance.NextLevel();
+            SceneLoader.LoadScene((Scenes)(++GameManager.levelNumber));
             Hide();
         });
         homeButton.onClick.AddListener(() =>
@@ -22,16 +19,35 @@ public class NextLevelUI : MonoBehaviour
             SceneLoader.LoadScene(Scenes.HomeScene);
             Hide();
         });
+        continueButton.onClick.AddListener(() =>
+        {
+            SceneLoader.LoadScene(Scenes.EndScene);
+            Hide();
+        });
+        nextButton.gameObject.SetActive(false);
+        homeButton.gameObject.SetActive(false);
+        continueButton.gameObject.SetActive(false);
     }
 
     private void Start()
     {
-        player.OnPlayerWin += Player_OnPlayerWin;
+        GameManager.Instance.OnPlayerWin += Player_OnPlayerWin;
         Hide();
     }
 
-    private void Player_OnPlayerWin(object sender, EventArgs e)
+    private void Player_OnPlayerWin(object sender, Enemy e)
     {
+        if (e.IsFinalBoss)
+        {
+            continueButton.gameObject.SetActive(true);
+            continueButton.Select();
+            gameObject.SetActive(true);
+            return;
+        }
+        
+        nextButton.gameObject.SetActive(true);
+        homeButton.gameObject.SetActive(true);
+        
         nextButton.Select();
         gameObject.SetActive(true);
     }

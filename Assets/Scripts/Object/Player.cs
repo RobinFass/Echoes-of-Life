@@ -1,4 +1,5 @@
 using System;
+using Object;
 using UnityEngine;
 using UnityEngine.U2D.Animation;
 
@@ -14,17 +15,15 @@ public class Player : MonoBehaviour
     public PlayerAnimation Animation => PlayerAnimation.Instance;
 
     private GameManager gameManager => GameManager.Instance;
+    
+    public event EventHandler<Enemy> OnEnemyHit;
+    public event EventHandler<Room> OnChangingRoom;
 
     private void Awake()
     {
         Instance = this;
     }
-
-    private void Start()
-    {
-        Stats.OnDeath += Stats_OnDeath;
-    }
-
+    
     private void OnCollisionEnter2D(Collision2D other)
     {
         other.gameObject.TryGetComponent(out MonoBehaviour obj);
@@ -58,12 +57,6 @@ public class Player : MonoBehaviour
                 OnChangingRoom?.Invoke(this, room);
                 break;
             }
-            case End _:
-            {
-                OnPlayerWin?.Invoke(this, EventArgs.Empty);
-                gameManager.State = GameState.Won;
-                break;
-            }
             case Heal heal:
             {
                 Stats.Heal(7);
@@ -71,16 +64,6 @@ public class Player : MonoBehaviour
                 break;
             }
         }
-    }
-
-    public event EventHandler<Enemy> OnEnemyHit;
-    public event EventHandler<Room> OnChangingRoom;
-    public event EventHandler OnPlayerWin;
-
-    private void Stats_OnDeath(object sender, EventArgs eventArgs)
-    {
-        gameManager.State = GameState.Dead;
-
     }
 
     public void ChangeSprite(int level)

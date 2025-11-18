@@ -1,0 +1,340 @@
+fileFormatVersion: 2
+guid: 96da820cf32c1c947bf0a0461a98c118
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -2904008127429717043
+    second: boss 3 attack_0
+  - first:
+      213: 2213576883619334546
+    second: boss 3 attack_1
+  - first:
+      213: 7581872777653194546
+    second: boss 3 attack_2
+  - first:
+      213: -6087034403374420061
+    second: boss 3 attack_3
+  - first:
+      213: -3188021295905350472
+    second: boss 3 attack_4
+  - first:
+      213: -1730901764979774951
+    second: boss 3 attack_5
+  - first:
+      213: 9177499546846589052
+    second: boss 3 attack_6
+  - first:
+      213: 923168362914568150
+    second: boss 3 attack_7
+  - first:
+      213: 523853744146368362
+    second: boss 3 attack_8
+  - first:
+      213: 8131577308987483649
+    second: boss 3 attack_9
+  - first:
+      213: 4106743666465204305
+    second: boss 3 attack_10
+  - first:
+      213: -2017064941432263474
+    second: boss 3 attack_11
+  - first:
+      213: -6284467092415487137
+    second: boss 3 attack_12
+  - first:
+      213: 2979280808755040621
+    second: boss 3 attack_13
+  - first:
+      213: 647445075337218953
+    second: boss 3 attack_14
+  - first:
+      213: -718640244852076455
+    second: boss 3 attack_15
+  - first:
+      213: -2774518349149497816
+    second: boss 3 attack_16
+  - first:
+      213: -8293702222112966329
+    second: boss 3 attack_17
+  - first:
+      213: -2798610770800697909
+    second: boss 3 attack_18
+  - first:
+      213: -8226237841139509480
+    second: boss 3 attack_19
+  - first:
+      213: -1490101609285458175
+    second: boss 3 attack_20
+  - first:
+      213: -2953657448381103881
+    second: boss 3 attack_21
+  - first:
+      213: 5611885035735057796
+    second: boss 3 attack_22
+  - first:
+      213: 8426136471655594931
+    second: boss 3 attack_23
+  - first:
+      213: 9186953317496868763
+    second: boss 3 attack_24
+  - first:
+      213: -7174633849591398875
+    second: boss 3 attack_25
+  - first:
+      213: -3038742510356877037
+    second: boss 3 attack_26
+  - first:
+      213: 5986321315359275288
+    second: boss 3 attack_27
+  - first:
+      213: -3406058288750012035
+    second: boss 3 attack_28
+  - first:
+      213: 8340118051228570206
+    second: boss 3 attack_29
+  - first:
+      213: -5337458726861029349
+    second: boss 3 attack_30
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: boss 3 attack_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1000
+        width: 1000
+        height: 1000
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dc354b38ef3e2b7d0800000000000000
+      internalID: -2904008127429717043
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boss 3 attack_1
+      rect:
+        serializedVersion: 2
+        x: 1000
+        y: 1000
+        width: 1000
+        height: 1000
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2998527927438be10800000000000000
+      internalID: 2213576883619334546
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boss 3 attack_2
+      rect:
+        serializedVersion: 2
+        x: 2000
+        y: 1000
+        width: 1000
+        height: 1000
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 23f093cee19383960800000000000000
+      internalID: 7581872777653194546
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boss 3 attack_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 1000
+        height: 1000
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3af294be572868ba0800000000000000
+      internalID: -6087034403374420061
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boss 3 attack_4
+      rect:
+        serializedVersion: 2
+        x: 1000
+        y: 0
+        width: 1000
+        height: 1000
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8bc5e21b58fd1c3d0800000000000000
+      internalID: -3188021295905350472
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 004c62b4a61d2be4185b4524f00b268e
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":1000.0,"y":1000.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      boss 3 attack_0: -2904008127429717043
+      boss 3 attack_1: 2213576883619334546
+      boss 3 attack_2: 7581872777653194546
+      boss 3 attack_3: -6087034403374420061
+      boss 3 attack_4: -3188021295905350472
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

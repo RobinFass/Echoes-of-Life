@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    private static int levelNumber = 1;
+    public static int levelNumber = 1;
 
     [SerializeField] private LayerMask backgroundCollisionMask;
     [SerializeField] private List<GameLevel> levelList;
@@ -18,10 +18,7 @@ public class GameManager : MonoBehaviour
         set
         {
             state = value;
-            if (state == GameState.Playing)
-                Time.timeScale = 1;
-            else
-                Time.timeScale = 0;
+            Time.timeScale = state is GameState.Playing or GameState.Dead ? 1 : 0;
         }
     }
 
@@ -36,32 +33,35 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         if(levelList.Count <= 0) return; // gamemanager used in home scene too
+        
         player.OnChangingRoom += Player_OnChangingRoomSetCameraBounds;
         gameInput.OnMEnuEvent += GameInput_OnGamePause;
 
         LoadCurrentLevel();
-        State = GameState.Playing;
     }
 
     public event EventHandler OnGamePaused;
     public event EventHandler OnGameUnpaused;
     public event EventHandler OnControlsRequested;
+    public event EventHandler<Enemy> OnPlayerWin;
+    
 
-    private void LoadCurrentLevel()
+    public void LoadCurrentLevel()
     {
         foreach (var level in levelList)
             if (level.LevelNumber == levelNumber)
             {
                 var spawnedLevel = Instantiate(level, Vector3.zero, Quaternion.identity);
                 Player.Instance.transform.position = spawnedLevel.StartPosition;
-                Player.Instance.ChangeSprite(levelNumber - 1);
+                //Player.Instance.ChangeSprite(levelNumber);
                 Player_OnChangingRoomSetCameraBounds(null, spawnedLevel.GetStartRoom());
+                State = GameState.Playing;
                 return;
             }
 
         SceneLoader.LoadScene(Scenes.HomeScene);
         Debug.Log("No more levels to load, returning to home scene");
-        levelNumber = 1;
+        levelNumber = 0;
     }
 
     private void Player_OnChangingRoomSetCameraBounds(object sender, Room room)
@@ -85,13 +85,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void NextLevel()
-    {
-        levelNumber++;
-        SceneLoader.LoadScene(Scenes.GameScene);
-        State = GameState.Playing;
-    }
-
     public void RestartLevel()
     {
         SceneLoader.LoadScene(Scenes.GameScene);
@@ -101,5 +94,11 @@ public class GameManager : MonoBehaviour
     public void RequestControls()
     {
         OnControlsRequested?.Invoke(this, EventArgs.Empty);
+    }
+
+    public void CompleteBossRoom(Enemy enemy)
+    {
+        OnPlayerWin?.Invoke(this, enemy);
+        State = GameState.Won;
     }
 }

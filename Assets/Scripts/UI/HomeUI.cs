@@ -11,7 +11,16 @@ public class HomeUI : MonoBehaviour
 
     private void Awake()
     {
-        playButton.onClick.AddListener(() => { SceneLoader.LoadScene(Scenes.GameScene); });
+        playButton.onClick.AddListener(() =>
+        {
+            if (GameManager.levelNumber == 0)
+            {
+                GameManager.levelNumber = 1;
+                SceneLoader.LoadScene(Scenes.PreLvl1Scene);
+            }
+            else
+                SceneLoader.LoadScene(Scenes.GameScene);
+        });
         quitButton.onClick.AddListener(Application.Quit);
         controlsButton.onClick.AddListener(() => { gameManager.RequestControls(); });
     }
