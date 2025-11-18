@@ -2659,23 +2659,23 @@ MonoBehaviour:
   musicGroup: {fileID: -4819262451615246126, guid: 9f91fcc2d8a9a408393f4d170254d730, type: 2}
   sfxGroup: {fileID: -3206779096264370983, guid: 9f91fcc2d8a9a408393f4d170254d730, type: 2}
   musicClips:
-  - key: ambience1
+  - key: ambiance1
     clip: {fileID: 8300000, guid: eb967fb2433b94196b98518e155a6375, type: 3}
-  - key: test
-    clip: {fileID: 8300000, guid: 6615419f4c2014a068f88772ec928e86, type: 3}
+  - key: ambiance2
+    clip: {fileID: 8300000, guid: fae731259d6cf41c6917b281ee5d7e89, type: 3}
   sfxClips:
   - key: dash
     clip: {fileID: 8300000, guid: d241a54f34488404d969ef4879d604b7, type: 3}
   levelMusic:
   - level: 1
-    key: ambience1
+    key: ambiance1
   - level: 2
-    key: test
+    key: ambiance2
   sfxPoolSize: 8
   dontDestroyOnLoad: 1
   autoPlayOnSceneLoad: 1
   level1SceneName: Level1
-  level1MusicKey: ambience1
+  level1MusicKey: ambiance1
   playOnlyOncePerSession: 0
 --- !u!4 &1076418573
 Transform:
