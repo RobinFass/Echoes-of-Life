@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public static int levelNumber = 1;
+    public static int levelNumber = 0;
 
     [SerializeField] private LayerMask backgroundCollisionMask;
     [SerializeField] private List<GameLevel> levelList;

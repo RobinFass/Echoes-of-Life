@@ -8,7 +8,7 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] private float maxHealth = 10f;
     [SerializeField] private float maxStamina = 20f;
     [SerializeField] private float staminaRegenRate = 2f;
-    [SerializeField] private float staminaRegenCooldown = 1f;
+    [SerializeField] private float staminaRegenCooldown = 2f;
     [SerializeField] private float hurtCooldown = 1f;
 
     private float health;

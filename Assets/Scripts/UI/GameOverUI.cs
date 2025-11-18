@@ -8,6 +8,7 @@ public class GameOverUI : MonoBehaviour
     [SerializeField] private Button continueButton;
     
     private Player player => Player.Instance;
+    private bool firstTimeFinalDeath = false;
 
     private void Awake()
     {
@@ -40,8 +41,9 @@ public class GameOverUI : MonoBehaviour
 
     private void GameManager_OnDeath(object sender, Enemy e)
     {
-        if (e.IsFinalBoss)
+        if (e.IsFinalBoss && !firstTimeFinalDeath)
         {
+            firstTimeFinalDeath = true;
             continueButton.gameObject.SetActive(true);
             continueButton.Select();
             gameObject.SetActive(true);
