@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    private static int levelNumber = 1;
+    private int levelNumber = 1;
 
     [SerializeField] private LayerMask backgroundCollisionMask;
     [SerializeField] private List<GameLevel> levelList;
@@ -18,24 +18,18 @@ public class GameManager : MonoBehaviour
         set
         {
             state = value;
-            if (state == GameState.Playing)
-                Time.timeScale = 1;
-            else
-                Time.timeScale = 0;
+            Time.timeScale = state == GameState.Playing ? 1f : 0f;
         }
     }
 
     private GameInput gameInput => GameInput.Instance;
     private Player player => Player.Instance;
 
-    private void Awake()
-    {
-        Instance = this;
-    }
+    private void Awake() => Instance = this;
 
     private void Start()
     {
-        if(levelList.Count <= 0) return; // gamemanager used in home scene too
+        if (levelList.Count <= 0) return; // gamemanager used in home scene too
         player.OnChangingRoom += Player_OnChangingRoomSetCameraBounds;
         gameInput.OnMEnuEvent += GameInput_OnGamePause;
 
@@ -56,18 +50,13 @@ public class GameManager : MonoBehaviour
                 Player.Instance.transform.position = spawnedLevel.StartPosition;
                 Player.Instance.ChangeSprite(levelNumber - 1);
                 Player_OnChangingRoomSetCameraBounds(null, spawnedLevel.GetStartRoom());
-                
-                // New: trigger level music via AudioManager
-                if (AudioManager.Instance != null)
-                {
-                    AudioManager.Instance.PlayLevelMusic(levelNumber);
-                }
+
+                AudioManager.Instance?.PlayLevelMusic(levelNumber);
                 return;
             }
 
-        SceneLoader.LoadScene(Scenes.HomeScene);
+        ReturnToMenu();
         Debug.Log("No more levels to load, returning to home scene");
-        levelNumber = 1;
     }
 
     private void Player_OnChangingRoomSetCameraBounds(object sender, Room room)
@@ -79,15 +68,17 @@ public class GameManager : MonoBehaviour
 
     private void GameInput_OnGamePause(object sender, EventArgs e)
     {
-        if (Time.timeScale.Equals(1))
+        if (Time.timeScale.Equals(1f))
         {
             OnGamePaused?.Invoke(this, EventArgs.Empty);
             State = GameState.Pause;
+            AudioManager.Instance?.PauseMusic();
         }
         else
         {
             OnGameUnpaused?.Invoke(this, EventArgs.Empty);
             State = GameState.Playing;
+            AudioManager.Instance?.ResumeMusic();
         }
     }
 
@@ -104,8 +95,13 @@ public class GameManager : MonoBehaviour
         State = GameState.Playing;
     }
 
-    public void RequestControls()
+    public void ReturnToMenu()
     {
-        OnControlsRequested?.Invoke(this, EventArgs.Empty);
+        levelNumber = 1;
+        AudioManager.Instance?.StopMusic();
+        SceneLoader.LoadScene(Scenes.HomeScene);
+        State = GameState.Playing;
     }
+
+    public void RequestControls() => OnControlsRequested?.Invoke(this, EventArgs.Empty);
 }

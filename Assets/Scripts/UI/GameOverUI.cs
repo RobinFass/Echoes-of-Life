@@ -19,7 +19,7 @@ public class GameOverUI : MonoBehaviour
         });
         homeButton.onClick.AddListener(() =>
         {
-            SceneLoader.LoadScene(Scenes.HomeScene);
+            GameManager.Instance?.ReturnToMenu();
             Hide();
         });
     }

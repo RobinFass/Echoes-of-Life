@@ -21,7 +21,7 @@ public class PauseUI : MonoBehaviour
         homeButton.onClick.AddListener(() =>
         {
             Hide();
-            SceneLoader.LoadScene(Scenes.HomeScene);
+            GameManager.Instance?.ReturnToMenu();
         });
         controlsButton.onClick.AddListener(() =>
         {

@@ -1,22 +1,12 @@
-// csharp
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 
 [System.Serializable]
-public class NamedClip
-{
-    public string key;
-    public AudioClip clip;
-}
-
+public class NamedClip { public string key; public AudioClip clip; }
 [System.Serializable]
-public class LevelMusicMapping
-{
-    public int level;
-    public string key; // must match a key from musicClips
-}
+public class LevelMusicMapping { public int level; public string key; }
 
 public class AudioManager : MonoBehaviour
 {
@@ -43,39 +33,29 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private string level1MusicKey = "ambiance1";
     [SerializeField] private bool playOnlyOncePerSession = false;
 
-    private Dictionary<string, AudioClip> musicMap = new();
-    private Dictionary<string, AudioClip> sfxMap = new();
-
+    private readonly Dictionary<string, AudioClip> musicMap = new();
+    private readonly Dictionary<string, AudioClip> sfxMap = new();
     private AudioSource musicSource;
-    private List<AudioSource> sfxPool = new();
-    private int sfxPoolIndex = 0;
-
+    private readonly List<AudioSource> sfxPool = new();
+    private int sfxPoolIndex;
     private bool hasPlayedLevel1Music;
     private string currentMusicKey;
 
-    private void OnEnable()
-    {
-        SceneManager.sceneLoaded += OnSceneLoaded;
-    }
+    // resume reliability
+    private bool isMusicPaused;
 
-    private void OnDisable()
-    {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
-    }
+    private void OnEnable() => SceneManager.sceneLoaded += OnSceneLoaded;
+    private void OnDisable() => SceneManager.sceneLoaded -= OnSceneLoaded;
 
     private void Start()
     {
         if (autoPlayOnSceneLoad)
-        {
-            var current = SceneManager.GetActiveScene();
-            OnSceneLoaded(current, LoadSceneMode.Single);
-        }
+            OnSceneLoaded(SceneManager.GetActiveScene(), LoadSceneMode.Single);
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if (!autoPlayOnSceneLoad) return;
-
         if (!string.IsNullOrEmpty(level1SceneName) &&
             scene.name.Equals(level1SceneName, System.StringComparison.OrdinalIgnoreCase))
         {
@@ -89,26 +69,20 @@ public class AudioManager : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
+        if (Instance != null && Instance != this) { Destroy(gameObject); return; }
         Instance = this;
         if (dontDestroyOnLoad) DontDestroyOnLoad(gameObject);
 
         foreach (var n in musicClips)
-            if (n != null && !string.IsNullOrEmpty(n.key) && n.clip != null)
-                musicMap[n.key] = n.clip;
-
+            if (!string.IsNullOrEmpty(n.key) && n.clip) musicMap[n.key] = n.clip;
         foreach (var n in sfxClips)
-            if (n != null && !string.IsNullOrEmpty(n.key) && n.clip != null)
-                sfxMap[n.key] = n.clip;
+            if (!string.IsNullOrEmpty(n.key) && n.clip) sfxMap[n.key] = n.clip;
 
         musicSource = gameObject.AddComponent<AudioSource>();
         musicSource.outputAudioMixerGroup = musicGroup;
         musicSource.loop = true;
         musicSource.playOnAwake = false;
+        musicSource.ignoreListenerPause = true; // do not be affected by global listener pause
 
         for (int i = 0; i < sfxPoolSize; i++)
         {
@@ -122,13 +96,13 @@ public class AudioManager : MonoBehaviour
 
     public void PlaySfx(string key, float volume = 1f)
     {
-        if (!sfxMap.TryGetValue(key, out var clip) || clip == null) return;
+        if (!sfxMap.TryGetValue(key, out var clip) || !clip) return;
         PlaySfx(clip, volume);
     }
 
     public void PlaySfx(AudioClip clip, float volume = 1f)
     {
-        if (clip == null) return;
+        if (!clip) return;
         var src = sfxPool[sfxPoolIndex];
         sfxPoolIndex = (sfxPoolIndex + 1) % sfxPool.Count;
         src.volume = Mathf.Clamp01(volume);
@@ -143,26 +117,24 @@ public class AudioManager : MonoBehaviour
             musicSource.volume = Mathf.Clamp01(volume);
             return;
         }
-
-        if (!musicMap.TryGetValue(key, out var clip) || clip == null)
+        if (!musicMap.TryGetValue(key, out var clip) || !clip)
         {
             Debug.LogWarning($"AudioManager: music key '{key}' not found.");
             return;
         }
-
         currentMusicKey = key;
         PlayMusic(clip, volume);
     }
 
     public void PlayMusic(AudioClip clip, float volume = 1f)
     {
-        if (clip == null) return;
+        if (!clip) return;
+        bool restarting = musicSource.clip != clip;
         musicSource.clip = clip;
         musicSource.volume = Mathf.Clamp01(volume);
-        if (!musicSource.isPlaying) musicSource.Play();
-        else
+        if (!musicSource.isPlaying || restarting)
         {
-            // restart with new clip if different
+            isMusicPaused = false;
             musicSource.Stop();
             musicSource.Play();
         }
@@ -171,7 +143,32 @@ public class AudioManager : MonoBehaviour
     public void StopMusic()
     {
         currentMusicKey = null;
+        isMusicPaused = false;
         musicSource.Stop();
+    }
+
+    public void PauseMusic()
+    {
+        if (musicSource != null && musicSource.isPlaying)
+        {
+            musicSource.Pause();
+            isMusicPaused = true;
+        }
+    }
+
+    public void ResumeMusic()
+    {
+        if (musicSource == null || musicSource.clip == null) return;
+
+        if (isMusicPaused)
+        {
+            musicSource.UnPause();
+            isMusicPaused = false;
+            return;
+        }
+
+        if (!musicSource.isPlaying)
+            musicSource.Play();
     }
 
     public void SetMusicVolume(float linear)
@@ -188,29 +185,19 @@ public class AudioManager : MonoBehaviour
                 linear <= 0.0001f ? -80f : Mathf.Log10(Mathf.Clamp01(linear)) * 20f);
     }
 
-    // New: play music based on level number (called by GameManager)
     public void PlayLevelMusic(int level, float volume = 1f)
     {
         string key = null;
         foreach (var m in levelMusic)
-        {
-            if (m != null && m.level == level && !string.IsNullOrEmpty(m.key))
-            {
-                key = m.key;
-                break;
-            }
-        }
+            if (m != null && m.level == level && !string.IsNullOrEmpty(m.key)) { key = m.key; break; }
 
         if (string.IsNullOrEmpty(key))
         {
-            // fallback: try "ambience{level}"
             var fallback = $"ambience{level}";
             if (musicMap.ContainsKey(fallback)) key = fallback;
         }
 
-        if (!string.IsNullOrEmpty(key))
-            PlayMusic(key, volume);
-        else
-            Debug.LogWarning($"AudioManager: no music mapping found for level {level}.");
+        if (!string.IsNullOrEmpty(key)) PlayMusic(key, volume);
+        else Debug.LogWarning($"AudioManager: no music mapping found for level {level}.");
     }
 }
