@@ -40,7 +40,7 @@ public class AudioManager : MonoBehaviour
     [Header("Auto Music on Scene Load (unused with prefab levels)")]
     [SerializeField] private bool autoPlayOnSceneLoad = false;
     [SerializeField] private string level1SceneName = "Level1";
-    [SerializeField] private string level1MusicKey = "ambience1";
+    [SerializeField] private string level1MusicKey = "ambiance1";
     [SerializeField] private bool playOnlyOncePerSession = false;
 
     private Dictionary<string, AudioClip> musicMap = new();
