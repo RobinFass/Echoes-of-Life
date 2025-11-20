@@ -158,7 +158,11 @@ public class AudioManager : MonoBehaviour
 
     public void ResumeMusic()
     {
-        if (musicSource == null || musicSource.clip == null) return;
+        if (musicSource == null || musicSource.clip == null)
+        {
+            Debug.Log("AudioManager: no music to resume.");
+            return;
+        }
 
         if (isMusicPaused)
         {
@@ -181,23 +185,37 @@ public class AudioManager : MonoBehaviour
     public void SetSfxVolume(float linear)
     {
         if (sfxGroup?.audioMixer != null)
+        { 
             sfxGroup.audioMixer.SetFloat("SfxVolume",
                 linear <= 0.0001f ? -80f : Mathf.Log10(Mathf.Clamp01(linear)) * 20f);
+        }
     }
 
     public void PlayLevelMusic(int level, float volume = 1f)
     {
         string key = null;
         foreach (var m in levelMusic)
-            if (m != null && m.level == level && !string.IsNullOrEmpty(m.key)) { key = m.key; break; }
+        {
+            if (m != null && m.level == level && !string.IsNullOrEmpty(m.key))
+            {
+                key = m.key;
+                break;
+            }
+        }
 
         if (string.IsNullOrEmpty(key))
         {
-            var fallback = $"ambience{level}";
+            var fallback = $"ambiance{level}"; // match your naming
             if (musicMap.ContainsKey(fallback)) key = fallback;
         }
 
-        if (!string.IsNullOrEmpty(key)) PlayMusic(key, volume);
-        else Debug.LogWarning($"AudioManager: no music mapping found for level {level}.");
+        if (!string.IsNullOrEmpty(key))
+        {
+            PlayMusic(key, volume);
+        }
+        else
+        {
+            Debug.LogWarning($"AudioManager: no music mapping found for level {level}.");
+        }
     }
 }

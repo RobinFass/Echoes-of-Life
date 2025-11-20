@@ -2660,9 +2660,11 @@ MonoBehaviour:
   sfxGroup: {fileID: -3206779096264370983, guid: 9f91fcc2d8a9a408393f4d170254d730, type: 2}
   musicClips:
   - key: ambiance1
-    clip: {fileID: 8300000, guid: eb967fb2433b94196b98518e155a6375, type: 3}
+    clip: {fileID: 8300000, guid: d3e460141ec28452385e9bc811a3814c, type: 3}
   - key: ambiance2
-    clip: {fileID: 8300000, guid: fae731259d6cf41c6917b281ee5d7e89, type: 3}
+    clip: {fileID: 8300000, guid: 06bc5fa51b523425d8132f09623080e3, type: 3}
+  - key: ambiance3
+    clip: {fileID: 8300000, guid: 7f0d508477efc4ffa97fc12353e9424c, type: 3}
   sfxClips:
   - key: dash
     clip: {fileID: 8300000, guid: d241a54f34488404d969ef4879d604b7, type: 3}
@@ -2671,6 +2673,8 @@ MonoBehaviour:
     key: ambiance1
   - level: 2
     key: ambiance2
+  - level: 3
+    key: ambiance3
   sfxPoolSize: 8
   dontDestroyOnLoad: 1
   autoPlayOnSceneLoad: 1

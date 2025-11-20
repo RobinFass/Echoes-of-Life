@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    private int levelNumber = 1;
+    private static int levelNumber = 1;
 
     [SerializeField] private LayerMask backgroundCollisionMask;
     [SerializeField] private List<GameLevel> levelList;
@@ -25,16 +25,22 @@ public class GameManager : MonoBehaviour
     private GameInput gameInput => GameInput.Instance;
     private Player player => Player.Instance;
 
-    private void Awake() => Instance = this;
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     private void Start()
     {
-        if (levelList.Count <= 0) return; // gamemanager used in home scene too
+        if (levelList.Count <= 0) return; // GameManager used in home scene too
+
         player.OnChangingRoom += Player_OnChangingRoomSetCameraBounds;
         gameInput.OnMEnuEvent += GameInput_OnGamePause;
 
         LoadCurrentLevel();
-        State = GameState.Playing;
+
+        state = GameState.Playing;
+        Time.timeScale = 1f;
     }
 
     public event EventHandler OnGamePaused;
@@ -44,22 +50,25 @@ public class GameManager : MonoBehaviour
     private void LoadCurrentLevel()
     {
         foreach (var level in levelList)
-            if (level.LevelNumber == levelNumber)
-            {
-                var spawnedLevel = Instantiate(level, Vector3.zero, Quaternion.identity);
-                Player.Instance.transform.position = spawnedLevel.StartPosition;
-                Player.Instance.ChangeSprite(levelNumber - 1);
-                Player_OnChangingRoomSetCameraBounds(null, spawnedLevel.GetStartRoom());
+        {
+            if (level.LevelNumber != levelNumber) continue;
 
-                AudioManager.Instance?.PlayLevelMusic(levelNumber);
-                return;
-            }
+            var spawnedLevel = Instantiate(level, Vector3.zero, Quaternion.identity);
+            Player.Instance.transform.position = spawnedLevel.StartPosition;
+            Player.Instance.ChangeSprite(levelNumber - 1);
+            Player_OnChangingRoomSetCameraBounds(null, spawnedLevel.GetStartRoom());
 
+            AudioManager.Instance?.PlayLevelMusic(levelNumber);
+
+            Debug.Log($"[GameManager] Loaded level {levelNumber}, requested music for level {levelNumber}");
+            return;
+        }
+
+        Debug.Log("[GameManager] No more levels to load, returning to home scene");
         ReturnToMenu();
-        Debug.Log("No more levels to load, returning to home scene");
     }
 
-    private void Player_OnChangingRoomSetCameraBounds(object sender, Room room)
+    private static void Player_OnChangingRoomSetCameraBounds(object sender, Room room)
     {
         var roomCameraBounds = room.GetCameraBounds().GetBounds();
         CineCamera.Instance.SetCameraBounds(roomCameraBounds);
@@ -68,31 +77,44 @@ public class GameManager : MonoBehaviour
 
     private void GameInput_OnGamePause(object sender, EventArgs e)
     {
-        if (Time.timeScale.Equals(1f))
-        {
-            OnGamePaused?.Invoke(this, EventArgs.Empty);
-            State = GameState.Pause;
-            AudioManager.Instance?.PauseMusic();
-        }
+        if (state == GameState.Playing)
+            PauseGame();
         else
-        {
-            OnGameUnpaused?.Invoke(this, EventArgs.Empty);
-            State = GameState.Playing;
-            AudioManager.Instance?.ResumeMusic();
-        }
+            ResumeGame();
+    }
+
+    public void PauseGame()
+    {
+        if (state == GameState.Pause) return;
+        state = GameState.Pause;
+        Time.timeScale = 0f;
+        OnGamePaused?.Invoke(this, EventArgs.Empty);
+        AudioManager.Instance?.PauseMusic();
+    }
+
+    public void ResumeGame()
+    {
+        if (state == GameState.Playing) return;
+        state = GameState.Playing;
+        Time.timeScale = 1f;
+        OnGameUnpaused?.Invoke(this, EventArgs.Empty);
+        AudioManager.Instance?.ResumeMusic();
     }
 
     public void NextLevel()
     {
         levelNumber++;
+        Debug.Log($"[GameManager] NextLevel, new levelNumber = {levelNumber}");
         SceneLoader.LoadScene(Scenes.GameScene);
-        State = GameState.Playing;
+        state = GameState.Playing;
+        Time.timeScale = 1f;
     }
 
     public void RestartLevel()
     {
         SceneLoader.LoadScene(Scenes.GameScene);
         State = GameState.Playing;
+        Time.timeScale = 1f;
     }
 
     public void ReturnToMenu()
@@ -101,6 +123,7 @@ public class GameManager : MonoBehaviour
         AudioManager.Instance?.StopMusic();
         SceneLoader.LoadScene(Scenes.HomeScene);
         State = GameState.Playing;
+        Time.timeScale = 1f;
     }
 
     public void RequestControls() => OnControlsRequested?.Invoke(this, EventArgs.Empty);
