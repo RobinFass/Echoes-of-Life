@@ -21,9 +21,20 @@ namespace UI
         {
             Hide();
             gameManager.OnControlsRequested += GameManager_OnControlsRequested;
+            gameManager.OnGameUnpaused += GameManager_OnGameUnpause;
+        }
+        
+        private void GameManager_OnGameUnpause(object sender, EventArgs e)
+        {
+            Hide();
         }
 
         private void GameManager_OnControlsRequested(object sender, EventArgs e)
+        {
+            Show();
+        }
+        
+        private void Show()
         {
             backButton.Select();
             gameObject.SetActive(true);
@@ -31,6 +42,7 @@ namespace UI
 
         private void Hide()
         {
+            if(GameInput.Instance) GameInput.Instance.UpdateKeys();
             gameObject.SetActive(false);
         }
     }

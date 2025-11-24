@@ -50,20 +50,18 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Map",
+                    "type": "Button",
+                    "id": "7462807a-ed1c-47a5-911f-c88e87981306",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Press(behavior=2)",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
-                {
-                    "name": "",
-                    "id": "902df6de-9d39-48a5-9f12-ebb86c16936c",
-                    "path": "<Gamepad>/leftStick",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Gamepad",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
                 {
                     "name": "Keyboard Movement",
                     "id": "f97c4206-bf51-456d-9245-833b56502fc4",
@@ -121,6 +119,17 @@
                 },
                 {
                     "name": "",
+                    "id": "902df6de-9d39-48a5-9f12-ebb86c16936c",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "d1d79520-0758-43dd-809b-c42d60aac0a7",
                     "path": "<Keyboard>/leftShift",
                     "interactions": "",
@@ -165,6 +174,17 @@
                 },
                 {
                     "name": "",
+                    "id": "9c0be23a-b101-4c73-b9d1-237a161c0b11",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Menu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "8e6a87c4-9005-4a8f-8c70-c5c893ff1d85",
                     "path": "<Gamepad>/start",
                     "interactions": "",
@@ -176,12 +196,12 @@
                 },
                 {
                     "name": "",
-                    "id": "9c0be23a-b101-4c73-b9d1-237a161c0b11",
-                    "path": "<Keyboard>/escape",
+                    "id": "d082a8cd-20c4-4df8-b172-06e89eb819f6",
+                    "path": "<Keyboard>/k",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard&Mouse",
-                    "action": "Menu",
+                    "groups": "",
+                    "action": "Attack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -209,12 +229,23 @@
                 },
                 {
                     "name": "",
-                    "id": "d082a8cd-20c4-4df8-b172-06e89eb819f6",
-                    "path": "<Keyboard>/k",
+                    "id": "24a6c13b-4c9d-4772-91b3-ee820f0af7ae",
+                    "path": "<Keyboard>/tab",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Attack",
+                    "action": "Map",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c8911cd2-5684-4539-a12a-551489f3de98",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Map",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

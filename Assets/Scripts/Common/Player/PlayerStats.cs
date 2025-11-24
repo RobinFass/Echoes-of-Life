@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
 {
+    public static PlayerStats Instance { get; private set; }
+    
     [SerializeField] private float maxHealth = 10f;
     [SerializeField] private float maxStamina = 20f;
     [SerializeField] private float staminaRegenRate = 2f;
@@ -15,16 +17,15 @@ public class PlayerStats : MonoBehaviour
     private bool isDying;
     private float stamina;
     private float staminaCooldownTime;
-    private float hurtCooldownTime;
-    public static PlayerStats Instance { get; private set; }
-
-
-    public float NormalizedHealth => health / maxHealth;
-    public float NormalizedStamina => stamina / maxStamina;
+    
     private Player player => Player.Instance;
     private PlayerAnimation anime => PlayerAnimation.Instance;
     private GameManager GameManager => GameManager.Instance;
 
+    public float HurtCooldownTime { get; private set; }
+    public float NormalizedHealth => health / maxHealth;
+    public float NormalizedStamina => stamina / maxStamina;
+    public bool isSprintHold { get; set; }
 
     private void Awake()
     {
@@ -41,8 +42,8 @@ public class PlayerStats : MonoBehaviour
     private void FixedUpdate()
     {
         if(GameManager.State != GameState.Playing) return;
-        if (hurtCooldownTime >= 0)
-            hurtCooldownTime -= Time.deltaTime;
+        if (HurtCooldownTime >= 0)
+            HurtCooldownTime -= Time.deltaTime;
 
         if (staminaCooldownTime >= 0)
             staminaCooldownTime -= Time.deltaTime;
@@ -54,7 +55,7 @@ public class PlayerStats : MonoBehaviour
 
     private async void Player_OnEnemyHit(object sender, Enemy e)
     {
-        if (isDying || hurtCooldownTime > 0) return;
+        if (isDying || HurtCooldownTime > 0) return;
 
         if (health - e.Damage <= 0f)
         {
@@ -70,21 +71,19 @@ public class PlayerStats : MonoBehaviour
         health -= e.Damage;
         e.Health -= player.Attack.BodyDamage;
         anime.PlayHurt();
-        hurtCooldownTime = hurtCooldown;
+        HurtCooldownTime = hurtCooldown;
     }
     
 
     public bool UseStamina(float amount)
     {
-        if (amount <= 0f) return true;
-        if (stamina >= amount)
-        {
-            stamina -= amount;
-            staminaCooldownTime = staminaRegenCooldown;
-            return true;
-        }
+        if (amount <= 0f) return false;
+        if (!(stamina >= amount)) return false;
+        if(isSprintHold) return false;
+        stamina -= amount;
+        staminaCooldownTime = staminaRegenCooldown;
+        return true;
 
-        return false;
     }
 
     public void Heal(float amount)

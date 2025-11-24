@@ -469,8 +469,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -200, y: -200}
-  m_SizeDelta: {x: 290, y: 290}
+  m_AnchoredPosition: {x: -150, y: -150}
+  m_SizeDelta: {x: 205, y: 205}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &184179457
 MonoBehaviour:
@@ -857,6 +857,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: ControlsUI
       objectReference: {fileID: 0}
+    - target: {fileID: 2229248706316419347, guid: 0bea9d21824abb44da46125ab0f6c1d3, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4498289018838965014, guid: 0bea9d21824abb44da46125ab0f6c1d3, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1067,8 +1075,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 2.2160416, y: 3.6635985}
+  m_Offset: {x: 0.09930098, y: 0.38192642}
+  m_Size: {x: 1.956332, y: 3.694153}
   m_Direction: 0
 --- !u!114 &291914585
 MonoBehaviour:
@@ -1775,10 +1783,10 @@ MonoBehaviour:
     ScreenPosition: {x: 0, y: 0}
     DeadZone:
       Enabled: 1
-      Size: {x: 0.3, y: 0.3}
+      Size: {x: 0, y: 0}
     HardLimits:
       Enabled: 1
-      Size: {x: 0.3, y: 0.3}
+      Size: {x: 0, y: 0}
       Offset: {x: 0, y: 0}
   CenterOnActivate: 0
   TargetOffset: {x: 0, y: 0, z: 0}
@@ -2438,8 +2446,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -200, y: -200}
-  m_SizeDelta: {x: 300, y: 300}
+  m_AnchoredPosition: {x: -150, y: -150}
+  m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &858629372
 MonoBehaviour:
@@ -2529,7 +2537,7 @@ MonoBehaviour:
   maxHealth: 10
   maxStamina: 20
   staminaRegenRate: 2
-  staminaRegenCooldown: 1
+  staminaRegenCooldown: 2
   hurtCooldown: 1
 --- !u!114 &876904192
 MonoBehaviour:
@@ -2546,7 +2554,7 @@ MonoBehaviour:
   moveForce: 2000
   sprintMultiplier: 2
   sprintStaminaCostPerSecond: 2
-  dashDistance: 5
+  dashDistance: 4
   dashDuration: 0.15
   dashStaminaCost: 2
   rigidBody: {fileID: 291914580}
@@ -2627,8 +2635,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -200, y: -200}
-  m_SizeDelta: {x: 15, y: 15}
+  m_AnchoredPosition: {x: -150, y: -150}
+  m_SizeDelta: {x: 5, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &910899102
 MonoBehaviour:

@@ -57,11 +57,13 @@ public class PlayerMovement : MonoBehaviour
             }
             else
             {
+                stats.isSprintHold = true;
                 anime.PauseSprint();
             }
         }
         else
         {
+            stats.isSprintHold = false;
             anime.PauseSprint();
         }
 

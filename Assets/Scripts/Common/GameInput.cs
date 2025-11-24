@@ -6,11 +6,18 @@ public class GameInput : MonoBehaviour
 {
     private InputActions inputActions;
     public static GameInput Instance { get; private set; }
+    
+    public event EventHandler OnDashEvent;
+    public event EventHandler OnMEnuEvent;
+    public event EventHandler OnAttackEvent;
 
     private void Awake()
     {
         Instance = this;
         inputActions = new InputActions();
+        if (inputActions.asset)
+            UpdateKeys();
+
         inputActions.Enable();
 
         inputActions.Player.Dash.performed += OnDash;
@@ -23,10 +30,11 @@ public class GameInput : MonoBehaviour
         inputActions.Disable();
     }
 
-    public event EventHandler OnDashEvent;
-    public event EventHandler OnMEnuEvent;
-    public event EventHandler OnAttackEvent;
-
+    public void UpdateKeys()
+    {
+        Common.RebindManager.Instance.ApplySavedOverridesToAsset(inputActions.asset);
+    }
+    
     public Vector2 OnMove()
     {
         return inputActions.Player.Move.ReadValue<Vector2>();
@@ -35,6 +43,11 @@ public class GameInput : MonoBehaviour
     public bool OnSprint()
     {
         return inputActions.Player.Sprint.IsPressed();
+    }
+    
+    public bool OnShowMap()
+    {
+        return inputActions.Player.Map.IsPressed();
     }
 
     private void OnDash(InputAction.CallbackContext callbackContext)

@@ -101,4 +101,15 @@ public class GameManager : MonoBehaviour
         OnPlayerWin?.Invoke(this, enemy);
         State = GameState.Won;
     }
+
+    private void FixedUpdate()
+    {
+        if(!MapUI.Instance) return;
+        if (gameInput.OnShowMap())
+        {
+            MapUI.Instance.Show();
+            return;
+        }
+        MapUI.Instance.Hide();
+    }
 }

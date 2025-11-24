@@ -1,5 +1,6 @@
 using System;
 using Object;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.U2D.Animation;
 
@@ -24,8 +25,10 @@ public class Player : MonoBehaviour
         Instance = this;
     }
     
-    private void OnCollisionEnter2D(Collision2D other)
+    private void OnCollisionStay2D(Collision2D other)
     {
+        if(Stats.HurtCooldownTime > 0) return;
+        
         other.gameObject.TryGetComponent(out MonoBehaviour obj);
         switch (obj)
         {
