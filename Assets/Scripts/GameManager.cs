@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
         set
         {
             state = value;
-            Time.timeScale = state is GameState.Playing or GameState.Dead ? 1 : 0;
+            Time.timeScale = state is GameState.Playing ? 1 : 0;
         }
     }
 

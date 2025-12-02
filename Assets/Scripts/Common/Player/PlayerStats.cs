@@ -55,16 +55,16 @@ public class PlayerStats : MonoBehaviour
 
     private async void Player_OnEnemyHit(object sender, Enemy e)
     {
-        if (isDying || HurtCooldownTime > 0) return;
+        if (isDying || HurtCooldownTime > 0 || PlayerMovement.Instance.dashing) return;
 
         if (health - e.Damage <= 0f)
         {
             isDying = true;
             health = 0f;
-            GameManager.State = GameState.Dead;
             anime.PlayDead();
             await Task.Delay(1200); // wait for death animation
             OnDeath?.Invoke(this, e);
+            GameManager.State = GameState.Dead;
             return;
         }
 

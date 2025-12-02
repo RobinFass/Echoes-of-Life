@@ -22,6 +22,8 @@ public class PlayerMovement : MonoBehaviour
     private PlayerStats stats => Player.Instance.Stats;
     private PlayerAnimation anime => Player.Instance.Animation;
     private GameManager GameManager => GameManager.Instance;
+    
+    public bool dashing { get; private set; }
 
     private void Awake()
     {
@@ -75,6 +77,7 @@ public class PlayerMovement : MonoBehaviour
         if (!stats.UseStamina(dashStaminaCost)) return;
         var dir = input.OnMove().normalized;
         if (dir == Vector2.zero) dir = lastMoveInput.normalized;
+        dashing = true;
         StartCoroutine(DashCoroutine(dir));
         anime.PlayDash();
     }
@@ -93,5 +96,6 @@ public class PlayerMovement : MonoBehaviour
 
         if (rigidBody)
             rigidBody.linearVelocity = Vector2.zero;
+        dashing = false;
     }
 }
