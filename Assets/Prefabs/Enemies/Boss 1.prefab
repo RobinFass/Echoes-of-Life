@@ -209,6 +209,7 @@ GameObject:
   - component: {fileID: 613593486381934757}
   - component: {fileID: 296438805239981558}
   - component: {fileID: 1057236286279899943}
+  - component: {fileID: 1978108042442704926}
   m_Layer: 7
   m_Name: Boss 1
   m_TagString: Untagged
@@ -1092,6 +1093,24 @@ PolygonCollider2D:
       - {x: 1.25, y: -0.32999998}
       - {x: 1.24, y: -0.32999998}
   m_UseDelaunayMesh: 0
+--- !u!114 &1978108042442704926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7754320905872796290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe966144522b405fb7d2ca568bd01e5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Common.EnemyMovement
+  radius: 10
+  speed: 750
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  rigidBody: {fileID: 8468596965974397449}
 --- !u!1 &8987902276808651136
 GameObject:
   m_ObjectHideFlags: 0

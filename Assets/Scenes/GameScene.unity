@@ -185,7 +185,7 @@ GameObject:
   - component: {fileID: 110760587}
   - component: {fileID: 110760589}
   - component: {fileID: 110760588}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: MiniMapCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -731,7 +731,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 237797777}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: AttackPosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -892,7 +892,7 @@ GameObject:
   - component: {fileID: 291914585}
   - component: {fileID: 291914587}
   - component: {fileID: 291914586}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -2500,7 +2500,7 @@ GameObject:
   - component: {fileID: 876904193}
   - component: {fileID: 876904192}
   - component: {fileID: 876904191}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PlayerActions
   m_TagString: Untagged
   m_Icon: {fileID: 0}

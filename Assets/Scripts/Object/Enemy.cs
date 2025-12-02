@@ -62,6 +62,6 @@ public class Enemy : MonoBehaviour
 
     public void ShowHealthBar()
     {
-        canva.gameObject.SetActive(true);
+        if(canva) canva.gameObject.SetActive(true);
     }
 }
