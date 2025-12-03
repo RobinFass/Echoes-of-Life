@@ -2660,7 +2660,7 @@ MonoBehaviour:
   sfxGroup: {fileID: -3206779096264370983, guid: 9f91fcc2d8a9a408393f4d170254d730, type: 2}
   musicClips:
   - key: ambiance1
-    clip: {fileID: 8300000, guid: d3e460141ec28452385e9bc811a3814c, type: 3}
+    clip: {fileID: 8300000, guid: bce07db9b5b7d45c3b5de4cc23867217, type: 3}
   - key: ambiance2
     clip: {fileID: 8300000, guid: 06bc5fa51b523425d8132f09623080e3, type: 3}
   - key: ambiance3
