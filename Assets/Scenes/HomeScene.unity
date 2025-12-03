@@ -854,6 +854,79 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab82ee7d80174486839430c8644c563a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SelectOnHover
+--- !u!1 &1092956250
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1092956252}
+  - component: {fileID: 1092956251}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1092956251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1092956250}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c47ce55334b4883817475ea868deabe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AudioManager
+  musicGroup: {fileID: -4819262451615246126, guid: 9f91fcc2d8a9a408393f4d170254d730, type: 2}
+  sfxGroup: {fileID: -3206779096264370983, guid: 9f91fcc2d8a9a408393f4d170254d730, type: 2}
+  musicClips:
+  - key: ambiance1
+    clip: {fileID: 8300000, guid: bce07db9b5b7d45c3b5de4cc23867217, type: 3}
+  - key: ambiance2
+    clip: {fileID: 8300000, guid: 06bc5fa51b523425d8132f09623080e3, type: 3}
+  - key: ambiance3
+    clip: {fileID: 8300000, guid: 7f0d508477efc4ffa97fc12353e9424c, type: 3}
+  sfxClips:
+  - key: dash
+    clip: {fileID: 8300000, guid: d241a54f34488404d969ef4879d604b7, type: 3}
+  - key: walk
+    clip: {fileID: 8300000, guid: af5297cbeedbe4929945b227a7e441b2, type: 3}
+  - key: run
+    clip: {fileID: 8300000, guid: 55310b521d8b0439d9bdfc4e898e9323, type: 3}
+  levelMusic:
+  - level: 1
+    key: ambiance1
+  - level: 2
+    key: ambiance2
+  - level: 3
+    key: ambiance3
+  sfxPoolSize: 8
+  dontDestroyOnLoad: 1
+  autoPlayOnSceneLoad: 1
+  level1SceneName: Level1
+  level1MusicKey: ambiance1
+  playOnlyOncePerSession: 0
+--- !u!4 &1092956252
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1092956250}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 60.34987, y: 6.66142, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1236678070
 GameObject:
   m_ObjectHideFlags: 0
@@ -1039,3 +1112,4 @@ SceneRoots:
   - {fileID: 2770496214272355521}
   - {fileID: 1236678073}
   - {fileID: 176237230}
+  - {fileID: 1092956252}

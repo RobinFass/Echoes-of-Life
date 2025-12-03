@@ -26,6 +26,8 @@ public class AudioManager : MonoBehaviour
     [Header("SFX Pool")]
     [SerializeField] private int sfxPoolSize = 8;
     [SerializeField] private bool dontDestroyOnLoad = true;
+    private readonly List<AudioSource> sfxPool = new();
+    private int sfxPoolIndex;
 
     [Header("Auto Music on Scene Load (unused with prefab levels)")]
     [SerializeField] private bool autoPlayOnSceneLoad = false;
@@ -35,13 +37,11 @@ public class AudioManager : MonoBehaviour
 
     private readonly Dictionary<string, AudioClip> musicMap = new();
     private readonly Dictionary<string, AudioClip> sfxMap = new();
+    
     private AudioSource musicSource;
-    private readonly List<AudioSource> sfxPool = new();
-    private int sfxPoolIndex;
+    private AudioSource loopingSfxSource;
     private bool hasPlayedLevel1Music;
     private string currentMusicKey;
-
-    // resume reliability
     private bool isMusicPaused;
 
     private void OnEnable() => SceneManager.sceneLoaded += OnSceneLoaded;
@@ -92,6 +92,26 @@ public class AudioManager : MonoBehaviour
             src.loop = false;
             sfxPool.Add(src);
         }
+        // one AudioSource used for looping SFX (walk, run, etc.)
+        loopingSfxSource = gameObject.AddComponent<AudioSource>();
+        loopingSfxSource.outputAudioMixerGroup = sfxGroup;
+        loopingSfxSource.loop = true;
+        loopingSfxSource.playOnAwake = false;
+    }
+    
+    public void PlayLoopingSfx(string key)
+    {
+        if (!sfxMap.TryGetValue(key, out var clip)) return;
+        if (loopingSfxSource.isPlaying && loopingSfxSource.clip == clip) return;
+
+        loopingSfxSource.clip = clip;
+        loopingSfxSource.Play();
+    }
+
+    public void StopLoopingSfx()
+    {
+        loopingSfxSource.Stop();
+        loopingSfxSource.clip = null;
     }
 
     public void PlaySfx(string key, float volume = 1f)
