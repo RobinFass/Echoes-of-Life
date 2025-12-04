@@ -209,7 +209,6 @@ GameObject:
   - component: {fileID: 7267382023673146996}
   - component: {fileID: 613593486381934757}
   - component: {fileID: 296438805239981558}
-  - component: {fileID: 1116029563952867647}
   - component: {fileID: 6285047025864694489}
   m_Layer: 7
   m_Name: Denture
@@ -423,32 +422,6 @@ MonoBehaviour:
   maxStartDelay: 0.75
   randomizeSpeed: 1
   speedRange: {x: 0.9, y: 1.1}
---- !u!114 &1116029563952867647
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7754320905872796290}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b514be1c3614e92b536e5eb13b654d1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyController2D
-  roomArea: {fileID: 7267382023673146996}
-  detectionRange: 7
-  loseSightRange: 10
-  stoppingDistance: 1.2
-  requireLineOfSight: 1
-  obstacleMask:
-    serializedVersion: 2
-    m_Bits: 1
-  patrolSpeed: 2
-  chaseSpeed: 3.5
-  acceleration: 20
-  patrolPoints: []
-  waypointTolerance: 0.2
-  waitAtWaypoint: 0.5
 --- !u!114 &6285047025864694489
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -467,6 +440,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   rigidBody: {fileID: 8468596965974397449}
+  enemyAttack: {fileID: 0}
 --- !u!1 &8987902276808651136
 GameObject:
   m_ObjectHideFlags: 0

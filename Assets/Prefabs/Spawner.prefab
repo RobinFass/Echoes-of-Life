@@ -44,6 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d616dde9c2233d64c8425a9bb663e235, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CoinSpawner
-  coinPrefab: {fileID: 0}
+  prefab: []
   ground: {fileID: 0}
-  coinAmount: 10
+  amount: 0
+  spawnMask:
+    serializedVersion: 2
+    m_Bits: 0
