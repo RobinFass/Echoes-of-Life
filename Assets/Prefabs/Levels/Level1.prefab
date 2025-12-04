@@ -425,12 +425,12 @@ Transform:
   - {fileID: 1142068082151955733}
   - {fileID: 8884187972930302619}
   - {fileID: 6945074791831749278}
+  - {fileID: 689019988929936421}
+  - {fileID: 2983828505238120053}
+  - {fileID: 4034749100636650157}
   - {fileID: 7364667239373526735}
   - {fileID: 4181881231271531086}
   - {fileID: 8008418625253280090}
-  - {fileID: 4034749100636650157}
-  - {fileID: 689019988929936421}
-  - {fileID: 2983828505238120053}
   - {fileID: 5281306677544053857}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1004,8 +1004,28 @@ PrefabInstance:
     - {fileID: 7354889630047984549, guid: b668e1257b7a14440ac96a314238a8bd, type: 3}
     - {fileID: 1212786597760549291, guid: b668e1257b7a14440ac96a314238a8bd, type: 3}
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2524539294186082082, guid: b668e1257b7a14440ac96a314238a8bd, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1220141195369732504}
   m_SourcePrefab: {fileID: 100100000, guid: b668e1257b7a14440ac96a314238a8bd, type: 3}
+--- !u!1 &5529582322310841400 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2524539294186082082, guid: b668e1257b7a14440ac96a314238a8bd, type: 3}
+  m_PrefabInstance: {fileID: 8049606884008921882}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1220141195369732504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5529582322310841400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39da1342ada54e19af9b4cafbb6bc6bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Common.BossDoor
 --- !u!4 &8008418625253280090 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 42340547213132352, guid: b668e1257b7a14440ac96a314238a8bd, type: 3}
