@@ -40,8 +40,7 @@ namespace CutScenes
             video.Play();
 
             var duration = (float)video.length + 2f;
-            var steps = 50;
-
+            var steps = 1000;
             for (var i = 0; i < steps; i++)
             {
                 if (skipRequested)
