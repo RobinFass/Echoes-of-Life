@@ -513,9 +513,17 @@ PrefabInstance:
       propertyPath: m_Sprites.Array.size
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4416491991654791113, guid: b668e1257b7a14440ac96a314238a8bd, type: 3}
+      propertyPath: m_Sprites.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7397273573322601003, guid: b668e1257b7a14440ac96a314238a8bd, type: 3}
       propertyPath: m_Name
       value: Room (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7507467078425557599, guid: b668e1257b7a14440ac96a314238a8bd, type: 3}
+      propertyPath: m_Sprites.Array.size
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7507467078425557599, guid: b668e1257b7a14440ac96a314238a8bd, type: 3}
       propertyPath: m_Sprites.Array.size
@@ -653,9 +661,17 @@ PrefabInstance:
       propertyPath: m_Sprites.Array.size
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4416491991654791113, guid: b668e1257b7a14440ac96a314238a8bd, type: 3}
+      propertyPath: m_Sprites.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7397273573322601003, guid: b668e1257b7a14440ac96a314238a8bd, type: 3}
       propertyPath: m_Name
       value: Room (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7507467078425557599, guid: b668e1257b7a14440ac96a314238a8bd, type: 3}
+      propertyPath: m_Sprites.Array.size
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7507467078425557599, guid: b668e1257b7a14440ac96a314238a8bd, type: 3}
       propertyPath: m_Sprites.Array.size
@@ -723,9 +739,17 @@ PrefabInstance:
       propertyPath: m_Sprites.Array.size
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4416491991654791113, guid: b668e1257b7a14440ac96a314238a8bd, type: 3}
+      propertyPath: m_Sprites.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7397273573322601003, guid: b668e1257b7a14440ac96a314238a8bd, type: 3}
       propertyPath: m_Name
       value: Room (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7507467078425557599, guid: b668e1257b7a14440ac96a314238a8bd, type: 3}
+      propertyPath: m_Sprites.Array.size
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7507467078425557599, guid: b668e1257b7a14440ac96a314238a8bd, type: 3}
       propertyPath: m_Sprites.Array.size
@@ -817,11 +841,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2929773614384436169, guid: eef5f65d14c5b2e4f81369ca0de84677, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 101.5
+      value: -55.22213
       objectReference: {fileID: 0}
     - target: {fileID: 2929773614384436169, guid: eef5f65d14c5b2e4f81369ca0de84677, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -5.6
+      value: -28.769526
       objectReference: {fileID: 0}
     - target: {fileID: 2929773614384436169, guid: eef5f65d14c5b2e4f81369ca0de84677, type: 3}
       propertyPath: m_LocalPosition.z
@@ -991,6 +1015,10 @@ PrefabInstance:
       propertyPath: m_Sprites.Array.size
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4416491991654791113, guid: b668e1257b7a14440ac96a314238a8bd, type: 3}
+      propertyPath: m_Sprites.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7397273573322601003, guid: b668e1257b7a14440ac96a314238a8bd, type: 3}
       propertyPath: m_Name
       value: Room (2)
@@ -999,10 +1027,13 @@ PrefabInstance:
       propertyPath: m_Sprites.Array.size
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7507467078425557599, guid: b668e1257b7a14440ac96a314238a8bd, type: 3}
+      propertyPath: m_Sprites.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects:
-    - {fileID: 7354889630047984549, guid: b668e1257b7a14440ac96a314238a8bd, type: 3}
-    - {fileID: 1212786597760549291, guid: b668e1257b7a14440ac96a314238a8bd, type: 3}
+    m_RemovedGameObjects: [{fileID: 7354889630047984549, guid: b668e1257b7a14440ac96a314238a8bd, type: 3},
+      {fileID: 1212786597760549291, guid: b668e1257b7a14440ac96a314238a8bd, type: 3}]
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b668e1257b7a14440ac96a314238a8bd, type: 3}

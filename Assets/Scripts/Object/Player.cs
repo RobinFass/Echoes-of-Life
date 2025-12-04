@@ -24,6 +24,14 @@ public class Player : MonoBehaviour
     {
         Instance = this;
     }
+
+    private void Start()
+    {
+        Stats.OnDeath += Stats_OnDeath;
+        // subscribe to attack event so we can play sword SFX
+        if (PlayerAttack.Instance != null)
+            PlayerAttack.Instance.OnAttack += PlayerAttack_OnAttack;
+    }
     
     private void OnCollisionStay2D(Collision2D other)
     {
@@ -57,6 +65,8 @@ public class Player : MonoBehaviour
                 var offset = direction * 3f;
                 transform.position = destinationDoor.transform.position + offset;
 
+                AudioManager.Instance?.PlaySfx("room"); // play room-enter sound
+
                 OnChangingRoom?.Invoke(this, room);
                 break;
             }
@@ -67,6 +77,22 @@ public class Player : MonoBehaviour
                 break;
             }
         }
+    }
+
+    // called whenever PlayerAttack triggers an attack
+    private void PlayerAttack_OnAttack(object sender, EventArgs e)
+    {
+        AudioManager.Instance?.PlaySfx("sword");
+    }
+
+    public event EventHandler<Enemy> OnEnemyHit;
+    public event EventHandler<Room> OnChangingRoom;
+    public event EventHandler OnPlayerWin;
+
+    private void Stats_OnDeath(object sender, EventArgs eventArgs)
+    {
+        gameManager.State = GameState.Dead;
+        AudioManager.Instance?.StopLoopingSfx(); // stop walk/run when player dies
     }
 
     public void ChangeSprite(int level)

@@ -22,7 +22,7 @@ public class GameLevel : MonoBehaviour
             }
         }
 
-        if (!closestRoom) Debug.LogError("No room found in the level");
+        if (closestRoom == null) Debug.LogError("No room found in the level");
         return closestRoom;
     }
 }

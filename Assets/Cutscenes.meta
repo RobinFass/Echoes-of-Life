@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Cutscenes.meta
 guid: cc1d03fd3d4d32246a2958272ab97468
+========
+guid: 6902cd759380f4345a2b91c1cdf2c308
+>>>>>>>> audio:Assets/Sprites/Animator.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

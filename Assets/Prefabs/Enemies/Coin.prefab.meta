@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Prefabs/Enemies/Coin.prefab.meta
 guid: 7b035dd81c438744ab535d002442bf97
+========
+guid: eef5f65d14c5b2e4f81369ca0de84677
+>>>>>>>> audio:Assets/Prefabs/Boss 1.prefab.meta
 PrefabImporter:
   externalObjects: {}
   userData: 

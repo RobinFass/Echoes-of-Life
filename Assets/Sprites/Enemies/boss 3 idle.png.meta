@@ -1,4 +1,5 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Sprites/Enemies/boss 3 idle.png.meta
 guid: eb07a205a84ee0f4fa96d6fe3f71699f
 TextureImporter:
   internalIDToNameTable:
@@ -11,6 +12,20 @@ TextureImporter:
   - first:
       213: 2834607119113390968
     second: boss 3 idle_2
+========
+guid: 59c122886e311a446a28a1ba5e88008c
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -6732689717527077762
+    second: idle v2_0
+  - first:
+      213: -8065173108732115810
+    second: idle v2_1
+  - first:
+      213: 1826018317282062197
+    second: idle v2_2
+>>>>>>>> audio:Assets/Sprites/Player/idle v2.png.meta
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -43,7 +58,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -119,6 +134,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
+<<<<<<<< HEAD:Assets/Sprites/Enemies/boss 3 idle.png.meta
       name: boss 3 idle_0
       rect:
         serializedVersion: 2
@@ -128,19 +144,36 @@ TextureImporter:
         height: 1000
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
+========
+      name: idle v2_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1004
+        width: 1000
+        height: 1000
+      alignment: 9
+      pivot: {x: 0.55, y: 0.3}
+>>>>>>>> audio:Assets/Sprites/Player/idle v2.png.meta
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
+<<<<<<<< HEAD:Assets/Sprites/Enemies/boss 3 idle.png.meta
       spriteID: 73d00ccd54ca73bd0800000000000000
       internalID: -2650460439627952841
+========
+      spriteID: e7c9fdb8f5ea092a0800000000000000
+      internalID: -6732689717527077762
+>>>>>>>> audio:Assets/Sprites/Player/idle v2.png.meta
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
+<<<<<<<< HEAD:Assets/Sprites/Enemies/boss 3 idle.png.meta
       name: boss 3 idle_1
       rect:
         serializedVersion: 2
@@ -150,19 +183,36 @@ TextureImporter:
         height: 1000
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
+========
+      name: idle v2_1
+      rect:
+        serializedVersion: 2
+        x: 1000
+        y: 1004
+        width: 1000
+        height: 1000
+      alignment: 9
+      pivot: {x: 0.55, y: 0.3}
+>>>>>>>> audio:Assets/Sprites/Player/idle v2.png.meta
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
+<<<<<<<< HEAD:Assets/Sprites/Enemies/boss 3 idle.png.meta
       spriteID: 652f1fb13ebdccd00800000000000000
       internalID: 994411386214937174
+========
+      spriteID: e944df9e9cfb21090800000000000000
+      internalID: -8065173108732115810
+>>>>>>>> audio:Assets/Sprites/Player/idle v2.png.meta
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
+<<<<<<<< HEAD:Assets/Sprites/Enemies/boss 3 idle.png.meta
       name: boss 3 idle_2
       rect:
         serializedVersion: 2
@@ -172,14 +222,30 @@ TextureImporter:
         height: 1000
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
+========
+      name: idle v2_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 4
+        width: 1000
+        height: 1000
+      alignment: 9
+      pivot: {x: 0.55, y: 0.3}
+>>>>>>>> audio:Assets/Sprites/Player/idle v2.png.meta
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
+<<<<<<<< HEAD:Assets/Sprites/Enemies/boss 3 idle.png.meta
       spriteID: 87b0c8c082c865720800000000000000
       internalID: 2834607119113390968
+========
+      spriteID: 57f24f22cf1575910800000000000000
+      internalID: 1826018317282062197
+>>>>>>>> audio:Assets/Sprites/Player/idle v2.png.meta
       vertices: []
       indices: 
       edges: []
@@ -188,7 +254,11 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
+<<<<<<<< HEAD:Assets/Sprites/Enemies/boss 3 idle.png.meta
     spriteID: 05ea587c7bafb61409341706feefe114
+========
+    spriteID: b5fb731cbfd0bc14b931c32c2d8be4e8
+>>>>>>>> audio:Assets/Sprites/Player/idle v2.png.meta
     internalID: 0
     vertices: []
     indices: 
@@ -198,11 +268,21 @@ TextureImporter:
     spriteCustomMetadata:
       entries:
       - key: SpriteEditor.SliceSettings
+<<<<<<<< HEAD:Assets/Sprites/Enemies/boss 3 idle.png.meta
         value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":1000.0,"y":1000.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
       boss 3 idle_0: -2650460439627952841
       boss 3 idle_1: 994411386214937174
       boss 3 idle_2: 2834607119113390968
+========
+        value: '{"sliceOnImport":true,"gridCellCount":{"x":2.0,"y":2.0},"gridSpriteSize":{"x":1000.0,"y":1000.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.550000011920929,"y":0.30000001192092898},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":9,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
+      - key: SpriteEditor.SliceOnImport
+        value: True
+    nameFileIdTable:
+      idle v2_0: -6732689717527077762
+      idle v2_1: -8065173108732115810
+      idle v2_2: 1826018317282062197
+>>>>>>>> audio:Assets/Sprites/Player/idle v2.png.meta
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

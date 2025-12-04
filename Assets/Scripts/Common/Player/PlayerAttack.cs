@@ -1,8 +1,8 @@
-// csharp
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -37,7 +37,11 @@ public class PlayerAttack : MonoBehaviour
     public static PlayerAttack Instance { get; private set; }
     private GameInput input => GameInput.Instance;
     private GameManager GameManager => GameManager.Instance;
+
     private PlayerAnimation playerAnimation => Player.Instance ? Player.Instance.Animation : null;
+
+    // expose an event so other systems (like audio) can react to attacks
+    public event EventHandler OnAttack;
     private static bool IsInLayer(LayerMask mask, int layer) => (mask.value & (1 << layer)) != 0;
 
     public float BodyDamage { get => bodyDamage; set => bodyDamage = value; }
@@ -88,11 +92,14 @@ public class PlayerAttack : MonoBehaviour
 
     private void OnAttackEvent(object sender, EventArgs e)
     {
-        if (GameManager.State != GameState.Playing) return;
+        if(GameManager.State != GameState.Playing) return;
         if (attackCooldownTimer > 0f) return;
         if (!attackPos) return;
 
-        playerAnimation?.PlayAttack();
+        // attack is accepted: notify listeners (Player will play "sword" SFX)
+        OnAttack?.Invoke(this, EventArgs.Empty);
+
+        playerAnimation.PlayAttack();
         attackCooldownTimer = attackCooldown;
 
         var origin = (Vector2)attackPos.position;
@@ -106,6 +113,9 @@ public class PlayerAttack : MonoBehaviour
             var enemy = enemyCollider.GetComponent<Enemy>();
             if (!enemy) continue;
 
+            // successful hit: play monster-hit SFX
+            AudioManager.Instance?.PlaySfx("monsterHit");
+            
             enemy.ShowHealthBar();
             enemy.Health -= attackDamage;
             if (enemy.Health <= 0) continue;

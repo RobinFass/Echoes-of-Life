@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Sprites/Animator.meta
 guid: 6902cd759380f4345a2b91c1cdf2c308
+========
+guid: 3edb549c2b0e17242bfed7194427f98a
+>>>>>>>> audio:Assets/Sprites/Player.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

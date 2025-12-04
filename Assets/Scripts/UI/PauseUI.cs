@@ -8,24 +8,26 @@ public class PauseUI : MonoBehaviour
     [SerializeField] private Button homeButton;
     [SerializeField] private Button controlsButton;
 
-
     private static GameManager gameManager => GameManager.Instance;
 
     private void Awake()
     {
         continueButton.onClick.AddListener(() =>
         {
+            AudioManager.Instance?.PlayClick();
             Hide();
-            gameManager.State = GameState.Playing;
+            gameManager?.ResumeGame();
         });
         homeButton.onClick.AddListener(() =>
         {
+            AudioManager.Instance?.PlayClick();
             Hide();
-            SceneLoader.LoadScene(Scenes.HomeScene);
+            gameManager?.ReturnToMenu();
         });
         controlsButton.onClick.AddListener(() =>
         {
-            gameManager.RequestControls();
+            AudioManager.Instance?.PlayClick();
+            gameManager?.RequestControls();
         });
     }
 
@@ -36,15 +38,9 @@ public class PauseUI : MonoBehaviour
         Hide();
     }
 
-    private void GameManager_OnGamePause(object sender, EventArgs e)
-    {
-        Show();
-    }
+    private void GameManager_OnGamePause(object sender, EventArgs e) => Show();
 
-    private void GameManager_OnGameUnpause(object sender, EventArgs e)
-    {
-        Hide();
-    }
+    private void GameManager_OnGameUnpause(object sender, EventArgs e) => Hide();
 
     private void Show()
     {

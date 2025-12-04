@@ -7,6 +7,8 @@ public class NextLevelUI : MonoBehaviour
     [SerializeField] private Button homeButton;
     [SerializeField] private Button continueButton;
     
+    private Player player => Player.Instance;
+
     private void Awake()
     {
         nextButton.onClick.AddListener(() =>

@@ -14,7 +14,11 @@ namespace UI
 
         private void Awake()
         {
-            backButton.onClick.AddListener(Hide);
+            backButton.onClick.AddListener(() =>
+            {
+                AudioManager.Instance?.PlayClick();
+                Hide();
+            });
         }
 
         private void Start()
