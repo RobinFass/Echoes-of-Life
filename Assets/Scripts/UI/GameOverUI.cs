@@ -14,11 +14,13 @@ public class GameOverUI : MonoBehaviour
     {
         retryButton.onClick.AddListener(() =>
         {
+            AudioManager.Instance?.PlayClick();
             GameManager.Instance.RestartLevel();
             Hide();
         });
         homeButton.onClick.AddListener(() =>
         {
+            AudioManager.Instance?.PlayClick();
             GameManager.Instance?.ReturnToMenu();
             Hide();
         });

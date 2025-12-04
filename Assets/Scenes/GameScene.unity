@@ -855,6 +855,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: ControlsUI
       objectReference: {fileID: 0}
+    - target: {fileID: 2643252291913989550, guid: 0bea9d21824abb44da46125ab0f6c1d3, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4590571188744773076, guid: 0bea9d21824abb44da46125ab0f6c1d3, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

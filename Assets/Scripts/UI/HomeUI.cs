@@ -11,9 +11,19 @@ public class HomeUI : MonoBehaviour
 
     private void Awake()
     {
-        playButton.onClick.AddListener(() => { SceneLoader.LoadScene(Scenes.GameScene); });
-        quitButton.onClick.AddListener(Application.Quit);
-        controlsButton.onClick.AddListener(() => { gameManager.RequestControls(); });
+        playButton.onClick.AddListener(() => {
+            AudioManager.Instance?.PlayClick();
+            SceneLoader.LoadScene(Scenes.GameScene);
+        });
+        quitButton.onClick.AddListener(() => {
+            AudioManager.Instance?.PlayClick();
+            Application.Quit();
+        });
+        controlsButton.onClick.AddListener(() =>
+        {
+            AudioManager.Instance?.PlayClick();
+            gameManager.RequestControls();
+        });
     }
 
     private void Start()

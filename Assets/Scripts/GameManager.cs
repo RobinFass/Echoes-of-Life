@@ -90,6 +90,7 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0f;
         OnGamePaused?.Invoke(this, EventArgs.Empty);
         AudioManager.Instance?.PauseMusic();
+        AudioManager.Instance?.StopLoopingSfx(); // stop walk/run when game is paused
     }
 
     public void ResumeGame()
@@ -99,12 +100,14 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
         OnGameUnpaused?.Invoke(this, EventArgs.Empty);
         AudioManager.Instance?.ResumeMusic();
+        AudioManager.Instance?.StopLoopingSfx(); // ensure no stale loop after resume
     }
 
     public void NextLevel()
     {
         levelNumber++;
         Debug.Log($"[GameManager] NextLevel, new levelNumber = {levelNumber}");
+        AudioManager.Instance?.StopLoopingSfx(); // safety: clear movement loop on level change
         SceneLoader.LoadScene(Scenes.GameScene);
         state = GameState.Playing;
         Time.timeScale = 1f;
@@ -112,6 +115,7 @@ public class GameManager : MonoBehaviour
 
     public void RestartLevel()
     {
+        AudioManager.Instance?.StopLoopingSfx(); // safety on restart
         SceneLoader.LoadScene(Scenes.GameScene);
         State = GameState.Playing;
         Time.timeScale = 1f;
@@ -121,6 +125,7 @@ public class GameManager : MonoBehaviour
     {
         levelNumber = 1;
         AudioManager.Instance?.StopMusic();
+        AudioManager.Instance?.StopLoopingSfx(); // safety when leaving the game
         SceneLoader.LoadScene(Scenes.HomeScene);
         State = GameState.Playing;
         Time.timeScale = 1f;

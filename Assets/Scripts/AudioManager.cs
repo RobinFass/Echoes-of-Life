@@ -211,6 +211,12 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    // UI helpers
+    public void PlayClick()
+    {
+        PlaySfx("click");
+    }
+
     public void PlayLevelMusic(int level, float volume = 1f)
     {
         string key = null;

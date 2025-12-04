@@ -36,6 +36,9 @@ public class PlayerAttack : MonoBehaviour
 
     private PlayerAnimation playerAnimation => Player.Instance ? Player.Instance.Animation : null;
 
+    // expose an event so other systems (like audio) can react to attacks
+    public event EventHandler OnAttack;
+
     public float BodyDamage
     {
         get => bodyDamage;
@@ -120,6 +123,9 @@ public class PlayerAttack : MonoBehaviour
         if (attackCooldownTimer > 0f) return;
         if (!attackPos) return;
 
+        // attack is accepted: notify listeners (Player will play "sword" SFX)
+        OnAttack?.Invoke(this, EventArgs.Empty);
+
         playerAnimation.PlayAttack();
         attackCooldownTimer = attackCooldown;
 
@@ -137,6 +143,9 @@ public class PlayerAttack : MonoBehaviour
             var toEnemy = (enemy.transform.position - attackPos.position).normalized;
             var angle = Vector2.Angle(coneCenterDir, toEnemy);
             if (angle > halfAngle) continue;
+
+            // successful hit: play monster-hit SFX
+            AudioManager.Instance?.PlaySfx("monsterHit");
 
             enemy.ShowHealthBar();
             enemy.Health -= attackDamage;

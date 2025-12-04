@@ -14,16 +14,19 @@ public class PauseUI : MonoBehaviour
     {
         continueButton.onClick.AddListener(() =>
         {
+            AudioManager.Instance?.PlayClick();
             Hide();
             gameManager?.ResumeGame();
         });
         homeButton.onClick.AddListener(() =>
         {
+            AudioManager.Instance?.PlayClick();
             Hide();
             gameManager?.ReturnToMenu();
         });
         controlsButton.onClick.AddListener(() =>
         {
+            AudioManager.Instance?.PlayClick();
             gameManager?.RequestControls();
         });
     }
