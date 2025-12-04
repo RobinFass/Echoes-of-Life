@@ -1,9 +1,5 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:Assets/Prefabs/Enemies.meta
 guid: da16c8318ea839b44b1dfb33fb06ce5a
-========
-guid: f47a443a0074c164393111df8eaeff2a
->>>>>>>> audio:Assets/Sprites/Clip.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

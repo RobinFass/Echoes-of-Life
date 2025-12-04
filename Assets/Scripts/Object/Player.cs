@@ -27,7 +27,6 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        Stats.OnDeath += Stats_OnDeath;
         // subscribe to attack event so we can play sword SFX
         if (PlayerAttack.Instance != null)
             PlayerAttack.Instance.OnAttack += PlayerAttack_OnAttack;
@@ -72,6 +71,7 @@ public class Player : MonoBehaviour
             }
             case Heal heal:
             {
+                AudioManager.Instance?.PlaySfx("heal");
                 Stats.Heal(7);
                 heal.SelfDestruct();
                 break;
@@ -83,16 +83,6 @@ public class Player : MonoBehaviour
     private void PlayerAttack_OnAttack(object sender, EventArgs e)
     {
         AudioManager.Instance?.PlaySfx("sword");
-    }
-
-    public event EventHandler<Enemy> OnEnemyHit;
-    public event EventHandler<Room> OnChangingRoom;
-    public event EventHandler OnPlayerWin;
-
-    private void Stats_OnDeath(object sender, EventArgs eventArgs)
-    {
-        gameManager.State = GameState.Dead;
-        AudioManager.Instance?.StopLoopingSfx(); // stop walk/run when player dies
     }
 
     public void ChangeSprite(int level)
