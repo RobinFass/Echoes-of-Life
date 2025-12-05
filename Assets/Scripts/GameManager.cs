@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public static int levelNumber = 0;
+    public static int levelNumber = 1;
 
     [SerializeField] private LayerMask backgroundCollisionMask;
     [SerializeField] private List<GameLevel> levelList;
@@ -55,8 +55,8 @@ public class GameManager : MonoBehaviour
             if (level.LevelNumber == levelNumber)
             {
                 var spawnedLevel = Instantiate(level, Vector3.zero, Quaternion.identity);
-                Player.Instance.transform.position = spawnedLevel.StartPosition;
-                //Player.Instance.ChangeSprite(levelNumber);
+                player.transform.position = spawnedLevel.StartPosition;
+                //player.ChangeSprite(levelNumber);
                 Player_OnChangingRoomSetCameraBounds(null, spawnedLevel.GetStartRoom());
                 State = GameState.Playing;
                 AudioManager.Instance?.PlayLevelMusic(levelNumber);
@@ -102,16 +102,6 @@ public class GameManager : MonoBehaviour
         OnGameUnpaused?.Invoke(this, EventArgs.Empty);
         AudioManager.Instance?.ResumeMusic();
         AudioManager.Instance?.StopLoopingSfx(); // ensure no stale loop after resume
-    }
-
-    public void NextLevel()
-    {
-        levelNumber++;
-        Debug.Log($"[GameManager] NextLevel, new levelNumber = {levelNumber}");
-        AudioManager.Instance?.StopLoopingSfx(); // safety: clear movement loop on level change
-        SceneLoader.LoadScene(Scenes.GameScene);
-        state = GameState.Playing;
-        Time.timeScale = 1f;
     }
 
     public void RestartLevel()

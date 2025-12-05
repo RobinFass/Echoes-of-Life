@@ -35,12 +35,6 @@ namespace CutScenes
         {
             foreach (var video in videos)
             {
-                if (skipRequested)
-                {
-                    skipRequested = false;
-                    break;
-                }
-
                 video.gameObject.SetActive(true);
                 video.Play();
 

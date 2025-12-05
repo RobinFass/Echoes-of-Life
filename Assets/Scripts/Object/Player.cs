@@ -87,6 +87,6 @@ public class Player : MonoBehaviour
 
     public void ChangeSprite(int level)
     {
-        spriteLibrary.spriteLibraryAsset = spriteLibraryAsset[level];
+        spriteLibrary.spriteLibraryAsset = spriteLibraryAsset[level-1];
     }
 }

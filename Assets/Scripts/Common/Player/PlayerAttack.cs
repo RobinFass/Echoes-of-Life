@@ -92,7 +92,7 @@ public class PlayerAttack : MonoBehaviour
 
     private void OnAttackEvent(object sender, EventArgs e)
     {
-        if(GameManager.State != GameState.Playing) return;
+        if(GameManager.State != GameState.Playing || PlayerStats.Instance.NormalizedHealth == 0) return;
         if (attackCooldownTimer > 0f) return;
         if (!attackPos) return;
 
@@ -140,7 +140,7 @@ public class PlayerAttack : MonoBehaviour
         if (rb) rb.linearVelocity = Vector2.zero;
     }
 
-    private void OnDrawGizmos() // dessine même non sélectionné (Scene view avec Gizmos actif)
+    private void OnDrawGizmos()
     {
         DrawConeGizmos(false);
     }

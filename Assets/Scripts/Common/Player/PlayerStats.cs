@@ -77,7 +77,7 @@ public class PlayerStats : MonoBehaviour
 
     public bool UseStamina(float amount)
     {
-        if (amount <= 0f) return false;
+        if (amount <= 0f|| health == 0) return false;
         if (!(stamina >= amount)) return false;
         if(isSprintHold) return false;
         stamina -= amount;

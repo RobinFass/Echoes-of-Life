@@ -3,9 +3,9 @@ using UnityEngine;
 
 namespace Common
 {
-    public class EnemyAttack : MonoBehaviour
+    public class EnemyAttack : MonoBehaviour, Attack
     {
-        [SerializeField] public float radius = 5f;
+        [SerializeField] private float radius = 5f;
         [SerializeField] private float attackCooldown = 1.5f;
         [SerializeField] private GameObject projectilePrefab;
         [SerializeField] private float projectileSpeed = 5;
@@ -13,7 +13,7 @@ namespace Common
         [SerializeField] private Animator animator;
 
         private float lastAttackTime;
-
+        public float Radius => radius;
         private void FixedUpdate()
         {
             lastAttackTime-= Time.fixedDeltaTime;
@@ -28,9 +28,8 @@ namespace Common
 
         private IEnumerator ShootAt(Vector3 direction)
         {
-            Vector3 spawnPos = transform.position;
-            GameObject proj = Instantiate(projectilePrefab, spawnPos+direction, Quaternion.identity);
-            print(proj.name);
+            var spawnPos = transform.position;
+            var proj = Instantiate(projectilePrefab, spawnPos+direction, Quaternion.identity);
             var rb = proj.GetComponent<Rigidbody2D>();
             rb.linearVelocity = (Vector2)direction * (10 * projectileSpeed);
             var elapsed = 0f;

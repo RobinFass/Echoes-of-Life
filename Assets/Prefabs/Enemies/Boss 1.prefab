@@ -210,6 +210,7 @@ GameObject:
   - component: {fileID: 296438805239981558}
   - component: {fileID: 1057236286279899943}
   - component: {fileID: 1978108042442704926}
+  - component: {fileID: 3924873704683551165}
   m_Layer: 7
   m_Name: Boss 1
   m_TagString: Untagged
@@ -1105,12 +1106,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe966144522b405fb7d2ca568bd01e5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Common.EnemyMovement
-  radius: 10
-  speed: 750
+  radius: 0
+  speed: 0
   playerLayer:
     serializedVersion: 2
     m_Bits: 256
   rigidBody: {fileID: 8468596965974397449}
+--- !u!114 &3924873704683551165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7754320905872796290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12f815321a0e47c8afa8cdd5c3c0ac9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Common.BossAttacks.FirstBoss
+  detectionRadius: 15
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  animator: {fileID: 8204598199356930263}
+  attackCooldown: 1.5
+  projectilePrefab: {fileID: 7754320905872796290, guid: cfb1e6e44095c43488d4033f12d37358, type: 3}
+  projectileSpeed: 6
+  projectileFacingAngleOffset: -90
+  ringCount: 10
+  ringSpawnRadius: 3.5
+  spreadCount: 3
+  spreadAngle: 30
 --- !u!1 &8987902276808651136
 GameObject:
   m_ObjectHideFlags: 0

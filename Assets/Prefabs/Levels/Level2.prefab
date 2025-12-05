@@ -613,11 +613,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3216123092490669720, guid: 01e2f8f1b8cbd41dc8fd53e5bdfb1854, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -74
+      value: 27.8
       objectReference: {fileID: 0}
     - target: {fileID: 3216123092490669720, guid: 01e2f8f1b8cbd41dc8fd53e5bdfb1854, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 9.5
+      value: -60.2
       objectReference: {fileID: 0}
     - target: {fileID: 3216123092490669720, guid: 01e2f8f1b8cbd41dc8fd53e5bdfb1854, type: 3}
       propertyPath: m_LocalPosition.z
@@ -868,8 +868,39 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7754320905872796290, guid: fdb471c4b4d701347b0b0d5b77831b9e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3012279173587708108}
   m_SourcePrefab: {fileID: 100100000, guid: fdb471c4b4d701347b0b0d5b77831b9e, type: 3}
+--- !u!1 &144614490562505140 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7754320905872796290, guid: fdb471c4b4d701347b0b0d5b77831b9e, type: 3}
+  m_PrefabInstance: {fileID: 7610282768885662518}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3012279173587708108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 144614490562505140}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbb2bcad3ae249bcbb4630667ef92f4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Common.BossAttacks.SecondBoss
+  radius: 5
+  prefabs: []
+  spawnCount: 10
+  ground: {fileID: 0}
+  spawnDelay: 0.05
+  prefabLifetime: 2
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  attackCooldown: 2
+  animator: {fileID: 0}
 --- !u!4 &4698805062347428095 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2929773614384436169, guid: fdb471c4b4d701347b0b0d5b77831b9e, type: 3}

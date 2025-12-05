@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Unity.VisualScripting;
+using UnityEngine;
 
 namespace Common
 {
@@ -8,7 +9,7 @@ namespace Common
         [SerializeField] private float speed = 1000;
         [SerializeField] private LayerMask playerLayer;
         [SerializeField] private Rigidbody2D rigidBody;
-        [SerializeField] private EnemyAttack enemyAttack;
+        [SerializeField] private Attack enemyAttack;
 
         private Transform player;
 
@@ -18,7 +19,7 @@ namespace Common
             if (hits is { Length: > 0 })
             {
                 player = hits[0].transform;
-                if (enemyAttack && (player.position - transform.position).magnitude < enemyAttack.radius)
+                if (!enemyAttack.IsUnityNull() && (player.position - transform.position).magnitude < enemyAttack.Radius)
                 {
                     Vector3 direction = (player.position - transform.position).normalized;
                     rigidBody.AddForce(-direction * (speed * Time.fixedDeltaTime));

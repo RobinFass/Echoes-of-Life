@@ -42,6 +42,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if(PlayerStats.Instance.NormalizedHealth == 0) return;
         // stop movement SFX when game is not in Playing state
         if (GameManager.State != GameState.Playing)
         {
