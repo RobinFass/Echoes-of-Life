@@ -210,6 +210,7 @@ GameObject:
   - component: {fileID: 3512982575702288526}
   - component: {fileID: 1289300385788207300}
   - component: {fileID: 27390749723592916}
+  - component: {fileID: 8672585034685769456}
   m_Layer: 7
   m_Name: Boss 2
   m_TagString: Untagged
@@ -410,7 +411,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 7.38, y: 7.16}
+    oldSize: {x: 10, y: 10}
     newSize: {x: 7.38, y: 7.16}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -1031,12 +1032,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Common.EnemyMovement
   radius: 10
-  speed: 750
+  speed: 1000
   playerLayer:
     serializedVersion: 2
     m_Bits: 256
   rigidBody: {fileID: 8468596965974397449}
-  enemyAttack: {fileID: 0}
+--- !u!114 &8672585034685769456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7754320905872796290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbb2bcad3ae249bcbb4630667ef92f4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Common.BossAttacks.SecondBoss
+  radius: 7
+  attackRadius: 3.5
+  prefab: {fileID: 7754320905872796290, guid: 8604159a8cb0100459ca14fa7a97f600, type: 3}
+  spawnCount: 10
+  ground: {fileID: 0}
+  spawnDelay: 0.1
+  prefabLifetime: 2
+  indicatorPrefab: {fileID: 7754320905872796290, guid: e0c9b6a14e2b5114d81cca509eb4f244, type: 3}
+  indicatorDuration: 1
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  attackCooldown: 10
+  animator: {fileID: 8204598199356930263}
 --- !u!1 &8987902276808651136
 GameObject:
   m_ObjectHideFlags: 0

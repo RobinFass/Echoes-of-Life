@@ -76,7 +76,17 @@ public class Player : MonoBehaviour
                 heal.SelfDestruct();
                 break;
             }
+            case Enemy enemy:
+            {
+                OnEnemyHit?.Invoke(this, enemy);
+                break;
+            }
         }
+    }
+
+    public void BeingHit(Enemy enemy)
+    {
+        OnEnemyHit?.Invoke(this, enemy);
     }
 
     // called whenever PlayerAttack triggers an attack
