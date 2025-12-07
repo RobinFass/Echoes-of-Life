@@ -747,6 +747,10 @@ PrefabInstance:
       propertyPath: radius
       value: 13
       objectReference: {fileID: 0}
+    - target: {fileID: 2231824907594881207, guid: fdb471c4b4d701347b0b0d5b77831b9e, type: 3}
+      propertyPath: maxHealth
+      value: 40
+      objectReference: {fileID: 0}
     - target: {fileID: 2929773614384436169, guid: fdb471c4b4d701347b0b0d5b77831b9e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 63.36
