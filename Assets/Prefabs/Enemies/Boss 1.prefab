@@ -305,7 +305,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
   maxHealth: 30
-  damage: 5
+  damage: 3
   canva: {fileID: 6699750611148955411}
   isBoss: 1
   isFinalBoss: 0
