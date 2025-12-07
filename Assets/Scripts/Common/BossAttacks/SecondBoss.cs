@@ -15,6 +15,7 @@ namespace Common.BossAttacks
         [SerializeField] private SpriteRenderer ground;
         [SerializeField] private float spawnDelay = 0.05f;
         [SerializeField] private float prefabLifetime = 2f;
+        [SerializeField] private float crackRadius = 3f; // nouveau: rayon pour les cracks
 
         [Header("Indicator")]
         [SerializeField] private GameObject indicatorPrefab;
@@ -35,10 +36,10 @@ namespace Common.BossAttacks
             {
                 if (animator != null)
                     animator.SetTrigger("Attack");
-                
+
                 StartCoroutine(SpawnRoutine());
                 lastAttackTime = attackCooldown;
-                
+
                 var toHit = Physics2D.OverlapCircleAll(transform.position, attackRadius, playerLayer.value);
                 if (toHit.Length > 0)
                     Player.Instance.BeingHit(gameObject.GetComponent<Enemy>());
@@ -52,7 +53,7 @@ namespace Common.BossAttacks
 
             for (int i = 0; i < spawnCount; i++)
             {
-                Vector3 pos = GetRandomPointInRoom();
+                Vector3 pos = GetRandomPointInRoom(crackRadius);
                 if (indicatorPrefab != null)
                 {
                     GameObject indicator = Instantiate(indicatorPrefab, pos, Quaternion.identity);
@@ -73,25 +74,36 @@ namespace Common.BossAttacks
             }
         }
 
-        private Vector3 GetRandomPointInRoom()
+        private Vector3 GetRandomPointInRoom(float maxRadius)
         {
             if (ground != null)
             {
                 Bounds b = ground.bounds;
-                float x = Random.Range(b.min.x, b.max.x);
-                float y = Random.Range(b.min.y, b.max.y);
-                float z = Random.Range(b.min.z, b.max.z);
-                return new Vector3(x, y, z);
+                // essayer plusieurs fois de générer un point dans le cercle et à l'intérieur des bounds
+                for (int attempt = 0; attempt < 20; attempt++)
+                {
+                    Vector2 rand = Random.insideUnitCircle * maxRadius;
+                    Vector3 candidate = transform.position + new Vector3(rand.x, rand.y, 0f);
+                    if (candidate.x >= b.min.x && candidate.x <= b.max.x && candidate.y >= b.min.y && candidate.y <= b.max.y)
+                        return candidate;
+                }
+
+                // fallback: clamp la position aux bounds (peut légèrement sortir du cercle si aucun point valide trouvé)
+                float clampedX = Mathf.Clamp(transform.position.x, b.min.x, b.max.x);
+                float clampedY = Mathf.Clamp(transform.position.y, b.min.y, b.max.y);
+                return new Vector3(clampedX, clampedY, transform.position.z);
             }
 
-            Vector2 rand = Random.insideUnitCircle * radius;
-            return transform.position + new Vector3(rand.x, 0f, rand.y);
+            Vector2 randCircle = Random.insideUnitCircle * maxRadius;
+            return transform.position + new Vector3(randCircle.x, randCircle.y, 0f);
         }
 
         private void OnDrawGizmosSelected()
         {
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(transform.position, radius);
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawWireSphere(transform.position, crackRadius); // affiche le rayon des cracks
         }
     }
 }

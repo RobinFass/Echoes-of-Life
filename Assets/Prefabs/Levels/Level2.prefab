@@ -407,7 +407,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 320
+    m_Bits: 832
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 8400000, guid: d14cb827a3bbd1440b71b5e878a20769, type: 2}
   m_TargetDisplay: 0
@@ -613,11 +613,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3216123092490669720, guid: 01e2f8f1b8cbd41dc8fd53e5bdfb1854, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -73.7
+      value: -73.3
       objectReference: {fileID: 0}
     - target: {fileID: 3216123092490669720, guid: 01e2f8f1b8cbd41dc8fd53e5bdfb1854, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2
+      value: -2.5
       objectReference: {fileID: 0}
     - target: {fileID: 3216123092490669720, guid: 01e2f8f1b8cbd41dc8fd53e5bdfb1854, type: 3}
       propertyPath: m_LocalPosition.z
@@ -749,11 +749,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2929773614384436169, guid: fdb471c4b4d701347b0b0d5b77831b9e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 56.80166
+      value: 63.36
       objectReference: {fileID: 0}
     - target: {fileID: 2929773614384436169, guid: fdb471c4b4d701347b0b0d5b77831b9e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -65.98265
+      value: -65.36
       objectReference: {fileID: 0}
     - target: {fileID: 2929773614384436169, guid: fdb471c4b4d701347b0b0d5b77831b9e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -798,6 +798,14 @@ PrefabInstance:
     - target: {fileID: 8672585034685769456, guid: fdb471c4b4d701347b0b0d5b77831b9e, type: 3}
       propertyPath: radius
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8672585034685769456, guid: fdb471c4b4d701347b0b0d5b77831b9e, type: 3}
+      propertyPath: spawnCount
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8672585034685769456, guid: fdb471c4b4d701347b0b0d5b77831b9e, type: 3}
+      propertyPath: attackCooldown
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8672585034685769456, guid: fdb471c4b4d701347b0b0d5b77831b9e, type: 3}
       propertyPath: prefabs.Array.size

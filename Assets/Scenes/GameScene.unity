@@ -2634,7 +2634,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStamina
   maxHealth: 10
   maxStamina: 20
-  staminaRegenRate: 2
+  staminaRegenRate: 4
   staminaRegenCooldown: 2
   hurtCooldown: 1
 --- !u!114 &876904192

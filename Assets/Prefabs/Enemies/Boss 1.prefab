@@ -1132,7 +1132,6 @@ MonoBehaviour:
   attackCooldown: 1.5
   projectilePrefab: {fileID: 7754320905872796290, guid: cfb1e6e44095c43488d4033f12d37358, type: 3}
   projectileSpeed: 6
-  projectileFacingAngleOffset: -90
   ringCount: 10
   ringSpawnRadius: 3.5
   spreadCount: 3

@@ -38,8 +38,8 @@ public class Enemy : MonoBehaviour
     {
         var mult = 1;
         if(!isBoss)
-            mult = GameManager.levelNumber/2 + 1;
-        maxHealth = Random.Range(maxHealth*mult / 2, maxHealth*mult * 2);
+            mult = GameManager.levelNumber/4 + 1;
+        maxHealth = Random.Range((float)(maxHealth*mult *0.5), (float)(maxHealth*mult * 1.5));
         health = maxHealth;
     }
 

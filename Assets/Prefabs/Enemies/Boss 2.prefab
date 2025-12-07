@@ -304,8 +304,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a3c6ba2248ad5741ae38bd85bf2fa37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
-  maxHealth: 40
-  damage: 7
+  maxHealth: 35
+  damage: 4
   canva: {fileID: 6699750611148955411}
   isBoss: 1
   isFinalBoss: 0
@@ -1052,10 +1052,11 @@ MonoBehaviour:
   radius: 7
   attackRadius: 3.5
   prefab: {fileID: 7754320905872796290, guid: 8604159a8cb0100459ca14fa7a97f600, type: 3}
-  spawnCount: 10
+  spawnCount: 20
   ground: {fileID: 0}
-  spawnDelay: 0.1
+  spawnDelay: 0
   prefabLifetime: 2
+  crackRadius: 10
   indicatorPrefab: {fileID: 7754320905872796290, guid: e0c9b6a14e2b5114d81cca509eb4f244, type: 3}
   indicatorDuration: 1
   playerLayer:

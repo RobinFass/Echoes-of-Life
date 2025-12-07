@@ -210,6 +210,7 @@ GameObject:
   - component: {fileID: 5888511349917589314}
   - component: {fileID: 2780907423849761416}
   - component: {fileID: 694981255657801167}
+  - component: {fileID: 7120577101229791676}
   m_Layer: 7
   m_Name: Boss 3
   m_TagString: Untagged
@@ -304,7 +305,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
   maxHealth: 50
-  damage: 10
+  damage: 5
   canva: {fileID: 6699750611148955411}
   isBoss: 1
   isFinalBoss: 1
@@ -1264,12 +1265,44 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Common.EnemyMovement
   radius: 10
-  speed: 750
+  speed: 1000
   playerLayer:
     serializedVersion: 2
     m_Bits: 256
   rigidBody: {fileID: 8468596965974397449}
-  enemyAttack: {fileID: 0}
+--- !u!114 &7120577101229791676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7754320905872796290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fac80f6a7b754793841ff1a485b3037a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Common.BossAttacks.ThirdBoss
+  detectRadius: 8
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  segmentPrefabs:
+  - {fileID: 7754320905872796290, guid: d6ce6643e6f8bfb46894db83ac0e939c, type: 3}
+  - {fileID: 7754320905872796290, guid: f9c9aa29df60b8f468c04271f7dde9b3, type: 3}
+  - {fileID: 7754320905872796290, guid: b41e93db4638ef141b19424ad6dcacf5, type: 3}
+  - {fileID: 7754320905872796290, guid: 11d8e57286bbdbc45bb76abf35e1bdf0, type: 3}
+  rayCount: 8
+  segmentCount: 2
+  segmentSpacing: 0.5
+  segmentLifetime: 1.5
+  betweenSegmentDelay: 0
+  betweenRayDelay: 0
+  maxAngleSpread: 360
+  prefabRotationOffset: 0
+  prefabForward: 0
+  gridOffset: 1
+  attackCooldown: 2
+  animator: {fileID: 8204598199356930263}
 --- !u!1 &8987902276808651136
 GameObject:
   m_ObjectHideFlags: 0
