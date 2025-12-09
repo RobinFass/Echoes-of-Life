@@ -52,15 +52,23 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public void SelfDestruct()
+    private void SelfDestruct()
     {
         if (isBoss)
         {
             gameManager.CompleteBossRoom(this);
         }
-
-        if (Random.Range(0f, 1f) < (0.3 - GameManager.levelNumber/10.0) && !isBoss && dropItemPrefab)
+        float dropChance = GameManager.levelNumber switch
+        {
+            1 => 0.10f, // 10%
+            2 => 0.075f, // 7.5%
+            3 => 0.05f, // 5%
+            _ => 0f
+        };
+        if (!isBoss && dropItemPrefab && Random.Range(0f, 1f) < dropChance)
+        {
             Instantiate(dropItemPrefab, gameObject.transform.position, Quaternion.identity);
+        }
         Destroy(gameObject);
     }
 

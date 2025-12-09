@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private List<GameLevel> levelList;
 
     private GameState state;
+    private bool ControlsOpen = false;
     public static GameManager Instance { get; private set; }
 
     public GameState State
@@ -79,9 +80,21 @@ public class GameManager : MonoBehaviour
     private void GameInput_OnGamePause(object sender, EventArgs e)
     {
         if (state == GameState.Playing)
+        {
             PauseGame();
+        }
         else
+        {
+            // If Controls are open and Escape is pressed, we want to go back to Pause menu,
+            // not resume gameplay.
+            if (ControlsOpen)
+            {
+                // Re-fire pause event (PauseUI will show). Do not change state (already Pause).
+                OnGamePaused?.Invoke(this, EventArgs.Empty);
+                return;
+            }
             ResumeGame();
+        }
     }
 
     public void PauseGame()
@@ -91,7 +104,7 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0f;
         OnGamePaused?.Invoke(this, EventArgs.Empty);
         AudioManager.Instance?.PauseMusic();
-        AudioManager.Instance?.StopLoopingSfx(); // stop walk/run when game is paused
+        AudioManager.Instance?.PauseLoopingSfx(); // pause walk/run when game is paused
     }
 
     public void ResumeGame()
@@ -101,7 +114,7 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
         OnGameUnpaused?.Invoke(this, EventArgs.Empty);
         AudioManager.Instance?.ResumeMusic();
-        AudioManager.Instance?.StopLoopingSfx(); // ensure no stale loop after resume
+        AudioManager.Instance?.ResumeLoopingSfx(); // resume paused walk/run
     }
 
     public void RestartLevel()
@@ -116,7 +129,7 @@ public class GameManager : MonoBehaviour
     {
         levelNumber = 1;
         AudioManager.Instance?.StopMusic();
-        AudioManager.Instance?.StopLoopingSfx(); // safety when leaving the game
+        AudioManager.Instance?.StopLoopingSfx(); // ensure no loop when going back to menu
         SceneLoader.LoadScene(Scenes.HomeScene);
         State = GameState.Playing;
         Time.timeScale = 1f;
@@ -124,7 +137,18 @@ public class GameManager : MonoBehaviour
 
     public void RequestControls()
     {
+        ControlsOpen = true;
         OnControlsRequested?.Invoke(this, EventArgs.Empty);
+    }
+
+    // Called when leaving Controls back to Pause
+    public void CloseControlsToPause()
+    {
+        ControlsOpen = false;
+        // Ensure pause state and event are consistent
+        state = GameState.Pause;
+        Time.timeScale = 0f;
+        OnGamePaused?.Invoke(this, EventArgs.Empty);
     }
 
     public void CompleteBossRoom(Enemy enemy)

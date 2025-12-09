@@ -35,6 +35,8 @@ public class PauseUI : MonoBehaviour
     {
         gameManager.OnGamePaused += GameManager_OnGamePause;
         gameManager.OnGameUnpaused += GameManager_OnGameUnpause;
+        // Hide PauseUI when entering Controls to avoid overlap
+        gameManager.OnControlsRequested += GameManager_OnControlsRequested;
         Hide();
     }
 
@@ -42,10 +44,13 @@ public class PauseUI : MonoBehaviour
 
     private void GameManager_OnGameUnpause(object sender, EventArgs e) => Hide();
 
+    private void GameManager_OnControlsRequested(object sender, EventArgs e) => Hide();
+
     private void Show()
     {
         continueButton.Select();
         gameObject.SetActive(true);
+        transform.SetAsLastSibling();
     }
 
     private void Hide()

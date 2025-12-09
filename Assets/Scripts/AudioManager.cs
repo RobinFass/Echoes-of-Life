@@ -43,6 +43,7 @@ public class AudioManager : MonoBehaviour
     private bool hasPlayedLevel1Music;
     private string currentMusicKey;
     private bool isMusicPaused;
+    private bool isLoopingSfxPaused;
 
     private void OnEnable() => SceneManager.sceneLoaded += OnSceneLoaded;
     private void OnDisable() => SceneManager.sceneLoaded -= OnSceneLoaded;
@@ -106,6 +107,27 @@ public class AudioManager : MonoBehaviour
 
         loopingSfxSource.clip = clip;
         loopingSfxSource.Play();
+    }
+    
+    public void PauseLoopingSfx()
+    {
+        if (loopingSfxSource != null && loopingSfxSource.isPlaying)
+        {
+            loopingSfxSource.Pause();
+            isLoopingSfxPaused = true;
+        }
+    }
+    
+    public void ResumeLoopingSfx()
+    {
+        if (loopingSfxSource == null || loopingSfxSource.clip == null) return;
+        if (isLoopingSfxPaused)
+        {
+            loopingSfxSource.UnPause();
+            isLoopingSfxPaused = false;
+            return;
+        }
+        if (!loopingSfxSource.isPlaying) loopingSfxSource.Play();
     }
 
     public void StopLoopingSfx()
