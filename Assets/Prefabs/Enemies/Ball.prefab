@@ -307,6 +307,7 @@ MonoBehaviour:
   maxHealth: 4
   damage: 1
   canva: {fileID: 6699750611148955411}
+  dropItemPrefab: {fileID: 6847506441175565239, guid: 6b0648eb7242daa4084f3c608db812b0, type: 3}
   isBoss: 0
   isFinalBoss: 0
 --- !u!50 &8468596965974397449
@@ -436,12 +437,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Common.EnemyMovement
   radius: 10
-  speed: 750
+  speed: 1000
   playerLayer:
     serializedVersion: 2
     m_Bits: 256
   rigidBody: {fileID: 8468596965974397449}
-  enemyAttack: {fileID: 5087797215184823496}
 --- !u!114 &5087797215184823496
 MonoBehaviour:
   m_ObjectHideFlags: 0

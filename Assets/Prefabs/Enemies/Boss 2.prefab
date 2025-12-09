@@ -307,6 +307,8 @@ MonoBehaviour:
   maxHealth: 35
   damage: 4
   canva: {fileID: 6699750611148955411}
+  dropItemPrefab: {fileID: 0}
+  dropChance: 0.2
   isBoss: 1
   isFinalBoss: 0
 --- !u!50 &8468596965974397449

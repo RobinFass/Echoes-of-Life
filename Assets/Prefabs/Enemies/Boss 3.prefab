@@ -307,6 +307,8 @@ MonoBehaviour:
   maxHealth: 50
   damage: 5
   canva: {fileID: 6699750611148955411}
+  dropItemPrefab: {fileID: 0}
+  dropChance: 0.2
   isBoss: 1
   isFinalBoss: 1
 --- !u!50 &8468596965974397449
@@ -1291,15 +1293,11 @@ MonoBehaviour:
   - {fileID: 7754320905872796290, guid: f9c9aa29df60b8f468c04271f7dde9b3, type: 3}
   - {fileID: 7754320905872796290, guid: b41e93db4638ef141b19424ad6dcacf5, type: 3}
   - {fileID: 7754320905872796290, guid: 11d8e57286bbdbc45bb76abf35e1bdf0, type: 3}
-  rayCount: 8
   segmentCount: 2
   segmentSpacing: 0.5
   segmentLifetime: 1.5
   betweenSegmentDelay: 0
   betweenRayDelay: 0
-  maxAngleSpread: 360
-  prefabRotationOffset: 0
-  prefabForward: 0
   gridOffset: 1
   attackCooldown: 2
   animator: {fileID: 8204598199356930263}

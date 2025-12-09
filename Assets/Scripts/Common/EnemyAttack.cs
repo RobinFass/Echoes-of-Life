@@ -29,18 +29,10 @@ namespace Common
         private IEnumerator ShootAt(Vector3 direction)
         {
             var spawnPos = transform.position;
-            var proj = Instantiate(projectilePrefab, spawnPos+direction, Quaternion.identity);
-            var rb = proj.GetComponent<Rigidbody2D>();
-            rb.linearVelocity = (Vector2)direction * (10 * projectileSpeed);
-            var elapsed = 0f;
-            while (elapsed < 1000)
-            {
-                if (rb) rb.linearVelocity = direction * projectileSpeed;
-                elapsed += Time.fixedDeltaTime;
-                yield return new WaitForFixedUpdate();
-            }
-            if (rb) rb.linearVelocity = Vector2.zero;
-
+            var projObj = Instantiate(projectilePrefab, spawnPos + direction, Quaternion.identity);
+            var projComp = projObj.GetComponent<Projectile>();
+            if (!projComp) yield break;
+            projComp.StartCoroutine(projComp.MoveInDirection(direction, projectileSpeed));
         }
 
         private void OnDrawGizmosSelected()

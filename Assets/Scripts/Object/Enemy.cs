@@ -7,6 +7,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float maxHealth = 4;
     [SerializeField] private float damage = 1;
     [SerializeField] private Canvas canva;
+    [SerializeField] private GameObject dropItemPrefab;
     [SerializeField] private bool isBoss = false;
     [SerializeField] private bool isFinalBoss = false;
 
@@ -57,6 +58,9 @@ public class Enemy : MonoBehaviour
         {
             gameManager.CompleteBossRoom(this);
         }
+
+        if (Random.Range(0f, 1f) < (0.3 - GameManager.levelNumber/10.0) && !isBoss && dropItemPrefab)
+            Instantiate(dropItemPrefab, gameObject.transform.position, Quaternion.identity);
         Destroy(gameObject);
     }
 
