@@ -36,7 +36,7 @@ public class Spawner : MonoBehaviour
 
     private Vector2 GetRandomPosition(Bounds bounds)
     {
-        var wallThicknes = 2;
+        var wallThicknes = 7;
         return new Vector2(
             Random.Range(bounds.min.x + wallThicknes, bounds.max.x - wallThicknes),
             Random.Range(bounds.min.y + wallThicknes, bounds.max.y - wallThicknes)

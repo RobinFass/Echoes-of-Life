@@ -49,4 +49,4 @@ MonoBehaviour:
   amount: 0
   spawnMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 393
