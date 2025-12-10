@@ -15,6 +15,10 @@ public class AudioManager : MonoBehaviour
     [Header("Mixer Groups")]
     [SerializeField] private AudioMixerGroup musicGroup;
     [SerializeField] private AudioMixerGroup sfxGroup;
+    
+    [Header("Volumes Sliders Persistence Keys")]
+    private const string MusicVolKey = "volume_music";
+    private const string SfxVolKey = "volume_sfx";
 
     [Header("Clips (assign in inspector)")]
     [SerializeField] private List<NamedClip> musicClips = new();
@@ -98,6 +102,13 @@ public class AudioManager : MonoBehaviour
         loopingSfxSource.outputAudioMixerGroup = sfxGroup;
         loopingSfxSource.loop = true;
         loopingSfxSource.playOnAwake = false;
+        
+        // Load saved volume or default to 1
+        float musicVol = PlayerPrefs.GetFloat(MusicVolKey, 1f);
+        float sfxVol   = PlayerPrefs.GetFloat(SfxVolKey, 1f);
+
+        SetMusicVolume(musicVol);
+        SetSfxVolume(sfxVol);
     }
     
     public void PlayLoopingSfx(string key)
@@ -199,17 +210,26 @@ public class AudioManager : MonoBehaviour
     public void SetMusicVolume(float linear)
     {
         if (musicGroup?.audioMixer != null)
+        {
             musicGroup.audioMixer.SetFloat("MusicVolume",
                 linear <= 0.0001f ? -80f : Mathf.Log10(Mathf.Clamp01(linear)) * 20f);
+        }
     }
 
     public void SetSfxVolume(float linear)
     {
         if (sfxGroup?.audioMixer != null)
-        { 
+        {
             sfxGroup.audioMixer.SetFloat("SfxVolume",
                 linear <= 0.0001f ? -80f : Mathf.Log10(Mathf.Clamp01(linear)) * 20f);
         }
+    }
+    
+    public void SaveVolumes(float musicLinear, float sfxLinear)
+    {
+        PlayerPrefs.SetFloat(MusicVolKey, musicLinear);
+        PlayerPrefs.SetFloat(SfxVolKey, sfxLinear);
+        PlayerPrefs.Save();
     }
 
     public void PlayLevelMusic(int level, float volume = 1f)
