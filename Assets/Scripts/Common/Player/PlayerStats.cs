@@ -14,7 +14,7 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] private float hurtCooldown = 1f;
 
     // Dev: toggle player invincibility easily in inspector or via code.
-    [SerializeField] public bool Invincible = true;
+    [SerializeField] public bool Invincible = false;
 
     private float health;
     private bool isDying;

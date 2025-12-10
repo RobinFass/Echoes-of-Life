@@ -12,7 +12,6 @@ public class GameOverUI : MonoBehaviour
 
     private void Awake()
     {
-        AudioManager.Instance?.StopLoopingSfx();
         retryButton.onClick.AddListener(() =>
         {
             AudioManager.Instance?.PlaySfx("click");
@@ -45,6 +44,9 @@ public class GameOverUI : MonoBehaviour
 
     private void GameManager_OnDeath(object sender, Enemy e)
     {
+        AudioManager.Instance?.StopLoopingSfx();
+        AudioManager.Instance?.StopMusic();
+        AudioManager.Instance?.PlaySfx("die");
         if (e.IsFinalBoss && !firstTimeFinalDeath)
         {
             firstTimeFinalDeath = true;
@@ -53,7 +55,6 @@ public class GameOverUI : MonoBehaviour
             gameObject.SetActive(true);
             return;
         }
-        AudioManager.Instance?.PlaySfx("die");
         
         retryButton.gameObject.SetActive(true);
         homeButton.gameObject.SetActive(true);

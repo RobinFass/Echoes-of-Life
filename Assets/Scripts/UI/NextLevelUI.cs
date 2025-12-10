@@ -11,6 +11,8 @@ public class NextLevelUI : MonoBehaviour
 
     private void Awake()
     {
+        AudioManager.Instance?.StopLoopingSfx();
+        AudioManager.Instance?.StopMusic();
         nextButton.onClick.AddListener(() =>
         {
             AudioManager.Instance?.PlaySfx("click");
@@ -42,6 +44,8 @@ public class NextLevelUI : MonoBehaviour
 
     private void Player_OnPlayerWin(object sender, Enemy e)
     {
+        AudioManager.Instance?.StopLoopingSfx();
+        AudioManager.Instance?.StopMusic();
         if (e.IsFinalBoss)
         {
             continueButton.gameObject.SetActive(true);

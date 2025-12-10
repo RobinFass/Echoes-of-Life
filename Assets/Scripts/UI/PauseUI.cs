@@ -12,6 +12,8 @@ public class PauseUI : MonoBehaviour
 
     private void Awake()
     {
+        AudioManager.Instance?.StopLoopingSfx();
+        AudioManager.Instance?.StopMusic();
         continueButton.onClick.AddListener(() =>
         {
             AudioManager.Instance?.PlaySfx("click");

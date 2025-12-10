@@ -11,6 +11,8 @@ public class HomeUI : MonoBehaviour
 
     private void Awake()
     {
+        AudioManager.Instance?.StopLoopingSfx();
+        AudioManager.Instance?.StopMusic();
         playButton.onClick.AddListener(() =>
         {
             AudioManager.Instance?.PlaySfx("click");
