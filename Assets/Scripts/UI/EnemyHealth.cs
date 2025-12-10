@@ -1,24 +1,28 @@
+using Object;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EnemyHealth : MonoBehaviour
+namespace UI
 {
-    [SerializeField] private Image healthBar;
-    [SerializeField] private Enemy enemy;
-
-    private void Start()
+    public class EnemyHealth : MonoBehaviour
     {
-        gameObject.SetActive(false);
-    }
+        [SerializeField] private Image healthBar;
+        [SerializeField] private Enemy enemy;
 
-    private void FixedUpdate()
-    {
-        UpdateHealthBar();
-    }
+        private void Start()
+        {
+            gameObject.SetActive(false);
+        }
 
-    private void UpdateHealthBar()
-    {
-        if (enemy.NormalizedHealth < 1f)
-            healthBar.fillAmount = enemy.NormalizedHealth;
+        private void FixedUpdate()
+        {
+            UpdateHealthBar();
+        }
+
+        private void UpdateHealthBar()
+        {
+            if (enemy.NormalizedHealth < 1f) 
+                healthBar.fillAmount = enemy.NormalizedHealth;
+        }
     }
 }

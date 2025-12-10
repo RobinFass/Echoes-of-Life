@@ -1,7 +1,10 @@
-﻿public enum GameState
+﻿namespace Common
 {
-    Playing,
-    Pause,
-    Dead,
-    Won
+    public enum GameState
+    {
+        Playing,
+        Pause,
+        Dead,
+        Won
+    }
 }

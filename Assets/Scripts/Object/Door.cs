@@ -1,16 +1,18 @@
 using UnityEngine;
 
-public class Door : MonoBehaviour
+namespace Object
 {
-    private Door _door;
-
-    public Door DestinationDoor
+    public class Door : MonoBehaviour
     {
-        get => _door;
-        set
+        private Door door;
+
+        public Door DestinationDoor
         {
-            var destinationDoor = value;
-            if (destinationDoor != null) _door = destinationDoor;
+            get => door;
+            set
+            {
+                if (value != null) door = value;
+            }
         }
     }
 }

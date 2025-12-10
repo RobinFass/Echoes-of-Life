@@ -1,5 +1,4 @@
-﻿// csharp
-using System;
+﻿using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -25,31 +24,24 @@ namespace Common
                 if (bindingDisplayText) bindingDisplayText.text = "";
                 return;
             }
-
             var action = actionReference.action;
-
             if (!string.IsNullOrEmpty(name))
             {
-                for (var i = 0; i < action.bindings.Count; i++)
+                for (int i = 0; i < action.bindings.Count; i++)
                 {
                     var b = action.bindings[i];
-                    if (b.isPartOfComposite && string.Equals(b.name, name, StringComparison.OrdinalIgnoreCase))
-                    {
-                        bindingDisplayText.text = action.GetBindingDisplayString(i);
-                        return;
-                    }
+                    if (!b.isPartOfComposite || !string.Equals(b.name, name, StringComparison.OrdinalIgnoreCase)) continue;
+                    bindingDisplayText.text = action.GetBindingDisplayString(i);
+                    return;
                 }
-                for (var i = 0; i < action.bindings.Count; i++)
+                for (int i = 0; i < action.bindings.Count; i++)
                 {
                     var b = action.bindings[i];
-                    if (!b.isPartOfComposite && !string.IsNullOrEmpty(b.effectivePath))
-                    {
-                        bindingDisplayText.text = action.GetBindingDisplayString(i);
-                        return;
-                    }
+                    if (b.isPartOfComposite || string.IsNullOrEmpty(b.effectivePath)) continue;
+                    bindingDisplayText.text = action.GetBindingDisplayString(i);
+                    return;
                 }
             }
-
             bindingDisplayText.text = "";
         }
     }

@@ -1,18 +1,24 @@
 using System;
 using System.Collections.Generic;
+using Common;
+using Object;
+using UI;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public static int levelNumber = 0;
+    public static GameManager Instance { get; private set; }
+    public static int LevelNumber;
+    
+    private static GameInput GameInput => GameInput.Instance;
+    private static Player Player => Player.Instance;
 
     [SerializeField] private LayerMask backgroundCollisionMask;
     [SerializeField] private List<GameLevel> levelList;
 
     private GameState state;
-    private bool ControlsOpen = false;
-    public static GameManager Instance { get; private set; }
-
+    private bool controlsOpen;
+    
     public GameState State
     {
         get => state;
@@ -23,9 +29,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private GameInput gameInput => GameInput.Instance;
-    private Player player => Player.Instance;
-
     private void Awake()
     {
         Instance = this;
@@ -33,13 +36,10 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        if(levelList.Count <= 0) return; // gamemanager used in home scene too
-        
-        player.OnChangingRoom += Player_OnChangingRoomSetCameraBounds;
-        gameInput.OnMEnuEvent += GameInput_OnGamePause;
-
+        if(levelList.Count <= 0) return;
+        Player.OnChangingRoom += Player_OnChangingRoomSetCameraBounds;
+        GameInput.OnMEnuEvent += GameInput_OnGamePause;
         LoadCurrentLevel();
-
         state = GameState.Playing;
         Time.timeScale = 1f;
     }
@@ -52,24 +52,23 @@ public class GameManager : MonoBehaviour
     private void LoadCurrentLevel()
     {
         foreach (var level in levelList)
-            if (level.LevelNumber == levelNumber)
+            if (level.LevelNumber == LevelNumber)
             {
                 var spawnedLevel = Instantiate(level, Vector3.zero, Quaternion.identity);
-                player.transform.position = spawnedLevel.StartPosition;
+                Player.transform.position = spawnedLevel.StartPosition;
                 //player.ChangeSprite(levelNumber);
                 Player_OnChangingRoomSetCameraBounds(null, spawnedLevel.GetStartRoom());
                 State = GameState.Playing;
-                AudioManager.Instance?.PlayLevelMusic(levelNumber);
-                Debug.Log($"[GameManager] Loaded level {levelNumber}, requested music for level {levelNumber}");
+                AudioManager.Instance?.PlayLevelMusic(LevelNumber);
+                Debug.Log($"[GameManager] Loaded level {LevelNumber}, requested music for level {LevelNumber}");
                 return;
             }
-
         SceneLoader.LoadScene(Scenes.HomeScene);
         Debug.Log("No more levels to load, returning to home scene");
-        levelNumber = 0;
+        LevelNumber = 0;
     }
 
-    private void Player_OnChangingRoomSetCameraBounds(object sender, Room room)
+    private static void Player_OnChangingRoomSetCameraBounds(object sender, Room room)
     {
         var roomCameraBounds = room.GetCameraBounds().GetBounds();
         CineCamera.Instance.SetCameraBounds(roomCameraBounds);
@@ -84,11 +83,8 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            // If Controls are open and Escape is pressed, we want to go back to Pause menu,
-            // not resume gameplay.
-            if (ControlsOpen)
+            if (controlsOpen)
             {
-                // Re-fire pause event (PauseUI will show). Do not change state (already Pause).
                 OnGamePaused?.Invoke(this, EventArgs.Empty);
                 return;
             }
@@ -96,7 +92,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void PauseGame()
+    private void PauseGame()
     {
         if (state == GameState.Pause) return;
         state = GameState.Pause;
@@ -126,9 +122,9 @@ public class GameManager : MonoBehaviour
 
     public void ReturnToMenu()
     {
-        levelNumber = 1;
+        LevelNumber = 1;
         AudioManager.Instance?.StopMusic();
-        AudioManager.Instance?.StopLoopingSfx(); // ensure no loop when going back to menu
+        AudioManager.Instance?.StopLoopingSfx();
         SceneLoader.LoadScene(Scenes.HomeScene);
         State = GameState.Playing;
         Time.timeScale = 1f;
@@ -136,15 +132,13 @@ public class GameManager : MonoBehaviour
 
     public void RequestControls()
     {
-        ControlsOpen = true;
+        controlsOpen = true;
         OnControlsRequested?.Invoke(this, EventArgs.Empty);
     }
 
-    // Called when leaving Controls back to Pause
     public void CloseControlsToPause()
     {
-        ControlsOpen = false;
-        // Ensure pause state and event are consistent
+        controlsOpen = false;
         state = GameState.Pause;
         Time.timeScale = 0f;
         OnGamePaused?.Invoke(this, EventArgs.Empty);
@@ -152,11 +146,8 @@ public class GameManager : MonoBehaviour
 
     public void CompleteBossRoom(Enemy enemy)
     {
-        // stop any ongoing loops/music when bossfight ends so NextLevelUI is silent
         AudioManager.Instance?.StopLoopingSfx();
         AudioManager.Instance?.StopMusic();
-
-        // Play appropriate success SFX based on boss
         if (enemy != null && enemy.IsFinalBoss)
         {
             AudioManager.Instance?.PlaySfx("majorSuccess");
@@ -165,7 +156,6 @@ public class GameManager : MonoBehaviour
         {
             AudioManager.Instance?.PlaySfx("success");
         }
-
         OnPlayerWin?.Invoke(this, enemy);
         State = GameState.Won;
     }
@@ -173,7 +163,7 @@ public class GameManager : MonoBehaviour
     private void FixedUpdate()
     {
         if(!MapUI.Instance) return;
-        if (gameInput.OnShowMap())
+        if (GameInput.OnShowMap())
         {
             MapUI.Instance.Show();
             return;

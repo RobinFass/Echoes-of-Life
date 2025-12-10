@@ -1,10 +1,13 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class SelectOnHover : MonoBehaviour, IPointerEnterHandler
+namespace Common
 {
-    public void OnPointerEnter(PointerEventData eventData)
+    public class SelectOnHover : MonoBehaviour, IPointerEnterHandler
     {
-        EventSystem.current.SetSelectedGameObject(gameObject);
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            EventSystem.current.SetSelectedGameObject(gameObject);
+        }
     }
 }

@@ -1,71 +1,72 @@
+using Common;
+using Object;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GameOverUI : MonoBehaviour
+namespace UI
 {
-    [SerializeField] private Button homeButton;
-    [SerializeField] private Button retryButton;
-    [SerializeField] private Button continueButton;
-    
-    private Player player => Player.Instance;
-    private bool firstTimeFinalDeath = false;
-
-    private void Awake()
+    public class GameOverUI : MonoBehaviour
     {
-        retryButton.onClick.AddListener(() =>
-        {
-            AudioManager.Instance?.PlaySfx("click");
-            GameManager.Instance.RestartLevel();
-            Hide();
-        });
-        homeButton.onClick.AddListener(() =>
-        {
-            AudioManager.Instance?.PlaySfx("click");
-            GameManager.Instance?.ReturnToMenu();
-            SceneLoader.LoadScene(Scenes.HomeScene);
-            Hide();
-        });
-        continueButton.onClick.AddListener(() =>
-        {
-            AudioManager.Instance?.PlaySfx("click");
-            SceneLoader.LoadScene(Scenes.EndScene);
-            Hide();
-        });
-        homeButton.gameObject.SetActive(false);
-        retryButton.gameObject.SetActive(false);
-        continueButton.gameObject.SetActive(false);
-    }
+        [SerializeField] private Button homeButton;
+        [SerializeField] private Button retryButton;
+        [SerializeField] private Button continueButton;
+        
+        private bool firstTimeFinalDeath;
 
-    private void Start()
-    {
-        player.Stats.OnDeath += GameManager_OnDeath;
-        Hide();
-    }
-    
-
-    private void GameManager_OnDeath(object sender, Enemy e)
-    {
-        AudioManager.Instance?.StopLoopingSfx();
-        AudioManager.Instance?.StopMusic();
-        AudioManager.Instance?.PlaySfx("die");
-        if (e.IsFinalBoss && !firstTimeFinalDeath)
+        private void Awake()
         {
-            firstTimeFinalDeath = true;
-            continueButton.gameObject.SetActive(true);
-            continueButton.Select();
-            gameObject.SetActive(true);
-            return;
+            retryButton.onClick.AddListener(() =>
+            {
+                AudioManager.Instance?.PlaySfx("click");
+                GameManager.Instance.RestartLevel();
+                Hide();
+            });
+            homeButton.onClick.AddListener(() =>
+            {
+                AudioManager.Instance?.PlaySfx("click");
+                GameManager.Instance?.ReturnToMenu();
+                SceneLoader.LoadScene(Scenes.HomeScene);
+                Hide();
+            });
+            continueButton.onClick.AddListener(() =>
+            {
+                AudioManager.Instance?.PlaySfx("click");
+                SceneLoader.LoadScene(Scenes.EndScene);
+                Hide();
+            });
+            homeButton.gameObject.SetActive(false);
+            retryButton.gameObject.SetActive(false);
+            continueButton.gameObject.SetActive(false);
         }
-        
-        retryButton.gameObject.SetActive(true);
-        homeButton.gameObject.SetActive(true);
-        
-        retryButton.Select();
-        gameObject.SetActive(true);
-    }
 
-    private void Hide()
-    {
-        gameObject.SetActive(false);
+        private void Start()
+        {
+            Player.Stats.OnDeath += GameManager_OnDeath;
+            Hide();
+        }
+
+        private void GameManager_OnDeath(object sender, Enemy e)
+        {
+            AudioManager.Instance?.StopLoopingSfx();
+            AudioManager.Instance?.StopMusic();
+            AudioManager.Instance?.PlaySfx("die");
+            if (e.IsFinalBoss && !firstTimeFinalDeath)
+            {
+                firstTimeFinalDeath = true;
+                continueButton.gameObject.SetActive(true);
+                continueButton.Select();
+                gameObject.SetActive(true);
+                return;
+            }
+            retryButton.gameObject.SetActive(true);
+            homeButton.gameObject.SetActive(true);
+            retryButton.Select();
+            gameObject.SetActive(true);
+        }
+
+        private void Hide()
+        {
+            gameObject.SetActive(false);
+        }
     }
 }

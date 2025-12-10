@@ -1,9 +1,12 @@
 using UnityEngine;
 
-public class Heal : MonoBehaviour
+namespace Object
 {
-    public void SelfDestruct()
+    public class Heal : MonoBehaviour
     {
-        Destroy(gameObject);
+        public void SelfDestruct()
+        {
+            Destroy(gameObject);
+        }
     }
 }

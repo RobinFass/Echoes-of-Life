@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Common
 {
-    public class EnemyAttack : MonoBehaviour, Attack
+    public class EnemyAttack : MonoBehaviour, IAttack
     {
         [SerializeField] private float radius = 5f;
         [SerializeField] private float attackCooldown = 1.5f;
@@ -14,16 +14,15 @@ namespace Common
 
         private float lastAttackTime;
         public float Radius => radius;
+        
         private void FixedUpdate()
         {
             lastAttackTime-= Time.fixedDeltaTime;
-            Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, radius, playerLayer.value);
-            if (lastAttackTime < 0 && projectilePrefab && hits is { Length: > 0 })
-            {
-                animator.SetTrigger("Attack");
-                StartCoroutine(ShootAt((hits[0].transform.position - transform.position).normalized));
-                lastAttackTime = attackCooldown;
-            }
+            var hits = Physics2D.OverlapCircleAll(transform.position, radius, playerLayer.value);
+            if (!(lastAttackTime < 0) || !projectilePrefab || hits is not { Length: > 0 }) return;
+            animator.SetTrigger("Attack");
+            StartCoroutine(ShootAt((hits[0].transform.position - transform.position).normalized));
+            lastAttackTime = attackCooldown;
         }
 
         private IEnumerator ShootAt(Vector3 direction)

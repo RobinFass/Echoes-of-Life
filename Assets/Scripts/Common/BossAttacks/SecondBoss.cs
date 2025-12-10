@@ -1,9 +1,10 @@
 ﻿using System.Collections;
+using Object;
 using UnityEngine;
 
 namespace Common.BossAttacks
 {
-    public class SecondBoss : MonoBehaviour, Attack
+    public class SecondBoss : MonoBehaviour, IAttack
     {
         [SerializeField] private float radius = 5f;
         [SerializeField] private float attackRadius = 3f;
@@ -15,7 +16,7 @@ namespace Common.BossAttacks
         [SerializeField] private SpriteRenderer ground;
         [SerializeField] private float spawnDelay = 0.05f;
         [SerializeField] private float prefabLifetime = 2f;
-        [SerializeField] private float crackRadius = 3f; // nouveau: rayon pour les cracks
+        [SerializeField] private float crackRadius = 3f;
 
         [Header("Indicator")]
         [SerializeField] private GameObject indicatorPrefab;
@@ -26,50 +27,38 @@ namespace Common.BossAttacks
         [SerializeField] private float attackCooldown = 2f;
         [SerializeField] private Animator animator;
 
-        private float lastAttackTime = 0f;
+        private float lastAttackTime;
 
         private void FixedUpdate()
         {
             lastAttackTime -= Time.fixedDeltaTime;
-            Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, radius, playerLayer.value);
-            if (lastAttackTime <= 0f && prefab != null && hits.Length > 0)
-            {
-                if (animator != null)
-                    animator.SetTrigger("Attack");
-
-                StartCoroutine(SpawnRoutine());
-                lastAttackTime = attackCooldown;
-
-                var toHit = Physics2D.OverlapCircleAll(transform.position, attackRadius, playerLayer.value);
-                if (toHit.Length > 0)
-                    Player.Instance.BeingHit(gameObject.GetComponent<Enemy>());
-            }
+            var hits = Physics2D.OverlapCircleAll(transform.position, radius, playerLayer.value);
+            if (!(lastAttackTime <= 0f) || prefab == null || hits.Length <= 0) return;
+            if (animator != null) animator.SetTrigger("Attack");
+            StartCoroutine(SpawnRoutine());
+            lastAttackTime = attackCooldown;
+            var toHit = Physics2D.OverlapCircleAll(transform.position, attackRadius, playerLayer.value);
+            if (toHit.Length > 0) Object.Player.Instance.BeingHit(gameObject.GetComponent<Enemy>());
         }
 
         private IEnumerator SpawnRoutine()
         {
-            if (prefab == null)
-                yield break;
-
+            if (prefab == null) yield break;
             for (int i = 0; i < spawnCount; i++)
             {
-                Vector3 pos = GetRandomPointInRoom(crackRadius);
+                var pos = GetRandomPointInRoom(crackRadius);
                 if (indicatorPrefab != null)
                 {
-                    GameObject indicator = Instantiate(indicatorPrefab, pos, Quaternion.identity);
+                    var indicator = Instantiate(indicatorPrefab, pos, Quaternion.identity);
                     Destroy(indicator, indicatorDuration);
                     yield return new WaitForSeconds(indicatorDuration);
                 }
                 else
                 {
-                    // fallback: keep original small delay before spawn if no indicator assigned
                     yield return new WaitForSeconds(spawnDelay);
                 }
-
-                GameObject instance = Instantiate(prefab, pos, Quaternion.identity);
+                var instance = Instantiate(prefab, pos, Quaternion.identity);
                 Destroy(instance, prefabLifetime);
-
-                // spacing between successive spawns
                 yield return new WaitForSeconds(spawnDelay);
             }
         }
@@ -78,23 +67,19 @@ namespace Common.BossAttacks
         {
             if (ground != null)
             {
-                Bounds b = ground.bounds;
-                // essayer plusieurs fois de générer un point dans le cercle et à l'intérieur des bounds
+                var b = ground.bounds;
                 for (int attempt = 0; attempt < 20; attempt++)
                 {
-                    Vector2 rand = Random.insideUnitCircle * maxRadius;
-                    Vector3 candidate = transform.position + new Vector3(rand.x, rand.y, 0f);
+                    var rand = Random.insideUnitCircle * maxRadius;
+                    var candidate = transform.position + new Vector3(rand.x, rand.y, 0f);
                     if (candidate.x >= b.min.x && candidate.x <= b.max.x && candidate.y >= b.min.y && candidate.y <= b.max.y)
                         return candidate;
                 }
-
-                // fallback: clamp la position aux bounds (peut légèrement sortir du cercle si aucun point valide trouvé)
                 float clampedX = Mathf.Clamp(transform.position.x, b.min.x, b.max.x);
                 float clampedY = Mathf.Clamp(transform.position.y, b.min.y, b.max.y);
                 return new Vector3(clampedX, clampedY, transform.position.z);
             }
-
-            Vector2 randCircle = Random.insideUnitCircle * maxRadius;
+            var randCircle = Random.insideUnitCircle * maxRadius;
             return transform.position + new Vector3(randCircle.x, randCircle.y, 0f);
         }
 
@@ -103,7 +88,7 @@ namespace Common.BossAttacks
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(transform.position, radius);
             Gizmos.color = Color.yellow;
-            Gizmos.DrawWireSphere(transform.position, crackRadius); // affiche le rayon des cracks
+            Gizmos.DrawWireSphere(transform.position, crackRadius);
         }
     }
 }

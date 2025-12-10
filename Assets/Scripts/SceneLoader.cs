@@ -1,3 +1,4 @@
+using Common;
 using UnityEngine.SceneManagement;
 
 public static class SceneLoader

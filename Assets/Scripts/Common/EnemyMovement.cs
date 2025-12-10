@@ -9,26 +9,24 @@ namespace Common
         [SerializeField] private float speed = 1000;
         [SerializeField] private LayerMask playerLayer;
         [SerializeField] private Rigidbody2D rigidBody;
-        [SerializeField] private Attack enemyAttack;
-
+        
+        private IAttack enemyAttack;
         private Transform player;
 
         private void FixedUpdate()
         {
-            Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, radius, playerLayer.value);
-            if (hits is { Length: > 0 })
+            var hits = Physics2D.OverlapCircleAll(transform.position, radius, playerLayer.value);
+            if (hits is not { Length: > 0 }) return;
+            player = hits[0].transform;
+            if (!enemyAttack.IsUnityNull() && (player.position - transform.position).magnitude < enemyAttack.Radius)
             {
-                player = hits[0].transform;
-                if (!enemyAttack.IsUnityNull() && (player.position - transform.position).magnitude < enemyAttack.Radius)
-                {
-                    Vector3 direction = (player.position - transform.position).normalized;
-                    rigidBody.AddForce(-direction * (speed * Time.fixedDeltaTime));
-                }
-                else
-                {
-                    Vector3 direction = (player.position - transform.position).normalized;
-                    rigidBody.AddForce(direction * (speed * Time.fixedDeltaTime));
-                }
+                var direction = (player.position - transform.position).normalized;
+                rigidBody.AddForce(-direction * (speed * Time.fixedDeltaTime));
+            }
+            else
+            {
+                var direction = (player.position - transform.position).normalized;
+                rigidBody.AddForce(direction * (speed * Time.fixedDeltaTime));
             }
         }
 

@@ -3,14 +3,14 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Video;
 
-namespace CutScenes
+namespace Common.CutScenes
 {
     public class EndCutScene : MonoBehaviour
     {
         [SerializeField] private VideoPlayer[] videos;
 
-        private GameInput input => GameInput.Instance;
-        private bool skipRequested = false;
+        private static GameInput Input => GameInput.Instance;
+        private bool skipRequested;
         
         private void Awake()
         {
@@ -22,7 +22,7 @@ namespace CutScenes
         
         private void Start()
         {
-            input.OnDashEvent += SkipCutscene;
+            Input.OnDashEvent += SkipCutscene;
             PlayEndingCutscene();
         }
 
@@ -35,27 +35,18 @@ namespace CutScenes
         {
             int index = (GameManager.Instance.State == GameState.Won) ? 0 : 1;
             var video = videos[index];
-
             video.gameObject.SetActive(true);
             video.Play();
-
-            var duration = (float)video.length + 2f;
-            var steps = 1000;
-            for (var i = 0; i < steps; i++)
+            float duration = (float)video.length + 2f;
+            const int steps = 1000;
+            for (int i = 0; i < steps; i++)
             {
-                if (skipRequested)
-                    break;
-
+                if (skipRequested) break;
                 await Task.Delay((int)(duration * 1000 / steps));
             }
-
             video.gameObject.SetActive(false);
-
-            if (index == 0)
-                GameManager.levelNumber = 0;
-
+            if (index == 0) GameManager.LevelNumber = 0;
             SceneLoader.LoadScene(Scenes.HomeScene);
         }
-
     }
 }

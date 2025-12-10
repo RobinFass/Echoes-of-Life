@@ -1,104 +1,97 @@
 using System;
+using Common.Player;
 using UnityEngine;
 using UnityEngine.U2D.Animation;
 
-public class Player : MonoBehaviour
+namespace Object
 {
-    [SerializeField] private SpriteLibrary spriteLibrary;
-    [SerializeField] private SpriteLibraryAsset[] spriteLibraryAsset;
-    public static Player Instance { get; private set; }
-
-    public PlayerAttack Attack => PlayerAttack.Instance;
-    public PlayerMovement Movement => PlayerMovement.Instance;
-    public PlayerStats Stats => PlayerStats.Instance;
-    public PlayerAnimation Animation => PlayerAnimation.Instance;
-
-    private GameManager gameManager => GameManager.Instance;
-    
-    public event EventHandler<Enemy> OnEnemyHit;
-    public event EventHandler<Room> OnChangingRoom;
-
-    private void Awake()
+    public class Player : MonoBehaviour
     {
-        Instance = this;
-    }
+        [SerializeField] private SpriteLibrary spriteLibrary;
+        [SerializeField] private SpriteLibraryAsset[] spriteLibraryAsset;
 
-    private void Start()
-    {
-        // subscribe to attack event so we can play sword SFX
-        if (PlayerAttack.Instance != null)
-            PlayerAttack.Instance.OnAttack += PlayerAttack_OnAttack;
-        
-        // Play spawn sound when player enters level
-        AudioManager.Instance?.PlaySfx("spawn");
-    }
-    
-    private void OnCollisionStay2D(Collision2D other)
-    {
-        if(Stats.HurtCooldownTime > 0) return;
-        
-        other.gameObject.TryGetComponent(out MonoBehaviour obj);
-        switch (obj)
+        public static Player Instance { get; private set; }
+
+        public static PlayerAttack Attack => PlayerAttack.Instance;
+        public static PlayerStats Stats => PlayerStats.Instance;
+        public static PlayerAnimation Animation => PlayerAnimation.Instance;
+
+        public event EventHandler<Enemy> OnEnemyHit;
+        public event EventHandler<Room> OnChangingRoom;
+
+        private void Awake()
         {
-            case Enemy enemy:
-            {
-                OnEnemyHit?.Invoke(this, enemy);
-                break;
-            }
+            Instance = this;
         }
-    }
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        other.gameObject.TryGetComponent(out MonoBehaviour obj);
-        switch (obj)
+        private void Start()
         {
-            case Door door:
+            if (PlayerAttack.Instance != null)
+                PlayerAttack.Instance.OnAttack += PlayerAttack_OnAttack;
+            AudioManager.Instance?.PlaySfx("spawn");
+        }
+
+        private void OnCollisionStay2D(Collision2D other)
+        {
+            if (Stats.HurtCooldownTime > 0) return;
+            other.gameObject.TryGetComponent(out MonoBehaviour obj);
+            switch (obj)
             {
-                var destinationDoor = door.DestinationDoor;
-                var room = destinationDoor.GetComponentInParent<Room>();
-                var roomCenter = room.transform.position;
-                var doorPos = destinationDoor.transform.position;
-                var direction = (roomCenter - doorPos).normalized;
-                var offset = direction * 3f;
-                transform.position = destinationDoor.transform.position + offset;
-                AudioManager.Instance?.PlaySfx("room");
-                if (destinationDoor.GetComponent<Common.BossDoor>() != null)
+                case Enemy enemy:
                 {
-                    AudioManager.Instance?.StopMusic();
-                    AudioManager.Instance?.PlayBossMusic(GameManager.levelNumber);
+                    OnEnemyHit?.Invoke(this, enemy);
+                    break;
                 }
-                OnChangingRoom?.Invoke(this, room);
-                break;
-            }
-            case Heal heal:
-            {
-                AudioManager.Instance?.PlaySfx("heal");
-                Stats.Heal(7);
-                heal.SelfDestruct();
-                break;
-            }
-            case Enemy enemy:
-            {
-                OnEnemyHit?.Invoke(this, enemy);
-                break;
             }
         }
-    }
 
-    public void BeingHit(Enemy enemy)
-    {
-        OnEnemyHit?.Invoke(this, enemy);
-    }
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+            other.gameObject.TryGetComponent(out MonoBehaviour obj);
+            switch (obj)
+            {
+                case Door door:
+                {
+                    var destinationDoor = door.DestinationDoor;
+                    var room = destinationDoor.GetComponentInParent<Room>();
+                    var roomCenter = room.transform.position;
+                    var doorPos = destinationDoor.transform.position;
+                    var direction = (roomCenter - doorPos).normalized;
+                    var offset = direction * 3f;
+                    transform.position = destinationDoor.transform.position + offset;
+                    AudioManager.Instance?.PlaySfx("room");
+                    if (destinationDoor.GetComponent<Common.BossDoor>() != null)
+                    {
+                        AudioManager.Instance?.StopMusic();
+                        AudioManager.Instance?.PlayBossMusic(GameManager.LevelNumber);
+                    }
 
-    // called whenever PlayerAttack triggers an attack
-    private void PlayerAttack_OnAttack(object sender, EventArgs e)
-    {
-        AudioManager.Instance?.PlaySfx("sword");
-    }
+                    OnChangingRoom?.Invoke(this, room);
+                    break;
+                }
+                case Heal heal:
+                {
+                    AudioManager.Instance?.PlaySfx("heal");
+                    Stats.Heal(7);
+                    heal.SelfDestruct();
+                    break;
+                }
+                case Enemy enemy:
+                {
+                    OnEnemyHit?.Invoke(this, enemy);
+                    break;
+                }
+            }
+        }
 
-    public void ChangeSprite(int level)
-    {
-        spriteLibrary.spriteLibraryAsset = spriteLibraryAsset[level-1];
+        public void BeingHit(Enemy enemy)
+        {
+            OnEnemyHit?.Invoke(this, enemy);
+        }
+
+        private static void PlayerAttack_OnAttack(object sender, EventArgs e)
+        {
+            AudioManager.Instance?.PlaySfx("sword");
+        }
     }
 }

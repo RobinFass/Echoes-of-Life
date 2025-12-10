@@ -1,6 +1,6 @@
 ﻿namespace Common
 {
-    public interface Attack
+    public interface IAttack
     {
         public float Radius { get; }
     }

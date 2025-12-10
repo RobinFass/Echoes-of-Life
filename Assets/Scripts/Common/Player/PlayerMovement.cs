@@ -2,153 +2,134 @@
 using System.Collections;
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+namespace Common.Player
 {
-    [Header("Movement")] [SerializeField] private float moveForce = 2000f;
-    [SerializeField] private float sprintMultiplier = 2f;
-    [SerializeField] private float sprintStaminaCostPerSecond = 2f;
+    public class PlayerMovement : MonoBehaviour
+    {
+        [Header("Movement")] [SerializeField] private float moveForce = 2000f;
+        [SerializeField] private float sprintMultiplier = 2f;
+        [SerializeField] private float sprintStaminaCostPerSecond = 2f;
 
-    [Header("Dash")] [SerializeField] private float dashDistance = 5f;
-    [SerializeField] private float dashDuration = 0.15f;
-    [SerializeField] private float dashStaminaCost = 2f;
+        [Header("Dash")] [SerializeField] private float dashDistance = 5f;
+        [SerializeField] private float dashDuration = 0.15f;
+        [SerializeField] private float dashStaminaCost = 2f;
 
-    [SerializeField] private Rigidbody2D rigidBody;
-    private AudioManager audioManager;
-
-    private Vector2 lastMoveInput = new(1f, 0f);
-    public static PlayerMovement Instance { get; private set; }
-    private GameInput input => GameInput.Instance;
-    private PlayerStats stats => Player.Instance.Stats;
-    private PlayerAnimation anime => Player.Instance.Animation;
-    private GameManager GameManager => GameManager.Instance;
-
-    // track what loop we are currently playing to avoid restarting each frame
-    private enum MoveSfxState { None, Walk, Run }
-    private MoveSfxState currentMoveSfx = MoveSfxState.None;
+        [SerializeField] private Rigidbody2D rigidBody;
+        
+        public static PlayerMovement Instance { get; private set; }
+        private static GameInput Input => GameInput.Instance;
+        private static PlayerStats Stats => Object.Player.Stats;
+        private static PlayerAnimation Anime => Object.Player.Animation;
+        private static GameManager GameManager => GameManager.Instance;
+        
+        private AudioManager audioManager;
+        private Vector2 lastMoveInput = new(1f, 0f);
+        private enum MoveSfxState { None, Walk, Run }
+        private MoveSfxState currentMoveSfx = MoveSfxState.None;
     
-    public bool dashing { get; private set; }
+        public bool Dashing { get; private set; }
 
-    private void Awake()
-    {
-        Instance = this;
-        audioManager = AudioManager.Instance;
-    }
-
-    private void Start()
-    {
-        if (input)
-            input.OnDashEvent += OnDashEvent;
-    }
-
-    private void FixedUpdate()
-    {
-        // stop movement SFX when game is not in Playing state
-        if (PlayerStats.Instance.NormalizedHealth == 0 || GameManager.State != GameState.Playing)
+        private void Awake()
         {
-            if (currentMoveSfx != MoveSfxState.None && audioManager != null)
+            Instance = this;
+            audioManager = AudioManager.Instance;
+        }
+
+        private void Start()
+        {
+            if (Input) Input.OnDashEvent += OnDashEvent;
+        }
+
+        private void FixedUpdate()
+        {
+            if (PlayerStats.Instance.NormalizedHealth == 0 || GameManager.State != GameState.Playing)
             {
+                if (currentMoveSfx == MoveSfxState.None || audioManager == null) return;
                 audioManager.StopLoopingSfx();
                 currentMoveSfx = MoveSfxState.None;
+                return;
             }
-            return;
-        }
-
-        var moveInput = input ? input.OnMove() : Vector2.zero;
-
-        // No movement: no sound, no sprint anim
-        if (moveInput == Vector2.zero)
-        {
-            if (currentMoveSfx != MoveSfxState.None && audioManager != null)
+            var moveInput = Input ? Input.OnMove() : Vector2.zero;
+            if (moveInput == Vector2.zero)
             {
-                audioManager.StopLoopingSfx();
-                currentMoveSfx = MoveSfxState.None;
+                if (currentMoveSfx != MoveSfxState.None && audioManager != null)
+                {
+                    audioManager.StopLoopingSfx();
+                    currentMoveSfx = MoveSfxState.None;
+                }
+
+                Anime.PauseSprint();
+                return;
             }
-
-            anime.PauseSprint();
-            return;
-        }
-
-        lastMoveInput = moveInput;
-
-        var speed = moveForce;
-        var sprintKeyHeld = input.OnSprint();
-
-        // compute sprint state EXACTLY as we drive the animation: key + stamina
-        bool isSprintingThisFrame = false;
-        if (sprintKeyHeld)
-        {
-            var used = sprintStaminaCostPerSecond * Time.fixedDeltaTime;
-            if (stats.UseStamina(used))
+            lastMoveInput = moveInput;
+            float speed = moveForce;
+            bool sprintKeyHeld = Input.OnSprint();
+            bool isSprintingThisFrame = false;
+            if (sprintKeyHeld)
             {
-                isSprintingThisFrame = true;
+                float used = sprintStaminaCostPerSecond * Time.fixedDeltaTime;
+                if (Stats.UseStamina(used))
+                {
+                    isSprintingThisFrame = true;
+                }
             }
-        }
-
-        // Animations
-        if (isSprintingThisFrame)
-        {
-            anime.PlaySprint();
-            speed *= sprintMultiplier;
-        }
-        else
-        {
-            anime.PauseSprint();
-        }
-
-        // Sounds: mirror the same condition
-        if (audioManager != null)
-        {
-            // running
             if (isSprintingThisFrame)
             {
-                if (currentMoveSfx != MoveSfxState.Run)
-                {
-                    audioManager.StopLoopingSfx();
-                    audioManager.PlayLoopingSfx("run");
-                    currentMoveSfx = MoveSfxState.Run;
-                }
+                Anime.PlaySprint();
+                speed *= sprintMultiplier;
             }
-            // walking (moving but not sprinting)
             else
             {
-                if (currentMoveSfx != MoveSfxState.Walk)
+                Anime.PauseSprint();
+            }
+            if (audioManager != null)
+            {
+                if (isSprintingThisFrame)
                 {
-                    audioManager.StopLoopingSfx();
-                    audioManager.PlayLoopingSfx("walk");
-                    currentMoveSfx = MoveSfxState.Walk;
+                    if (currentMoveSfx != MoveSfxState.Run)
+                    {
+                        audioManager.StopLoopingSfx();
+                        audioManager.PlayLoopingSfx("run");
+                        currentMoveSfx = MoveSfxState.Run;
+                    }
+                }
+                else
+                {
+                    if (currentMoveSfx != MoveSfxState.Walk)
+                    {
+                        audioManager.StopLoopingSfx();
+                        audioManager.PlayLoopingSfx("walk");
+                        currentMoveSfx = MoveSfxState.Walk;
+                    }
                 }
             }
+            rigidBody.AddForce(Time.fixedDeltaTime * speed * moveInput);
         }
 
-        rigidBody.AddForce(Time.fixedDeltaTime * speed * moveInput);
-    }
-
-    private void OnDashEvent(object sender, EventArgs e)
-    {
-        if (!stats.UseStamina(dashStaminaCost)) return;
-        if (GameManager.State != GameState.Playing) return;
-        var dir = input.OnMove().normalized;
-        if (dir == Vector2.zero) dir = lastMoveInput.normalized;
-        dashing = true;
-        AudioManager.Instance?.PlaySfx("dash");
-        StartCoroutine(DashCoroutine(dir));
-        anime.PlayDash();
-    }
-
-    private IEnumerator DashCoroutine(Vector2 direction)
-    {
-        var elapsed = 0f;
-        var dashSpeed = dashDistance / dashDuration;
-        while (elapsed < dashDuration)
+        private void OnDashEvent(object sender, EventArgs e)
         {
-            if (rigidBody)
-                rigidBody.linearVelocity = direction * dashSpeed;
-            elapsed += Time.fixedDeltaTime;
-            yield return new WaitForFixedUpdate();
+            if (!Stats.UseStamina(dashStaminaCost)) return;
+            if (GameManager.State != GameState.Playing) return;
+            var dir = Input.OnMove().normalized;
+            if (dir == Vector2.zero) dir = lastMoveInput.normalized;
+            Dashing = true;
+            AudioManager.Instance?.PlaySfx("dash");
+            StartCoroutine(DashCoroutine(dir));
+            Anime.PlayDash();
         }
 
-        if (rigidBody)
-            rigidBody.linearVelocity = Vector2.zero;
-        dashing = false;
+        private IEnumerator DashCoroutine(Vector2 direction)
+        {
+            float elapsed = 0f;
+            float dashSpeed = dashDistance / dashDuration;
+            while (elapsed < dashDuration)
+            {
+                if (rigidBody) rigidBody.linearVelocity = direction * dashSpeed;
+                elapsed += Time.fixedDeltaTime;
+                yield return new WaitForFixedUpdate();
+            }
+            if (rigidBody) rigidBody.linearVelocity = Vector2.zero;
+            Dashing = false;
+        }
     }
 }

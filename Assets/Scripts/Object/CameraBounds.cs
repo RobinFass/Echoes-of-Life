@@ -1,9 +1,12 @@
 using UnityEngine;
 
-public class CameraBounds : MonoBehaviour
+namespace Object
 {
-    public Collider2D GetBounds()
+    public class CameraBounds : MonoBehaviour
     {
-        return GetComponent<Collider2D>();
+        public Collider2D GetBounds()
+        {
+            return GetComponent<Collider2D>();
+        }
     }
 }

@@ -2791,7 +2791,7 @@ MonoBehaviour:
   staminaRegenRate: 4
   staminaRegenCooldown: 2
   hurtCooldown: 1
-  Invincible: 0
+  invincible: 0
 --- !u!114 &876904192
 MonoBehaviour:
   m_ObjectHideFlags: 0

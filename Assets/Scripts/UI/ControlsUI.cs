@@ -1,4 +1,5 @@
 ﻿using System;
+using Common;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,48 +9,43 @@ namespace UI
     {
         [SerializeField] private Button backButton;
 
-        private GameManager gameManager => GameManager.Instance;
-        private bool isOpen; // track if controls UI is currently shown
+        private static GameManager GameManager => GameManager.Instance;
+        private bool isOpen;
 
         private void Awake()
         {
             backButton.onClick.AddListener(() =>
             {
-                // Back behaves like Escape: go back to Pause
                 Hide();
-                gameManager.CloseControlsToPause();
+                GameManager.CloseControlsToPause();
             });
         }
 
         private void Start()
         {
             Hide();
-            gameManager.OnControlsRequested += GameManager_OnControlsRequested;
-            gameManager.OnGameUnpaused += GameManager_OnGameUnpause;
-            gameManager.OnGamePaused += GameManager_OnGamePause;
+            GameManager.OnControlsRequested += GameManager_OnControlsRequested;
+            GameManager.OnGameUnpaused += GameManager_OnGameUnpause;
+            GameManager.OnGamePaused += GameManager_OnGamePause;
         }
 
         private void OnDestroy()
         {
-            if (gameManager == null) return;
-            gameManager.OnControlsRequested -= GameManager_OnControlsRequested;
-            gameManager.OnGameUnpaused -= GameManager_OnGameUnpause;
-            gameManager.OnGamePaused -= GameManager_OnGamePause;
+            if (GameManager == null) return;
+            GameManager.OnControlsRequested -= GameManager_OnControlsRequested;
+            GameManager.OnGameUnpaused -= GameManager_OnGameUnpause;
+            GameManager.OnGamePaused -= GameManager_OnGamePause;
         }
         
         private void GameManager_OnGameUnpause(object sender, EventArgs e)
         {
-            // If Escape is pressed while Controls are open, return to Pause instead of resuming
-            if (isOpen)
-            {
-                Hide();
-                gameManager.CloseControlsToPause(); // PauseUI will show
-            }
+            if (!isOpen) return;
+            Hide();
+            GameManager.CloseControlsToPause(); // PauseUI will show
         }
 
         private void GameManager_OnGamePause(object sender, EventArgs e)
         {
-            // Safety: if Controls were open and a pause event is fired, ensure they don't stay visible simultaneously.
             if (isOpen) Hide();
         }
 
@@ -61,15 +57,14 @@ namespace UI
         private void Show()
         {
             isOpen = true;
-            AudioManager.Instance?.PlaySfx("open"); // controls panel opening
+            AudioManager.Instance?.PlaySfx("open");
             backButton.Select();
             gameObject.SetActive(true);
         }
 
         private void Hide()
         {
-            if (isOpen)
-                AudioManager.Instance?.PlaySfx("close"); // controls panel closing
+            if (isOpen) AudioManager.Instance?.PlaySfx("close");
             isOpen = false;
             if(GameInput.Instance) GameInput.Instance.UpdateKeys();
             gameObject.SetActive(false);

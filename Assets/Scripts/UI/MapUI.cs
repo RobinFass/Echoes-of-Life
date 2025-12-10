@@ -1,22 +1,25 @@
 using UnityEngine;
 
-public class MapUI : MonoBehaviour
+namespace UI
 {
-    public static MapUI Instance { get; private set; }
-    
-    private void Awake()
+    public class MapUI : MonoBehaviour
     {
-        Instance = this;
-        Hide();
-    }
+        public static MapUI Instance { get; private set; }
+    
+        private void Awake()
+        {
+            Instance = this;
+            Hide();
+        }
 
-    public void Show()
-    {
-        gameObject.SetActive(true);
-    }
+        public void Show()
+        {
+            gameObject.SetActive(true);
+        }
     
-    public void Hide()
-    {
-        gameObject.SetActive(false);
+        public void Hide()
+        {
+            gameObject.SetActive(false);
+        }
     }
 }

@@ -1,21 +1,24 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(Collider2D))]
-public class KeepColliderWorldRotation : MonoBehaviour
+namespace Common
 {
-    [SerializeField] private Transform target;
-    private readonly Vector3 worldOffset = Vector3.zero;
-
-    private void Reset()
+    [RequireComponent(typeof(Collider2D))]
+    public class KeepColliderWorldRotation : MonoBehaviour
     {
-        if (transform.parent)
-            target = transform.parent;
-    }
+        [SerializeField] private Transform target;
+        
+        private readonly Vector3 worldOffset = Vector3.zero;
 
-    private void LateUpdate()
-    {
-        if (!target) return;
-        transform.position = target.position + worldOffset;
-        transform.rotation = Quaternion.identity;
+        private void Reset()
+        {
+            if (transform.parent) target = transform.parent;
+        }
+
+        private void LateUpdate()
+        {
+            if (!target) return;
+            transform.position = target.position + worldOffset;
+            transform.rotation = Quaternion.identity;
+        }
     }
 }

@@ -7,21 +7,18 @@ namespace Common
     {
         [SerializeField] private LayerMask collisionLayers;
 
-        private bool _hasCollided;
+        private bool hasCollided;
 
         public IEnumerator MoveInDirection(Vector2 direction, float speed)
         {
             var rb = GetComponent<Rigidbody2D>();
             if (!rb) yield break;
-
-            _hasCollided = false;
-
-            while (!_hasCollided && gameObject)
+            hasCollided = false;
+            while (!hasCollided && gameObject)
             {
                 rb.linearVelocity = direction * speed;
                 yield return new WaitForFixedUpdate();
             }
-            
             if (rb) rb.linearVelocity = Vector2.zero;
         }
 
@@ -33,7 +30,7 @@ namespace Common
         
         private void OnDestroy()
         {
-            _hasCollided = true;
+            hasCollided = true;
         }
     }
 }
