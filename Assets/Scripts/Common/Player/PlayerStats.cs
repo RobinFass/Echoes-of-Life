@@ -13,6 +13,9 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] private float staminaRegenCooldown = 2f;
     [SerializeField] private float hurtCooldown = 1f;
 
+    // Dev: toggle player invincibility easily in inspector or via code.
+    [SerializeField] public bool Invincible = true;
+
     private float health;
     private bool isDying;
     private float stamina;
@@ -42,6 +45,16 @@ public class PlayerStats : MonoBehaviour
     private void FixedUpdate()
     {
         if(GameManager.State != GameState.Playing) return;
+
+        // Infinite stamina and no hurt cooldown while invincible
+        if (Invincible)
+        {
+            stamina = maxStamina;
+            staminaCooldownTime = 0f;
+            HurtCooldownTime = 0f;
+            return; // skip normal stamina/cooldown logic
+        }
+
         if (HurtCooldownTime >= 0)
             HurtCooldownTime -= Time.deltaTime;
 
@@ -55,6 +68,9 @@ public class PlayerStats : MonoBehaviour
 
     private async void Player_OnEnemyHit(object sender, Enemy e)
     {
+        // If invincible, ignore all incoming damage/effects.
+        if (Invincible) return;
+
         if (isDying || HurtCooldownTime > 0 || PlayerMovement.Instance.dashing) return;
 
         if (health - e.Damage <= 0f)
@@ -68,8 +84,12 @@ public class PlayerStats : MonoBehaviour
             return;
         }
 
+        // apply damage and retaliatory body damage
         health -= e.Damage;
         e.Health -= player.Attack.BodyDamage;
+
+        // trigger hurt feedback once, gated by HurtCooldownTime
+        AudioManager.Instance?.PlaySfx("playerHit"); // SFX for player being hit
         anime.PlayHurt();
         HurtCooldownTime = hurtCooldown;
     }
@@ -77,6 +97,9 @@ public class PlayerStats : MonoBehaviour
 
     public bool UseStamina(float amount)
     {
+        // Infinite stamina while invincible: always allow, do not consume.
+        if (Invincible) return true;
+
         if (amount <= 0f|| health == 0) return false;
         if (!(stamina >= amount)) return false;
         if(isSprintHold) return false;

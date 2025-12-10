@@ -891,7 +891,13 @@ MonoBehaviour:
   - key: ambiance2
     clip: {fileID: 8300000, guid: 06bc5fa51b523425d8132f09623080e3, type: 3}
   - key: ambiance3
-    clip: {fileID: 8300000, guid: 7f0d508477efc4ffa97fc12353e9424c, type: 3}
+    clip: {fileID: 8300000, guid: 4231442a7eed44b508b08ff30fd9b2c9, type: 3}
+  - key: boss1
+    clip: {fileID: 8300000, guid: 7cfbc640520c146ea9dc4c66e293f7bf, type: 3}
+  - key: boss2
+    clip: {fileID: 8300000, guid: 09ad51b137beb4fa28d9b2d29cba80e5, type: 3}
+  - key: boss3
+    clip: {fileID: 8300000, guid: 0ee45995237b3401ca9116eea1abed18, type: 3}
   sfxClips:
   - key: dash
     clip: {fileID: 8300000, guid: d241a54f34488404d969ef4879d604b7, type: 3}
@@ -907,10 +913,22 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 62a755a2e6d97420aa62ef7345c6d56c, type: 3}
   - key: monsterHit
     clip: {fileID: 8300000, guid: 5e28bf12a3ece4c2b91308ae843d4743, type: 3}
-  - key: hover
-    clip: {fileID: 8300000, guid: 8b6508e5f2316480a8cb09a326948930, type: 3}
+  - key: playerHit
+    clip: {fileID: 8300000, guid: b12c0f878a5034350901f1620dfddad6, type: 3}
+  - key: spawn
+    clip: {fileID: 8300000, guid: 487a7e231d12047ff9091b0d21d488ce, type: 3}
+  - key: success
+    clip: {fileID: 8300000, guid: 25af28374f675453286c19ee1f700614, type: 3}
+  - key: majorSuccess
+    clip: {fileID: 8300000, guid: 5f77523f8c78f4bd7b627ca98dfb0b85, type: 3}
   - key: click
     clip: {fileID: 8300000, guid: 822ad13dd27c645989519c758ef6d21b, type: 3}
+  - key: open
+    clip: {fileID: 8300000, guid: 1877764cdb19a45cda952b701035679f, type: 3}
+  - key: close
+    clip: {fileID: 8300000, guid: a6773d3232dd447c5841a377d9727c2c, type: 3}
+  - key: die
+    clip: {fileID: 8300000, guid: 5658fa6a2c64c4ded884469af5474206, type: 3}
   levelMusic:
   - level: 1
     key: ambiance1

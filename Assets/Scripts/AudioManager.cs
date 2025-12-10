@@ -142,7 +142,7 @@ public class AudioManager : MonoBehaviour
         PlaySfx(clip, volume);
     }
 
-    public void PlaySfx(AudioClip clip, float volume = 1f)
+    private void PlaySfx(AudioClip clip, float volume = 1f)
     {
         if (!clip) return;
         var src = sfxPool[sfxPoolIndex];
@@ -168,7 +168,7 @@ public class AudioManager : MonoBehaviour
         PlayMusic(clip, volume);
     }
 
-    public void PlayMusic(AudioClip clip, float volume = 1f)
+    private void PlayMusic(AudioClip clip, float volume = 1f)
     {
         if (!clip) return;
         bool restarting = musicSource.clip != clip;
@@ -233,12 +233,6 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    // UI helpers
-    public void PlayClick()
-    {
-        PlaySfx("click");
-    }
-
     public void PlayLevelMusic(int level, float volume = 1f)
     {
         string key = null;
@@ -265,5 +259,12 @@ public class AudioManager : MonoBehaviour
         {
             Debug.LogWarning($"AudioManager: no music mapping found for level {level}.");
         }
+    }
+
+    // Play boss music for the given level index (boss1, boss2, boss3).
+    public void PlayBossMusic(int level, float volume = 1f)
+    {
+        var key = $"boss{Mathf.Clamp(level, 1, 3)}";
+        PlayMusic(key, volume);
     }
 }

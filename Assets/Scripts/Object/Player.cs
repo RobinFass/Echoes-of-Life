@@ -1,6 +1,4 @@
 using System;
-using Object;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.U2D.Animation;
 
@@ -30,6 +28,9 @@ public class Player : MonoBehaviour
         // subscribe to attack event so we can play sword SFX
         if (PlayerAttack.Instance != null)
             PlayerAttack.Instance.OnAttack += PlayerAttack_OnAttack;
+        
+        // Play spawn sound when player enters level
+        AudioManager.Instance?.PlaySfx("spawn");
     }
     
     private void OnCollisionStay2D(Collision2D other)

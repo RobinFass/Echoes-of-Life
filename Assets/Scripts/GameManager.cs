@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using Common;
+using Common.BossAttacks;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -12,6 +14,7 @@ public class GameManager : MonoBehaviour
     private GameState state;
     private bool ControlsOpen = false;
     public static GameManager Instance { get; private set; }
+    private bool inBossRoom = false;
 
     public GameState State
     {
@@ -75,6 +78,18 @@ public class GameManager : MonoBehaviour
         var roomCameraBounds = room.GetCameraBounds().GetBounds();
         CineCamera.Instance.SetCameraBounds(roomCameraBounds);
         CineCamera.Instance.transform.position = Player.Instance.transform.position;
+
+        // Robust boss-room detection: BossDoor or FirstBoss present in this room
+        bool isBossRoom =
+            room.GetComponentInChildren<BossDoor>(true) != null ||
+            room.GetComponentInChildren<FirstBoss>(true) != null;
+        if (isBossRoom && !inBossRoom)
+        {
+            // Entering boss room: stop ambiance and start boss music
+            AudioManager.Instance?.StopMusic();
+            AudioManager.Instance?.PlayBossMusic(levelNumber);
+            inBossRoom = true;
+        }
     }
 
     private void GameInput_OnGamePause(object sender, EventArgs e)
@@ -153,6 +168,20 @@ public class GameManager : MonoBehaviour
 
     public void CompleteBossRoom(Enemy enemy)
     {
+        // stop any ongoing loops/music when bossfight ends so NextLevelUI is silent
+        AudioManager.Instance?.StopLoopingSfx();
+        AudioManager.Instance?.StopMusic();
+
+        // Play appropriate success SFX based on boss
+        if (enemy != null && enemy.IsFinalBoss)
+        {
+            AudioManager.Instance?.PlaySfx("majorSuccess");
+        }
+        else
+        {
+            AudioManager.Instance?.PlaySfx("success");
+        }
+
         OnPlayerWin?.Invoke(this, enemy);
         State = GameState.Won;
     }

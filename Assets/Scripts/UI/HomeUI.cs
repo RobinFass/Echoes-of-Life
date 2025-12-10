@@ -13,7 +13,7 @@ public class HomeUI : MonoBehaviour
     {
         playButton.onClick.AddListener(() =>
         {
-            AudioManager.Instance?.PlayClick();
+            AudioManager.Instance?.PlaySfx("click");
             if (GameManager.levelNumber == 0)
             {
                 GameManager.levelNumber = 1;
@@ -23,12 +23,11 @@ public class HomeUI : MonoBehaviour
                 SceneLoader.LoadScene(Scenes.GameScene);
         });
         quitButton.onClick.AddListener(() => {
-            AudioManager.Instance?.PlayClick();
+            AudioManager.Instance?.PlaySfx("click");
             Application.Quit();
         });
         controlsButton.onClick.AddListener(() =>
         {
-            AudioManager.Instance?.PlayClick();
             gameManager.RequestControls();
         });
     }

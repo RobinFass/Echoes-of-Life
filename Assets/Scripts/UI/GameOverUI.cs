@@ -12,21 +12,22 @@ public class GameOverUI : MonoBehaviour
 
     private void Awake()
     {
+        AudioManager.Instance?.StopLoopingSfx();
         retryButton.onClick.AddListener(() =>
         {
-            AudioManager.Instance?.PlayClick();
+            AudioManager.Instance?.PlaySfx("click");
             GameManager.Instance.RestartLevel();
             Hide();
         });
         homeButton.onClick.AddListener(() =>
         {
-            AudioManager.Instance?.PlayClick();
+            AudioManager.Instance?.PlaySfx("click");
             SceneLoader.LoadScene(Scenes.HomeScene);
             Hide();
         });
         continueButton.onClick.AddListener(() =>
         {
-            AudioManager.Instance?.PlayClick();
+            AudioManager.Instance?.PlaySfx("click");
             SceneLoader.LoadScene(Scenes.EndScene);
             Hide();
         });
@@ -52,6 +53,7 @@ public class GameOverUI : MonoBehaviour
             gameObject.SetActive(true);
             return;
         }
+        AudioManager.Instance?.PlaySfx("die");
         
         retryButton.gameObject.SetActive(true);
         homeButton.gameObject.SetActive(true);

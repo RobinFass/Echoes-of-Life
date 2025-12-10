@@ -13,16 +13,19 @@ public class NextLevelUI : MonoBehaviour
     {
         nextButton.onClick.AddListener(() =>
         {
+            AudioManager.Instance?.PlaySfx("click");
             SceneLoader.LoadScene((Scenes)(++GameManager.levelNumber));
             Hide();
         });
         homeButton.onClick.AddListener(() =>
         {
+            AudioManager.Instance?.PlaySfx("click");
             SceneLoader.LoadScene(Scenes.HomeScene);
             Hide();
         });
         continueButton.onClick.AddListener(() =>
         {
+            AudioManager.Instance?.PlaySfx("click");
             SceneLoader.LoadScene(Scenes.EndScene);
             Hide();
         });

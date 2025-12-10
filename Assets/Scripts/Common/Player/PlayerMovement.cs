@@ -42,9 +42,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(PlayerStats.Instance.NormalizedHealth == 0) return;
         // stop movement SFX when game is not in Playing state
-        if (GameManager.State != GameState.Playing)
+        if (PlayerStats.Instance.NormalizedHealth == 0 || GameManager.State != GameState.Playing)
         {
             if (currentMoveSfx != MoveSfxState.None && audioManager != null)
             {
@@ -127,6 +126,7 @@ public class PlayerMovement : MonoBehaviour
     private void OnDashEvent(object sender, EventArgs e)
     {
         if (!stats.UseStamina(dashStaminaCost)) return;
+        if (GameManager.State != GameState.Playing) return;
         var dir = input.OnMove().normalized;
         if (dir == Vector2.zero) dir = lastMoveInput.normalized;
         dashing = true;

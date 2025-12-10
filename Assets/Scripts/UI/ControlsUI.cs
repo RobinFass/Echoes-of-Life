@@ -15,7 +15,6 @@ namespace UI
         {
             backButton.onClick.AddListener(() =>
             {
-                AudioManager.Instance?.PlayClick();
                 // Back behaves like Escape: go back to Pause
                 Hide();
                 gameManager.CloseControlsToPause();
@@ -62,12 +61,15 @@ namespace UI
         private void Show()
         {
             isOpen = true;
+            AudioManager.Instance?.PlaySfx("open"); // controls panel opening
             backButton.Select();
             gameObject.SetActive(true);
         }
 
         private void Hide()
         {
+            if (isOpen)
+                AudioManager.Instance?.PlaySfx("close"); // controls panel closing
             isOpen = false;
             if(GameInput.Instance) GameInput.Instance.UpdateKeys();
             gameObject.SetActive(false);
