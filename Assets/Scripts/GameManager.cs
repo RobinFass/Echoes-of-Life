@@ -48,9 +48,8 @@ public class GameManager : MonoBehaviour
     public event EventHandler OnGameUnpaused;
     public event EventHandler OnControlsRequested;
     public event EventHandler<Enemy> OnPlayerWin;
-    
 
-    public void LoadCurrentLevel()
+    private void LoadCurrentLevel()
     {
         foreach (var level in levelList)
             if (level.LevelNumber == levelNumber)

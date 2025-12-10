@@ -110,8 +110,9 @@ MonoBehaviour:
   maxHealth: 0.1
   damage: 2
   canva: {fileID: 0}
+  dropItemPrefab: {fileID: 0}
   isBoss: 0
-  isFinalBoss: 0
+  isFinalBoss: 1
 --- !u!50 &8468596965974397449
 Rigidbody2D:
   serializedVersion: 5
