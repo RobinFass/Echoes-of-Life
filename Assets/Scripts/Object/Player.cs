@@ -57,16 +57,17 @@ public class Player : MonoBehaviour
             {
                 var destinationDoor = door.DestinationDoor;
                 var room = destinationDoor.GetComponentInParent<Room>();
-
                 var roomCenter = room.transform.position;
                 var doorPos = destinationDoor.transform.position;
                 var direction = (roomCenter - doorPos).normalized;
-
                 var offset = direction * 3f;
                 transform.position = destinationDoor.transform.position + offset;
-
-                AudioManager.Instance?.PlaySfx("room"); // play room-enter sound
-
+                AudioManager.Instance?.PlaySfx("room");
+                if (destinationDoor.GetComponent<Common.BossDoor>() != null)
+                {
+                    AudioManager.Instance?.StopMusic();
+                    AudioManager.Instance?.PlayBossMusic(GameManager.levelNumber);
+                }
                 OnChangingRoom?.Invoke(this, room);
                 break;
             }

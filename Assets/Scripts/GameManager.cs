@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Common;
-using Common.BossAttacks;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -14,7 +12,6 @@ public class GameManager : MonoBehaviour
     private GameState state;
     private bool ControlsOpen = false;
     public static GameManager Instance { get; private set; }
-    private bool inBossRoom = false;
 
     public GameState State
     {
@@ -78,18 +75,6 @@ public class GameManager : MonoBehaviour
         var roomCameraBounds = room.GetCameraBounds().GetBounds();
         CineCamera.Instance.SetCameraBounds(roomCameraBounds);
         CineCamera.Instance.transform.position = Player.Instance.transform.position;
-
-        // Robust boss-room detection: BossDoor or FirstBoss present in this room
-        bool isBossRoom =
-            room.GetComponentInChildren<BossDoor>(true) != null ||
-            room.GetComponentInChildren<FirstBoss>(true) != null;
-        if (isBossRoom && !inBossRoom)
-        {
-            // Entering boss room: stop ambiance and start boss music
-            AudioManager.Instance?.StopMusic();
-            AudioManager.Instance?.PlayBossMusic(levelNumber);
-            inBossRoom = true;
-        }
     }
 
     private void GameInput_OnGamePause(object sender, EventArgs e)
@@ -119,7 +104,7 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0f;
         OnGamePaused?.Invoke(this, EventArgs.Empty);
         AudioManager.Instance?.PauseMusic();
-        AudioManager.Instance?.PauseLoopingSfx(); // pause walk/run when game is paused
+        AudioManager.Instance?.StopLoopingSfx();
     }
 
     public void ResumeGame()
@@ -129,12 +114,12 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
         OnGameUnpaused?.Invoke(this, EventArgs.Empty);
         AudioManager.Instance?.ResumeMusic();
-        AudioManager.Instance?.ResumeLoopingSfx(); // resume paused walk/run
     }
 
     public void RestartLevel()
     {
-        AudioManager.Instance?.StopLoopingSfx(); // safety on restart
+        AudioManager.Instance?.StopMusic();
+        AudioManager.Instance?.StopLoopingSfx();
         SceneLoader.LoadScene(Scenes.GameScene);
         State = GameState.Playing;
         Time.timeScale = 1f;

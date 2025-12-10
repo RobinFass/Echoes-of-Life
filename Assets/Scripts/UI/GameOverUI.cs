@@ -21,6 +21,7 @@ public class GameOverUI : MonoBehaviour
         homeButton.onClick.AddListener(() =>
         {
             AudioManager.Instance?.PlaySfx("click");
+            GameManager.Instance?.ReturnToMenu();
             SceneLoader.LoadScene(Scenes.HomeScene);
             Hide();
         });

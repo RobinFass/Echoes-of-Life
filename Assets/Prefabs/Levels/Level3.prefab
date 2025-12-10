@@ -797,13 +797,33 @@ PrefabInstance:
     m_RemovedGameObjects:
     - {fileID: 1212786597760549291, guid: aa20cc27c5b550c46bc8a8e0df3c88c1, type: 3}
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2524539294186082082, guid: aa20cc27c5b550c46bc8a8e0df3c88c1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4552587224273322871}
   m_SourcePrefab: {fileID: 100100000, guid: aa20cc27c5b550c46bc8a8e0df3c88c1, type: 3}
 --- !u!4 &783637520782436866 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 42340547213132352, guid: aa20cc27c5b550c46bc8a8e0df3c88c1, type: 3}
   m_PrefabInstance: {fileID: 753902878814087234}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2989987389023299424 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2524539294186082082, guid: aa20cc27c5b550c46bc8a8e0df3c88c1, type: 3}
+  m_PrefabInstance: {fileID: 753902878814087234}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4552587224273322871
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2989987389023299424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39da1342ada54e19af9b4cafbb6bc6bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Common.BossDoor
 --- !u!1001 &927196830284822001
 PrefabInstance:
   m_ObjectHideFlags: 0

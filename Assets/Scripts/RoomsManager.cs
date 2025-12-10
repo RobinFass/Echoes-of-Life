@@ -1,5 +1,3 @@
-// Assets/Scripts/RoomsManager.cs
-
 using System.Collections.Generic;
 using UnityEngine;
 

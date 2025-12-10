@@ -108,27 +108,6 @@ public class AudioManager : MonoBehaviour
         loopingSfxSource.clip = clip;
         loopingSfxSource.Play();
     }
-    
-    public void PauseLoopingSfx()
-    {
-        if (loopingSfxSource != null && loopingSfxSource.isPlaying)
-        {
-            loopingSfxSource.Pause();
-            isLoopingSfxPaused = true;
-        }
-    }
-    
-    public void ResumeLoopingSfx()
-    {
-        if (loopingSfxSource == null || loopingSfxSource.clip == null) return;
-        if (isLoopingSfxPaused)
-        {
-            loopingSfxSource.UnPause();
-            isLoopingSfxPaused = false;
-            return;
-        }
-        if (!loopingSfxSource.isPlaying) loopingSfxSource.Play();
-    }
 
     public void StopLoopingSfx()
     {
@@ -260,11 +239,11 @@ public class AudioManager : MonoBehaviour
             Debug.LogWarning($"AudioManager: no music mapping found for level {level}.");
         }
     }
-
-    // Play boss music for the given level index (boss1, boss2, boss3).
+    
     public void PlayBossMusic(int level, float volume = 1f)
     {
         var key = $"boss{Mathf.Clamp(level, 1, 3)}";
+        Debug.Log($"AudioManager: playing boss music '{key}' for level {level}.");
         PlayMusic(key, volume);
     }
 }
